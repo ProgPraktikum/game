@@ -22,7 +22,7 @@ public class GUIMain {
         mainFrame = new JFrame();
 
         mainFrame.setUndecorated(true);
-        mainFrame.setOpacity(0.8f);
+//        mainFrame.setOpacity(0.8f);
         mainFrame.setBackground(Color.BLACK);
         mainFrame.setContentPane(Box.createVerticalBox());
 
