@@ -22,14 +22,14 @@ public class GUIMain {
         mainFrame = new JFrame();
 
         mainFrame.setUndecorated(true);
-        mainFrame.setBackground(Color.BLACK);
         mainFrame.setOpacity(0.8f);
+        mainFrame.setBackground(Color.BLACK);
         mainFrame.setContentPane(Box.createVerticalBox());
 
         /*
         Schlachtschiff Bild (Startbildschirm)
          */
-        Icon cover = new ImageIcon("Schlachtschiff.jpg");
+        Icon cover = new ImageIcon("GUI/Schlachtschiff.jpg");
         JLabel schlachtschiff = new JLabel(cover);
         schlachtschiff.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainFrame.add(schlachtschiff);
