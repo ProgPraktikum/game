@@ -1,3 +1,4 @@
+package Data;
 /*
 @author: Felix
 desc: Datenklasse zum zusammenfassen der schiffsatribute beim plazieren
@@ -5,14 +6,14 @@ desc: Datenklasse zum zusammenfassen der schiffsatribute beim plazieren
 public class ship{
 
 //atribute
-	final public int length;
-	final public int xpos;
-	final public int ypos;
-	final public int origin;
+	private int length = 0;
+	private int xpos = 0;
+	private int ypos = 0;
+	private int orientation =0;
 //konstruktor
 	public ship(int o, int l){
 		if (o == 0 || o==1){
-			origin = o;
+			orientation = o;
 		}
 		if (l != 0){
 			length = l;
@@ -22,7 +23,6 @@ public class ship{
 	public void setxpos(int x){
 		xpos = x;
 	}
-	public void setypos(int y){
-		ypos = y;
+	public void setypos(int y){ ypos = y;
 	}
 }
