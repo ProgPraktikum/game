@@ -8,15 +8,15 @@ import Data.DataContainer;
 
 import javax.xml.crypto.Data;
 
-public class board implements boardinterface{
-    //(java int arrays werden mit 0 initialisiert)
-    //fuer jeden spieler 2 arrays um abgegebene schuesse lokal zu speichern
+public class board implements boardinterface {
+    /** (Java int Arrays werden default mit 0 initialisiert)
+    fuer jeden Spieler 2 Arrays um abgegebene Schuesse lokal zu speichern **/
 
     // MEMBER VARIABLES
-    private int playerboard0 [] [];
-    private int playerboard1 [] [];
-    private int playershots0 [] [];
-	private int playershots1 [] [];
+    private int playerboard0[][];
+    private int playerboard1[][];
+    private int playershots0[][];
+	private int playershots1[][];
 
 	// CONSTRUCTOR
     board(){}
@@ -24,7 +24,7 @@ public class board implements boardinterface{
     private DataContainer con = new DataContainer();
 
     // PUBLIC METHODS
-    public void createboard(){
+    public void createboard() {
         int x = con.getSpielFeldBreite();
         int y = con.getSpielFeldHoehe();
         playerboard0 = new int[x][y];
@@ -33,16 +33,16 @@ public class board implements boardinterface{
         playershots0 = new int[x][y];
     }
 		
-    public String checkboard(int x, int y, int player){
+    public String checkboard(int x, int y, int player) {
         int i;
-        if ( x > con.getSpielFeldBreite() || x < 0) {
+        if (x > con.getSpielFeldBreite() || x < 0) {
             return "Falscher X Wert";
         }
-        else if ( y > con.getSpielFeldHoehe() ||y < 0) {
+        else if (y > con.getSpielFeldHoehe() ||y < 0) {
             return "Falscher Y Wert";
         }
         else {
-            if ( player == 0) {
+            if (player == 0) {
                 i = playerboard0[x][y];
 			
                 /*Wasser kann direkt zurueckgegeben werden, 
