@@ -1,10 +1,12 @@
 package Data;
-public class game{
+public class game {
 	boolean is_online;
 	//konstruktor feldgroesse, online/ singleplayer game
-	game(int x, int y, boolean o){
-		DataContainer.setSpielFeldBreite(x);
-		DataContainer.setSpielfeldHoehe(y);
-		is_online= o;
+	DataContainer con = new DataContainer();
+
+	game (int x, int y, boolean o) {
+		con.setSpielFeldBreite(x);
+		con.setSpielFeldHoehe(y);
+		is_online = o;
 	} 
 }
