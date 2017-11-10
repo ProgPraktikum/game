@@ -1,4 +1,4 @@
 package ai;
 
-public interface AI {
+public class AI {
 }
