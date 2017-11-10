@@ -1,3 +1,4 @@
+package Data;
 /*
 @author: Felix
 desc: Datenklasse zum zusammenfassen der schiffsatribute beim plazieren

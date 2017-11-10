@@ -1,3 +1,4 @@
+package Data;
 public interface gameinterface {
 	/* 
 	@Author: Felix

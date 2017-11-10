@@ -1,3 +1,4 @@
+package Data;
 public class game{
 	boolean is_online;
 	//konstruktor feldgroesse, online/ singleplayer game
