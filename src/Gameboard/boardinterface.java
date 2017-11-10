@@ -1,24 +1,10 @@
-package battleship;
-
 /**
- *Arraycodierung: 0=Wasser, 1=Schiff, 2=getroffenes Schiff, 3=versenktes Schiff, 4=Wassertreffer
+ *Arraycodierung: 0=Wasser, 1=Treffer, 2=Schiff, 3=versenktes Schiff, 4=Wassertreffer
  * @author Felix
  */
 public interface boardinterface {
-   void setx();
-   /* setzt x größe eingabe: int
-   */
-   
-   void sety();
-   //setzt y größe eingabe: int
-   
-   int getx();
-   //gibt x zurück
-   
-   int gety();
-   //gibt y zurück
    void createboard();
-   /*erzeugt arrays aus x,y werten des objekts für schiffe und schüsse der gegner
+   /*erzeugt arrays aus x,y werten des Datacontiners, für schiffe und schüsse der Spieler
    */
    
    boolean place(); 

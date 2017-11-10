@@ -4,9 +4,6 @@
 	@author Felix
 */
 public class board implements boardinterface{
-    //feldgroesse:
-    private int x;
-    private int y;
     //(java int arrays werden mit 0 initialisiert)
     //fuer jeden spieler 2 arrays um abgegebene schuesse lokal zu speichern
     private int playerboard0 [] [];
@@ -14,26 +11,13 @@ public class board implements boardinterface{
     private int playershots0 [] [];
 	private int playershots1 [] [];
 //konstruktor 
-    board(int x, int y){
-	this.x=x;
-	this.y=y;	
-    }
+    board(){}
 
     //methoden
-    public void setx(int x){
-    	this.x=x;
-    }	
 
-    public void sety(int y){
-	this.y=y;
-    }
-    public int getx(){
-	return x;
-    }
-    public int gety(){
-	return y;
-	}
     public void createboard(){
+        int x= Datacontiner.getSpielFeldBreite();
+        int y= Datacontainer.getSpielFeldHoehe();
         playerboard0 = new int[x] [y];
         playerboard1 = new int[x] [y];
         playershots0 = new int[x] [y];
@@ -42,9 +26,9 @@ public class board implements boardinterface{
 		
     public String checkboard(int x, int y, int player){
         int i;
-        if( x > this.x || x < 0){
+        if( x > DataContainer.getSpielFeldBreite() || x < 0){
             return "Falscher X Wert";
-        }else if( y > this.y ||y < 0){
+        }else if( y > Datacontainer.getSpielFeldHoehe() ||y < 0){
             return "Falscher Y Wert";
         }else{
             if( player == 0){
@@ -67,5 +51,5 @@ public class board implements boardinterface{
                 return "ungueltiger Spieler";
             }			
         }//close else block with correct input
-    }//close function
+    return "you shouldn't be here";}//close function //missing return function laut compiler
 }//close class
