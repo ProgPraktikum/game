@@ -1,5 +1,6 @@
 package GUI;
 
+import Data.DataContainer;
 import GUI.SelectFieldSize;
 
 import javax.swing.*;
@@ -44,11 +45,12 @@ public class SelectModi {
         sSpiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         sSpiel.addActionListener(
                 (e) -> {
-
+                    DataContainer.setGameType("ss");
+                    new GameView();
                 }
         );
         vbox.add(sSpiel);
-        // Einzelspieler Button
+        // Benutzerdefiniert Button
         vbox.add(Box.createVerticalStrut(7));   //Abstand zwischen Buttons
         JButton vsCom = new JButton("Benutzerdefiniert");
         vsCom.setToolTipText("Spiel gegen den Computer mit selbst gewaehlter Feldgroesse und selbst" +
@@ -62,6 +64,7 @@ public class SelectModi {
         vsCom.setFont(new Font("Tahoma", Font.PLAIN, 20));
         vsCom.addActionListener(
                 (e) -> {
+                    DataContainer.setGameType("bdf");
                     new_Game.setVisible(false);
                     new SelectFieldSize();
                 }

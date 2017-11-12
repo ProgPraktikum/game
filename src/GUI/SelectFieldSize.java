@@ -1,7 +1,10 @@
 package GUI;
 
+import Data.DataContainer;
+
 import javax.swing.*;
 import java.awt.*;
+
 
 public class SelectFieldSize {
 
@@ -18,7 +21,7 @@ public class SelectFieldSize {
 
         Box hbox = Box.createHorizontalBox();
         Box hbox2 = Box.createHorizontalBox();
-
+        Box hbox3 = Box.createHorizontalBox();
         Box vbox = Box.createVerticalBox();
 
 
@@ -31,22 +34,46 @@ public class SelectFieldSize {
         vbox.add(Box.createVerticalStrut(20));
         hbox.add(Box.createHorizontalStrut(5));
 
-        //Textfeld für den X Wert der Spielfeldgroesse
-        JTextField feldx = new JTextField();
-        feldx.setPreferredSize(new Dimension(150 , 30));
-        feldx.setMinimumSize(new Dimension(150, 30));
-        feldx.setMaximumSize(new Dimension(150, 30));
 
-        //Textfeld für den Y Wert der Spielfeldgroesse
-        JTextField feldy = new JTextField();
-        feldy.setPreferredSize(new Dimension(150 , 30));
-        feldy.setMinimumSize(new Dimension(150, 30));
-        feldy.setMaximumSize(new Dimension(150, 30));
+        /**
+         * JLabel: Bitte Spielfeldbreite waehlen
+         */
+        JLabel lblBreite = new JLabel("Spielfeldbreite:");
+        lblBreite.setVisible(true);
+        lblBreite.setForeground(Color.WHITE);
+        lblBreite.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-        // X zwischen den Textfeldern
-        JLabel abstand = new JLabel("X");
-        abstand.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        abstand.setForeground(Color.WHITE);
+        /**
+         * SpinnerModel fuer die Feldgroesse
+         */
+        SpinnerNumberModel spinNumModel1 = new SpinnerNumberModel(10,5,30,1);
+        SpinnerNumberModel spinNumModel2 = new SpinnerNumberModel(10,5,30,1);
+        /**
+         * JSpinner zur Wahl der Feldbreite
+         */
+        JSpinner spinnerBreite = new JSpinner();
+        spinnerBreite.setModel(spinNumModel1);
+        spinnerBreite.setMinimumSize(new Dimension(50,30));
+        spinnerBreite.setMaximumSize(new Dimension(50,30));
+        spinnerBreite.setPreferredSize(new Dimension(50,30));
+
+
+        /**
+         * JSpinner zur Wahl der Feldhoehe
+         */
+        JSpinner spinnerHoehe = new JSpinner();
+        spinnerHoehe.setModel(spinNumModel2);
+        spinnerHoehe.setMinimumSize(new Dimension(50,30));
+        spinnerHoehe.setMaximumSize(new Dimension(50,30));
+        spinnerHoehe.setPreferredSize(new Dimension(50,30));
+
+        /**
+         * JLabel: Bitte Spielfeldhoehe waehlen
+         */
+        JLabel lblHoehe = new JLabel("Spielfeldhoehe:");
+        lblHoehe.setForeground(Color.WHITE);
+        lblHoehe.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        lblHoehe.setVisible(true);
 
         /*
          Bestaetigen Button ( ließt die eingegebenen Werte ein und und speichert diese
@@ -57,12 +84,13 @@ public class SelectFieldSize {
         ok.setFont(new Font("Tahoma", Font.PLAIN, 20));
         ok.addActionListener(
                 (e) -> {
-                    // TODO Einlesen der Werte und am besten in einer seperaten "Container-Klasse" für sämtliche Daten wie Anzahl und Art der Schiffe speichern.
 
+                        DataContainer.setSpielFeldBreite((int) spinnerBreite.getValue());
+                        DataContainer.setSpielFeldHoehe((int) spinnerHoehe.getValue());
 
                     eingaben.setVisible(false);
                     new SelectShips();
-
+                    //new GameView();
                 }
         );
 
@@ -79,9 +107,11 @@ public class SelectFieldSize {
                     eingaben.dispose(); }
         );
 
-        hbox.add(feldx);
-        hbox.add(abstand);
-        hbox.add(feldy);
+        hbox.add(lblBreite);
+        hbox.add(spinnerBreite);
+        hbox3.add(lblHoehe);
+        hbox3.add(spinnerHoehe);
+
 
         hbox2.add(ok);
         hbox2.add(abbrechen);
@@ -89,8 +119,9 @@ public class SelectFieldSize {
         vbox.add(groesseFeld);
         vbox.add(hbox);
 
-        eingaben.add(vbox);
-        eingaben.add(hbox2);
+        eingaben.add(vbox);  // Box mit Feldbreite
+        eingaben.add(hbox3); // Box mit Feldhoehe
+        eingaben.add(hbox2); // Box mit Buttons
 
         eingaben.pack();
         eingaben.setLocationRelativeTo(null);
