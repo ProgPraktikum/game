@@ -1,71 +1,74 @@
-/*
+/**
+    @author Felix
+**/
 
+package Gameboard;
 
-	@author Felix
-*/
-public class board implements boardinterface{
-    //feldgroesse:
-    private int x;
-    private int y;
-    //(java int arrays werden mit 0 initialisiert)
-    //fuer jeden spieler 2 arrays um abgegebene schuesse lokal zu speichern
-    private int playerboard0 [] [];
-    private int playerboard1 [] [];
-    private int playershots0 [] [];
-	private int playershots1 [] [];
-//konstruktor 
-    board(int x, int y){
-	this.x=x;
-	this.y=y;	
-    }
+import Data.DataContainer;
 
-    //methoden
-    public void setx(int x){
-    	this.x=x;
-    }	
+import javax.xml.crypto.Data;
 
-    public void sety(int y){
-	this.y=y;
-    }
-    public int getx(){
-	return x;
-    }
-    public int gety(){
-	return y;
-	}
-    public void createboard(){
-        playerboard0 = new int[x] [y];
-        playerboard1 = new int[x] [y];
-        playershots0 = new int[x] [y];
-        playershots0 = new int[x] [y];
+public class board implements boardinterface {
+    /** (Java int Arrays werden default mit 0 initialisiert)
+    fuer jeden Spieler 2 Arrays um abgegebene Schuesse lokal zu speichern **/
+
+    // MEMBER VARIABLES
+    private int playerboard0[][];
+    private int playerboard1[][];
+    private int playershots0[][];
+	private int playershots1[][];
+
+	// CONSTRUCTOR
+    board(){}
+
+    private DataContainer con = new DataContainer();
+
+    // PUBLIC METHODS
+    public void createboard() {
+        int x = con.getSpielFeldBreite();
+        int y = con.getSpielFeldHoehe();
+        playerboard0 = new int[x][y];
+        playerboard1 = new int[x][y];
+        playershots0 = new int[x][y];
+        playershots0 = new int[x][y];
     }
 		
-    public String checkboard(int x, int y, int player){
+    public String checkboard(int x, int y, int player) {
         int i;
-        if( x > this.x || x < 0){
+        if (x > con.getSpielFeldBreite() || x < 0) {
             return "Falscher X Wert";
-        }else if( y > this.y ||y < 0){
+        }
+        else if (y > con.getSpielFeldHoehe() ||y < 0) {
             return "Falscher Y Wert";
-        }else{
-            if( player == 0){
-                i= playerboard0 [x] [y];
+        }
+        else {
+            if (player == 0) {
+                i = playerboard0[x][y];
 			
                 /*Wasser kann direkt zurueckgegeben werden, 
                 bei treffer muss aber ueberprueft werden ob schiff versenkt ist*/
 
-                switch (i){										
+                switch (i) {
                     case 0: return "Wasser";
-                    case 1: return shipcheckup(x, y, player);//not implemented yet
+                    // case 1: return shipcheckup(x, y, player); // NOT IMPLEMENTED YET => COMMENT ME OUT SO I DONT FAIL THE BUILD
                 }
-            }else if (player== 1) {
-                i=playerboard1 [x] [y];
-                switch (i){
+            }
+            else if (player == 1) {
+                i = playerboard1[x][y];
+                switch (i) {
                     case 0: return "Wasser";
-                    case 1: return shipcheckup(x, y, player);//not implemented yet
+                    // case 1: return shipcheckup(x, y, player); // NOT IMPLEMENTED YET => COMMENT ME OUT SO I DONT FAIL THE BUILD
                 }
-            }else{
+            }
+            else {
                 return "ungueltiger Spieler";
             }			
-        }//close else block with correct input
-    }//close function
+        } //close else block with correct input
+        return "you shouldn't be here";
+    }//close function //missing return function laut compiler
+
+    public String checkboard() {return "foo";}
+    public boolean place() {return true;}
+    public boolean checkplace() {return true;}
+    public String checkship() {return "foo";}
 }//close class
