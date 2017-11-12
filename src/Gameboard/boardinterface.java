@@ -4,23 +4,24 @@
  */
 
 package Gameboard;
+import Data.ship;
 
 public interface boardinterface {
     void createboard();
     /*erzeugt arrays aus x,y werten des Datacontiners, für schiffe und schüsse der Spieler
     */
 
-    boolean place();
+    boolean place(ship s);
     /*place plaziert ein schiff im spielfeld an der stelle x, y mit orientation o
     und länge l und gibt bei erfolg true und bei fehler false zurück
     */
 
-    boolean checkplace();
+    boolean checkPlace(ship s);
     /* checkplace überprüft ob ein schiff an stelle x,y mit orientation o und
     länge l ins feld plaziert werden kann
     */
 
-    String checkboard();
+    String checkboard(int x, int y);
     /*ckeckt koordinate und spieler ob wasser oder schiff plaziert ist
     bei schiff wird checkship aufgerufen
     */
