@@ -53,6 +53,7 @@ public class SelectFieldSize {
          */
         JSpinner spinnerBreite = new JSpinner();
         spinnerBreite.setModel(spinNumModel1);
+        ((JSpinner.DefaultEditor)spinnerBreite.getEditor()).getTextField().setEditable(false);
         spinnerBreite.setMinimumSize(new Dimension(50,30));
         spinnerBreite.setMaximumSize(new Dimension(50,30));
         spinnerBreite.setPreferredSize(new Dimension(50,30));
@@ -63,6 +64,7 @@ public class SelectFieldSize {
          */
         JSpinner spinnerHoehe = new JSpinner();
         spinnerHoehe.setModel(spinNumModel2);
+        ((JSpinner.DefaultEditor)spinnerHoehe.getEditor()).getTextField().setEditable(false);
         spinnerHoehe.setMinimumSize(new Dimension(50,30));
         spinnerHoehe.setMaximumSize(new Dimension(50,30));
         spinnerHoehe.setPreferredSize(new Dimension(50,30));
