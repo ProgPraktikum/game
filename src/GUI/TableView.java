@@ -45,10 +45,10 @@ public class TableView extends JTable {
         setDefaultRenderer(Object.class, renderer);
 
         // Felder der Tabelle werden mit einer bestimmten Groesse erstellt
-        setRowHeight(20);
+        setRowHeight(25);
         TableColumnModel columnModel = getColumnModel();
         for (int i = 0; i < getColumnCount(); i++) {
-            columnModel.getColumn(i).setPreferredWidth(20);
+            columnModel.getColumn(i).setPreferredWidth(25);
 
 
         }
