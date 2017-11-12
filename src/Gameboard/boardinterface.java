@@ -23,7 +23,7 @@ public interface boardinterface {
     bei schiff wird checkship aufgerufen
     */
 
-    String checkship(int x, int y, int player);
+    String checkship(int x, int y);
     /* checkt ob umliegende felder schiffe enthalten und ob diese getroffen sind
     wenn ja dann wird checkship mit neuer koordinate rekursiv aufgerufen um zu
     ermittlen ob schiff getroffen oder versenkt ist

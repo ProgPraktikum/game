@@ -30,10 +30,13 @@ public class ship{
 		this.length = length;
 	}
 	public void setOrientation(int orientation) {
-		this.orientation = orientation;
+		if(orientation==0||orientation==1) {
+            this.orientation = orientation;
+        }
 	}
 
-	public int getXpos(){
+	public int getXpos()
+    {
 		return xpos;
 	}
 	public int getYpos(){
