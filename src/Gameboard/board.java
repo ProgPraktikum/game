@@ -1,5 +1,5 @@
 /**
-    @author Felix
+*    @author Felix
 **/
 
 package Gameboard;
@@ -16,13 +16,11 @@ public class board implements boardinterface {
     private int playerboard[][];
     private int playershots[][];
 
+	private DataContainer con = new DataContainer();
+
 	// CONSTRUCTOR
-    board(){}
 
-    private DataContainer con = new DataContainer();
-
-    // PUBLIC METHODS
-    public void createboard() {
+    board(){
         int x = con.getSpielFeldBreite();
         int y = con.getSpielFeldHoehe();
         playerboard = new int[x][y];
@@ -40,7 +38,6 @@ public class board implements boardinterface {
 			
                 /*Wasser kann direkt zurueckgegeben werden, 
                 bei treffer muss aber ueberprueft werden ob schiff versenkt ist*/
-
             switch (i) {
                 case 0:
                     return "Wasser";
