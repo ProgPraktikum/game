@@ -1,5 +1,5 @@
 /**
-    @author Felix
+*    @author Felix
 **/
 
 package Gameboard;
@@ -18,21 +18,22 @@ public class board implements boardinterface {
     private int playershots0[][];
 	private int playershots1[][];
 
+	private DataContainer con = new DataContainer();
+
 	// CONSTRUCTOR
-    board(){}
 
-    private DataContainer con = new DataContainer();
-
-    // PUBLIC METHODS
-    public void createboard() {
+    board(){
         int x = con.getSpielFeldBreite();
         int y = con.getSpielFeldHoehe();
         playerboard0 = new int[x][y];
         playerboard1 = new int[x][y];
         playershots0 = new int[x][y];
-        playershots0 = new int[x][y];
+        playershots1 = new int[x][y];
     }
-		
+
+
+    // PUBLIC METHODS
+
     public String checkboard(int x, int y, int player) {
         int i;
         if (x > con.getSpielFeldBreite() || x < 0) {
@@ -50,14 +51,14 @@ public class board implements boardinterface {
 
                 switch (i) {
                     case 0: return "Wasser";
-                    // case 1: return shipcheckup(x, y, player); // NOT IMPLEMENTED YET => COMMENT ME OUT SO I DONT FAIL THE BUILD
+                    // case 1: return shipcheck(x, y, player); // NOT IMPLEMENTED YET => COMMENT ME OUT SO I DONT FAIL THE BUILD
                 }
             }
             else if (player == 1) {
                 i = playerboard1[x][y];
                 switch (i) {
                     case 0: return "Wasser";
-                    // case 1: return shipcheckup(x, y, player); // NOT IMPLEMENTED YET => COMMENT ME OUT SO I DONT FAIL THE BUILD
+                    // case 1: return shipcheck(x, y, player); // NOT IMPLEMENTED YET => COMMENT ME OUT SO I DONT FAIL THE BUILD
                 }
             }
             else {
@@ -67,8 +68,8 @@ public class board implements boardinterface {
         return "you shouldn't be here";
     }//close function //missing return function laut compiler
 
-    public String checkboard() {return "foo";}
-    public boolean place() {return true;}
+    public boolean place(int x, int y, int player) {
+        return true;}
     public boolean checkplace() {return true;}
-    public String checkship() {return "foo";}
+    public String checkship(int x, int y, int player) {return "foo";}
 }//close class
