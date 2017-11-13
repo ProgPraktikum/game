@@ -8,6 +8,14 @@ import Data.ship;
 
 public interface boardinterface {
 
+    int getPlayershots(int x, int y);
+    /* gibt wert an x,y stelle im array playershots aus
+     */
+
+    void setPlayershots(int x, int y, int value);
+    /*setzt wert an x,y stelle in playershots auf value
+    */
+
     boolean place(ship s);
     /*place plaziert ein schiff im spielfeld an der stelle x, y mit orientation o
     und länge l und gibt bei erfolg true und bei fehler false zurück

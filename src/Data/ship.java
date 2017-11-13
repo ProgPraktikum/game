@@ -10,13 +10,12 @@ public class ship{
 	private int xpos = 0;
 	private int ypos = 0;
 	private int orientation =0;
+	private int hitcounter =0;
 //konstruktor
-	public ship(int o, int l){
-		if (o == 0 || o==1){
-			orientation = o;
-		}
+	public ship(int l){
 		if (l != 0){
 			length = l;
+			hitcounter=l;
 		}
 	}
 //methoden *not fully implemented yet
@@ -30,9 +29,7 @@ public class ship{
 		this.length = length;
 	}
 	public void setOrientation(int orientation) {
-		if(orientation==0||orientation==1) {
-            this.orientation = orientation;
-        }
+        this.orientation = orientation;
 	}
 
 	public int getXpos()
@@ -48,5 +45,13 @@ public class ship{
 
     public int getOrientation() {
         return orientation;
+    }
+
+    public int getHitcounter() {
+        return hitcounter;
+    }
+    public int hit(){
+	    hitcounter--;
+	    return hitcounter;
     }
 }

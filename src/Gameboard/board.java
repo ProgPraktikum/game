@@ -26,7 +26,15 @@ public class board implements boardinterface {
         playerboard = new int[x][y];
         playershots = new int[x][y];
     }
-		
+    //methoden
+    public void setPlayershots(int x, int y, int value) {
+        playerboard[x][y]= value;
+    }
+
+    public int getPlayershots(int x, int y) {
+        return playershots[x][y];
+    }
+
     public String checkboard(int x, int y) {
         int i;
         if (x > con.getSpielFeldBreite() || x < 0) {
@@ -47,9 +55,22 @@ public class board implements boardinterface {
         return "you shouldn't be here";
     }//close function //missing return function laut compiler
 
-    public String checkboard() {return "foo";}
     public boolean place(ship s) {
-        return checkPlace(s);
+        if (checkPlace(s)){
+            if(s.getOrientation()==0){
+                for(int i=s.getXpos();i==s.getXpos()-s.getLength()+1;i--){
+                    playerboard[i][s.getYpos()] = 1;
+                }
+                return true;
+            }
+            else if(s.getOrientation()==1){
+                for(int i=s.getYpos();i==s.getYpos()-s.getLength()+1;i--){
+                    playerboard[s.getXpos()][i] = 1;
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean checkPlace(ship s){
@@ -74,6 +95,7 @@ public class board implements boardinterface {
     }
 
     public String checkship(int x, int y) {return "foo";}
+
     private boolean  collisionCheck(ship s){
         int xminf = 0;
         int xmaxf = 0;
