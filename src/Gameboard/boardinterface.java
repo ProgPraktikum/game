@@ -1,10 +1,10 @@
 /**
- *Arraycodierung: 0=Wasser, 1=Treffer, 2=Schiff, 3=versenktes Schiff, 4=Wassertreffer
+ *Arraycodierung: 0=Wasser, 1=Schiff, 2=getroffenens schiff, 3=versenktes Schiff, 4=Wassertreffer
  * @author Felix
  */
 
 package Gameboard;
-import Data.ship;
+import Data.*;
 
 public interface boardinterface {
 
@@ -29,11 +29,5 @@ public interface boardinterface {
     String checkboard(int x, int y);
     /*ckeckt koordinate und spieler ob wasser oder schiff plaziert ist
     bei schiff wird checkship aufgerufen
-    */
-
-    String checkship(int x, int y);
-    /* checkt ob umliegende felder schiffe enthalten und ob diese getroffen sind
-    wenn ja dann wird checkship mit neuer koordinate rekursiv aufgerufen um zu
-    ermittlen ob schiff getroffen oder versenkt ist
     */
 }

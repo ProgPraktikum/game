@@ -50,8 +50,7 @@ public class ship{
     public int getHitcounter() {
         return hitcounter;
     }
-    public int hit(){
+    public void hit(){
 	    hitcounter--;
-	    return hitcounter;
     }
 }
