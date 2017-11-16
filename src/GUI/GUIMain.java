@@ -1,8 +1,10 @@
 package GUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-
+import java.io.IOException;
+import javax.imageio.*;
 
 
 /** Diese Klasse bildet das Startfenster, also quasi das Hauptmenü.
@@ -22,14 +24,22 @@ public class GUIMain {
         mainFrame = new JFrame();
 
         mainFrame.setUndecorated(true);
+//        mainFrame.setOpacity(0.8f);
         mainFrame.setBackground(Color.BLACK);
-        mainFrame.setOpacity(0.8f);
         mainFrame.setContentPane(Box.createVerticalBox());
 
         /*
         Schlachtschiff Bild (Startbildschirm)
          */
-        Icon cover = new ImageIcon("Schlachtschiff.jpg");
+        ImageIcon cover = null;
+        try{
+            Image image = ImageIO.read(getClass().getResource("Schlachtschiff.jpg"));
+            cover = new ImageIcon(image);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+       // Icon cover = new ImageIcon("GUI/Schlachtschiff.jpg");
         JLabel schlachtschiff = new JLabel(cover);
         schlachtschiff.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainFrame.add(schlachtschiff);
