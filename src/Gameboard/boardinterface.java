@@ -1,5 +1,5 @@
 /**
- *Arraycodierung: 0=Wasser, 1=Schiff, 2=getroffenens schiff, 3=versenktes Schiff, 4=Wassertreffer
+ *Arraycodierung: 0=Wasser, 1=treffer, 2=versenkt, 3=schiff, 4=Wassertreffer
  * @author Felix
  */
 
@@ -26,7 +26,7 @@ public interface boardinterface {
     länge l ins feld plaziert werden kann
     */
     
-    String checkboard(int x, int y);
+    int checkboard(int x, int y);
     /*ckeckt koordinate und spieler ob wasser oder schiff plaziert ist
     bei schiff wird checkship aufgerufen
     */

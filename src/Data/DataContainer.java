@@ -12,6 +12,10 @@ public class DataContainer {
 
     private int spielFeldBreite = 10;
     private int spielFeldHoehe = 10;
+    private ship fleet[];
+    private ship selectedShip;
+    private int maxFleetsize=30;
+    private static int counter=0; //counter für arrayindex
 
 
     /*
@@ -40,5 +44,26 @@ public class DataContainer {
      */
     public void setSpielFeldHoehe(int n){
         spielFeldHoehe = n;
+    }
+
+    public void addFleet(ship s){
+        fleet[counter]= s;
+        counter++;
+    }
+    public ship getFleet(int i){
+        return fleet[i];
+    }
+    public ship removeShip(int i){ //overhaul with list... need sleep
+        ship s= fleet[i];
+        return s;
+    }
+    public void selectship(int i){
+            selectedShip= fleet[i];
+    }
+    public int getMaxFleetsize(){
+        return maxFleetsize;
+    }
+    public void calcMaxFleetsize(){
+        maxFleetsize= (spielFeldHoehe*spielFeldBreite)/30 *100;
     }
 }

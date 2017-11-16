@@ -12,17 +12,18 @@ public class board implements boardinterface {
     fuer jeden Spieler 2 Arrays um abgegebene Schuesse lokal zu speichern **/
 
     // MEMBER VARIABLES
-    private hullpiece playerboard[][];
+    private Abstracttile playerboard[][];
     private int playershots[][];
 
 	private DataContainer con = new DataContainer();
 
 	// CONSTRUCTOR
 
-    board(){
+    public board(){
         int x = con.getSpielFeldBreite();
         int y = con.getSpielFeldHoehe();
-        playerboard = new hullpiece [x][y];
+        playerboard = new Abstracttile[x][y];
+
         playershots = new int[x][y];
     }
     //methoden
@@ -34,41 +35,42 @@ public class board implements boardinterface {
         return playershots[x][y];
     }
 
-    public String checkboard(int x, int y) {
+    public int checkboard(int x, int y) {
         int i;
         if (x > con.getSpielFeldBreite() || x < 0) {
-            return "Falscher X Wert";
+            return -1;
         } else if (y > con.getSpielFeldHoehe() || y < 0) {
-            return "Falscher Y Wert";
+            return -1;
         } else {
-            ship s= playerboard[x][y].getMaster(); //hilfsvariable um leserlichkeit zu verbessern
+
             i = playerboard[x][y].getStatus();
 			
                 /*Wasser kann direkt zurueckgegeben werden, 
                 bei treffer muss aber ueberprueft werden ob schiff versenkt ist*/
             switch (i) {
                 case 0:
-                    return "Wasser";
+                    return 0;
                 case 1:
+                    if( playerboard[x][y] instanceof hullpiece){
+                    ship s = playerboard[x][y].getMaster(); //hilfsvariable um leserlichkeit zu verbessern
                     playerboard[x][y].hit();
-                    if(s.getHitcounter()==0){
-                        if(s.getOrientation()==0){
-                            for(int j=s.getXpos();j==s.getXpos()-s.getLength()+1;j--){
-                                playerboard[j][s.getYpos()].setStatus(3);
+                    if (s.getHitcounter() == 0) {
+                        if (s.getOrientation() == 0) {
+                            for (int j = s.getXpos(); j == s.getXpos() - s.getLength() + 1; j--) {
+                                playerboard[j][s.getYpos()].setStatus(2);
+                            }
+                        } else if (s.getOrientation() == 1) {
+                            for (int k = s.getYpos(); k == s.getYpos() - s.getLength() + 1; k++) {
+                                playerboard[s.getXpos()][k].setStatus(2);
                             }
                         }
-                        else if(s.getOrientation() == 1){
-                            for(int k=s.getYpos();k==s.getYpos()-s.getLength()+1;k++){
-                                playerboard[s.getXpos()][k].setStatus(3);
-                            }
-                        }
-                        return "Versenkt";
+                        return 2;
+                    } else {
+                        return 1;
                     }
-                    else {
-                        return "Treffer";
-                    }
+                }
                 default:
-                    return "Fehler"; //i am needed to prevent an error
+                    return -1; //i am needed to prevent an error
             }
         }
     }
