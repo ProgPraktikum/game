@@ -1,4 +1,6 @@
 /**
+*    klasse die die datenstruktur für das spielfeld enthält und
+ *    entsprechende operationen zum spielen wie schüsse, treffer und das plazieren von schiffen
 *    @author Felix
 **/
 
@@ -48,13 +50,13 @@ public class board implements boardinterface {
                 /*Wasser kann direkt zurueckgegeben werden, 
                 bei treffer muss aber ueberprueft werden ob schiff versenkt ist*/
             switch (i) {
-                case 0:
+                case 0: //wasser
                     return 0;
-                case 1:
-                    if( playerboard[x][y] instanceof hullpiece){
+                case 3: //schiff
+                    //if( playerboard[x][y] instanceof hullpiece){ //redundanz prüfen
                     ship s = playerboard[x][y].getMaster(); //hilfsvariable um leserlichkeit zu verbessern
                     playerboard[x][y].hit();
-                    if (s.getHitcounter() == 0) {
+                    if (s.getHitcounter() == 0) {//wenn schiff keine ungetroffenen felder mehr hat
                         if (s.getOrientation() == 0) {
                             for (int j = s.getXpos(); j == s.getXpos() - s.getLength() + 1; j--) {
                                 playerboard[j][s.getYpos()].setStatus(2);
@@ -64,13 +66,13 @@ public class board implements boardinterface {
                                 playerboard[s.getXpos()][k].setStatus(2);
                             }
                         }
-                        return 2;
+                        return 2; //versenkt
                     } else {
-                        return 1;
+                        return 1; //normaler treffer
                     }
-                }
+                //} //close reduzndant if
                 default:
-                    return -1; //i am needed to prevent an error
+                    return -1; //benötigt um kompilierfehler zu verähindern
             }
         }
     }

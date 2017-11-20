@@ -12,5 +12,5 @@ public class Watertile extends Abstracttile{
         this.status=status;
     }
     public void hit(){}
-    public ship getMaster(){return master;}
+    public ship getMaster(){return null;}
 }

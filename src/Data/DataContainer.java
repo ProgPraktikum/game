@@ -15,6 +15,7 @@ public class DataContainer {
     private ship fleet[];
     private ship selectedShip;
     private int maxFleetsize=30;
+    private int currFleetsize=0;
     private static int counter=0; //counter für arrayindex
 
 
@@ -46,24 +47,54 @@ public class DataContainer {
         spielFeldHoehe = n;
     }
 
+    /*
+    fügt schiff zu fleet hinzu
+     */
     public void addFleet(ship s){
         fleet[counter]= s;
         counter++;
     }
+
+    /*
+    gibt schiff an stelle i in fleet aus
+     */
     public ship getFleet(int i){
         return fleet[i];
     }
-    public ship removeShip(int i){ //overhaul with list... need sleep
+
+    /*
+    entfernt schiff aus fleet
+     */
+    public ship removeShip(int i){
         ship s= fleet[i];
+        fleet[i]=null;
         return s;
     }
+    /*wählt schiff an stelle i in fleet aus und speichjert es in selectedship
+
+     */
     public void selectship(int i){
             selectedShip= fleet[i];
     }
+    /*gibt maxfleetsize aus
+
+     */
     public int getMaxFleetsize(){
         return maxFleetsize;
     }
-    public void calcMaxFleetsize(){
+    /*
+    gibt aktuelle flottengröße aus
+     */
+    public int getCurrFleetsize(){ return currFleetsize;}
+    //erhöht currFleetsize um  int l
+    public void addCurrFleetsize(int l){
+        currFleetsize += l;
+    }
+
+    /*
+    berechnet maximale flottengröße
+     */
+        public void calcMaxFleetsize(){
         maxFleetsize= (spielFeldHoehe*spielFeldBreite)/30 *100;
     }
 }
