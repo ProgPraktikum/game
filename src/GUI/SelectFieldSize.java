@@ -87,12 +87,16 @@ public class SelectFieldSize {
         ok.addActionListener(
                 (e) -> {
 
-                        DataContainer.setSpielFeldBreite((int) spinnerBreite.getValue());
-                        DataContainer.setSpielFeldHoehe((int) spinnerHoehe.getValue());
+                    DataContainer.setSpielFeldBreite((int) spinnerBreite.getValue());
+                    DataContainer.setSpielFeldHoehe((int) spinnerHoehe.getValue());
 
                     eingaben.setVisible(false);
+
+                    //setzt die Maximale Schiffslaenge
+                    DataContainer.setMaxShipLength();
+
                     new SelectShips();
-                    //new GameView();
+
                 }
         );
 

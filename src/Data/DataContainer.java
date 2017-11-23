@@ -3,6 +3,9 @@ package Data;
 import GUI.TableView;
 
 import javax.swing.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * Diese Klasse beinhaltet sämtliche Werte, wie z.B. Spielfedgroesse. Ebenso enthaelt diese
@@ -20,6 +23,24 @@ public class DataContainer {
     //Spielfeld
     private static int spielFeldBreite = 10;
     private static int spielFeldHoehe = 10;
+
+    // Maximale Belegungsfaktor
+    private static int occupancy = (int)((spielFeldBreite * spielFeldHoehe)*0.3);
+
+    // Variabe für die maximale Schiffslänge
+    private static int maxShipLength;
+
+    /*
+    * Dieser Stack ist für die gewaehlten schiffe des Spielers.
+    * speicher die Anzahl der Schiffe mit Länge xxx
+    */
+    private static Stack<Integer> shipLenghts;
+
+    /*
+     * Dieser Stack ist für die gewaehlten schiffe für die AI
+     * speichert die Anzahl der Schiffe mit der Länge xxx
+     */
+    private static Stack<Integer> shipLengthsAI;
 
     // Spieler Table
     private static TableView table = null;
@@ -87,43 +108,7 @@ public class DataContainer {
     public static void setGameType(String typ){
         gameType = typ;
     }
-    /**
-     * Diese Methode setzt das uebergebene JScrollPane, welches unter den
-     * Spielfeldern angezeigt wird
-     *
-     * @param scrollPane
-     */
-    public void setScrollPane(JScrollPane scrollPane) {
-        this.scrollPane = scrollPane;
-    }
 
-    /**
-     * Diese Methode gibt das JScrollPane zurueck
-     *
-     * @return scrollPane
-     */
-    public JScrollPane getScrollPane() {
-        return scrollPane;
-    }
-    /**
-     * Diese Methode setzt die JTextArea, welche unter den Spielfeldern
-     * angezeigt wird
-     *
-     * @param textArea
-     */
-    public void setTextArea(JTextArea textArea) {
-        this.textArea = textArea;
-    }
-
-    /**
-     * Diese Methode gibt die JTextArea zurueck, welche unter den Spielfeldern
-     * angezeigt wird
-     *
-     * @return
-     */
-    public JTextArea getTextArea() {
-        return textArea;
-    }
 
     /*
     getter für die Variable allowed
@@ -138,4 +123,79 @@ public class DataContainer {
     public static void setAllowed(boolean x){
         allowed = x;
     }
+
+    public static void setOccupancy(int occupancy) {
+        DataContainer.occupancy = occupancy;
+    }
+    /*
+    gibt den max Belegungsfaktor zurück
+     */
+    public static int getOccupancy(){
+        return occupancy;
+    }
+
+
+    /*
+   erstellt die stacks für die schiffe des Spielers und der AI
+    */
+    public static void setShipStack(){
+        shipLenghts = new Stack<Integer>();
+        shipLengthsAI = new Stack<Integer>();
+    }
+
+    public static void setMaxShipLength(){
+
+        if(DataContainer.getSpielFeldHoehe() < DataContainer.getSpielFeldBreite()){
+            maxShipLength = DataContainer.getSpielFeldBreite() / 2;
+        }else{
+            maxShipLength = DataContainer.getSpielFeldHoehe() / 2;
+        }
+    }
+    //getter für maxShipLength
+    public static int getMaxShipLength(){
+        return maxShipLength;
+    }
+
+    public static Stack<Integer> getShipLenghts(){
+        return shipLenghts;
+    }
+    public static Stack<Integer> getShipLengthsKI(){
+        return shipLengthsAI;
+    }
+    public void setShipLenghts(Stack<Integer>shipLenghts){
+        this.shipLenghts = shipLenghts;
+    }
+    public void setShipLengthsKI(Stack<Integer>shipLengthsKI){
+        this.shipLengthsAI = shipLengthsKI;
+    }
+
+
+
+
+    public static boolean setShipTypePush(List<JSpinner> spinners, int occupancy) {
+
+        Iterator<JSpinner> ships = spinners.iterator();
+
+        int shipLength;
+        int shipCounter = maxShipLength ;
+
+        while (ships.hasNext()) {
+            shipLength = Integer.parseInt(ships.next().getValue().toString());
+
+            for (int i = 0; i < shipLength; i++) {
+                occupancy = occupancy - shipLength;
+                if (occupancy < 0)
+                    return false;
+                shipLenghts.push(shipCounter);
+                shipLengthsAI.push(shipCounter);
+
+            }
+
+            shipCounter--;
+        }
+
+        return true;
+    }
 }
+
+

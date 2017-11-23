@@ -1,7 +1,6 @@
 package GUI;
 
 import Data.DataContainer;
-import GUI.SelectFieldSize;
 
 import javax.swing.*;
 import java.awt.*;

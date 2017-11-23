@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import javax.imageio.*;
 
 
 /** Diese Klasse bildet das Startfenster, also quasi das Hauptmenü.
