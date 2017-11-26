@@ -113,6 +113,7 @@ public class SelectShips {
 
         vbox.add(Box.createVerticalStrut(10));
         vbox.add(label1);
+        vbox.add(Box.createVerticalStrut(20));
 
         Box horizont = Box.createHorizontalBox();
         horizont.add(vbox_label);
