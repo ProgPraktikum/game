@@ -21,13 +21,12 @@ public class GUIMain {
     public GUIMain(){
 
         mainFrame = new JFrame();
-
+        mainFrame.setTitle("Schiffe versenken");
         mainFrame.setUndecorated(true);
-//        mainFrame.setOpacity(0.8f);
         mainFrame.setBackground(Color.BLACK);
         mainFrame.setContentPane(Box.createVerticalBox());
 
-        /*
+        /**
         Schlachtschiff Bild (Startbildschirm)
          */
         ImageIcon cover = null;
@@ -38,13 +37,15 @@ public class GUIMain {
         catch(IOException e){
             e.printStackTrace();
         }
-       // Icon cover = new ImageIcon("GUI/Schlachtschiff.jpg");
+
         JLabel schlachtschiff = new JLabel(cover);
         schlachtschiff.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainFrame.add(schlachtschiff);
 
-        /*
-         ButtonBox
+
+
+        /**
+         ButtonBox nimmt sämtliche vorhanden JButtons auf
          */
         Box btn_box = Box.createVerticalBox();
 
