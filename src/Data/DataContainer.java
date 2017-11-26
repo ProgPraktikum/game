@@ -172,7 +172,7 @@ public class DataContainer {
 
 
 
-    public static boolean setShipTypePush(List<JSpinner> spinners, int occupancy) {
+    public static boolean setShipLengthPush(List<JSpinner> spinners, int occupancy) {
 
         Iterator<JSpinner> ships = spinners.iterator();
 
