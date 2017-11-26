@@ -32,19 +32,42 @@ public class PlaceShips {
 
         startingPoint = null;
 
+
+        /**
+         * JMenuBar mit dem Menüeintrag "Beenden".
+         */
+        JMenuBar bar = new JMenuBar();
+        {
+            JMenu menu = new JMenu("File");
+            {
+                JMenuItem item = new JMenuItem("Beenden");
+                item.addActionListener(
+                        (e) -> {
+                            setships.dispose();
+                        }
+                );
+                menu.add(item);
+            }
+            bar.add(menu);
+        }
+
+        /**
+         * erzeugt eine neue Table, welche im späteren Verlauf das Spielfeld
+         * des Spielers darstellt.
+         */
         table = new TableView();
 
 
         Iterator<Integer> ships = DataContainer.getShipLenghts().iterator();
 
-       /*
+       /**
         TextArea zum anzeigen der zu platzierenden schiffe + scrollpane
          */
         scrollPane = new JScrollPane();
         ta = new JTextArea(5, 2);
         scrollPane.getViewport().add(ta);
 
-        /*
+        /**
 		 * Es werden alle ausgewaehlten Schiffstypen zur textArea hinzugefuegt.
 		 */
         while (ships.hasNext()) {
@@ -55,7 +78,7 @@ public class PlaceShips {
         JButton weiter = new JButton("weiter");
 
 
-          /*
+          /**
           MouseAdapter wird hinzugefuegt. beim klicken wird TouchedMouse aufgerufen.
           anschließend wird geprueft ob die schiffe platziert sind
            */
@@ -74,6 +97,7 @@ public class PlaceShips {
         });
 
 
+        weiter.setAlignmentX(Component.CENTER_ALIGNMENT);
         weiter.setForeground(Color.WHITE);
         weiter.setBackground(Color.BLACK);
         weiter.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -86,10 +110,13 @@ public class PlaceShips {
 
                         //Todo: Aufruf der AI damit sie die Schiffe platziert
                     }
-                    new GameView();
                     setships.dispose();
+                    new GameView();
                 }
         );
+
+
+
 
 
         Box verticalBox = Box.createVerticalBox();
@@ -100,8 +127,9 @@ public class PlaceShips {
         verticalBox.add(scrollPane);
 
 
-        setships.add(verticalBox);
-        setships.add(weiter);
+        setships.setJMenuBar(bar);              //JMenuBar wird hinzugefuegt
+        setships.add(verticalBox);              //die verticalBox wird hinzugefuegt
+        setships.add(weiter);                   //weiter Button hinzugefuegt
         setships.pack();
         setships.setLocationRelativeTo(null);
         setships.setVisible(true);
@@ -195,7 +223,7 @@ public class PlaceShips {
      * @param column
      */
     public void endpoints(int row, int column){
-        boolean check = true;       //zur pruefung ob setzbar ist
+        boolean check;       //zur pruefung ob setzbar ist
         int length = DataContainer.getShipLenghts().firstElement();// länge des zu setzenden schiffs
 
 
