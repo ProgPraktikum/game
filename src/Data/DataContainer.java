@@ -48,6 +48,9 @@ public class DataContainer {
      */
     private static Stack<Integer> shipLengthsAI;
 
+    //aktuelles schiff für plazierung
+    private static ship selectedShip;
+
     // Spieler Table
     private static TableView table = null;
 
@@ -153,7 +156,7 @@ public class DataContainer {
     *erstellt schiffsstack
     */
     public static void  setFleet(){
-        fleet = new Stack<ship>;
+        fleet = new Stack<ship>();
     }
 
     public static void setMaxShipLength(){
@@ -182,7 +185,19 @@ public class DataContainer {
         this.shipLengthsAI = shipLengthsKI;
     }
 
+    //get für fleet stack
+    public static Stack<ship> getfleet(){
+        return fleet;
+    }
+    //set für selectedShip
+    public static void setSelectedShip(){
+        selectedShip= fleet.pop();
+    }
 
+    //get für selectedShip
+    public static ship getSelectedShip(){
+        return selectedShip;
+    }
 
 
     public static boolean setShipLengthPush(List<JSpinner> spinners, int occupancy) {

@@ -17,13 +17,12 @@ public class board implements boardinterface {
     private Abstracttile playerboard[][];
     private int playershots[][];
 
-	private DataContainer con = new DataContainer();
 
 	// CONSTRUCTOR
 
     public board(){
-        int x = con.getSpielFeldBreite();
-        int y = con.getSpielFeldHoehe();
+        int x = DataContainer.getSpielFeldBreite();
+        int y = DataContainer.getSpielFeldHoehe();
         playerboard = new Abstracttile[x][y];
 
         playershots = new int[x][y];
@@ -39,9 +38,9 @@ public class board implements boardinterface {
 
     public int checkboard(int x, int y) {
         int i;
-        if (x > con.getSpielFeldBreite() || x < 0) {
+        if (x > DataContainer.getSpielFeldBreite() || x < 0) {
             return -1;
-        } else if (y > con.getSpielFeldHoehe() || y < 0) {
+        } else if (y > DataContainer.getSpielFeldHoehe() || y < 0) {
             return -1;
         } else {
 
@@ -70,7 +69,7 @@ public class board implements boardinterface {
                     } else {
                         return 1; //normaler treffer
                     }
-                //} //close reduzndant if
+                //} //close redundant if
                 default:
                     return -1; //benötigt um kompilierfehler zu verähindern
             }
@@ -99,7 +98,7 @@ public class board implements boardinterface {
         if(s.getXpos() < 0 || s.getYpos() < 0){ //checkt ob schiff ausserhalb des arrays plaziert werden will
             return false;
         }
-        else if(s.getXpos()>con.getSpielFeldBreite() ||s.getYpos() > con.getSpielFeldHoehe()){ //checkt ob schiff ausserhalb des arrays plaziert werden will
+        else if(s.getXpos()>DataContainer.getSpielFeldBreite() ||s.getYpos() > DataContainer.getSpielFeldHoehe()){ //checkt ob schiff ausserhalb des arrays plaziert werden will
             return false;
         }
         else if (playerboard [s.getXpos()] [s.getYpos()].getStatus() == 1){ //checkt ob bereits schiff an stelle plaziert ist
@@ -125,13 +124,13 @@ public class board implements boardinterface {
             if (s.getXpos() - s.getLength() + 1 == 0) { //schiff ist am xmin des arrays plaziert
                 xminf = 1;
             }
-            if (s.getXpos() == con.getSpielFeldBreite() - 1) { //schiff ist am xmax des arrays plaziert
+            if (s.getXpos() == DataContainer.getSpielFeldBreite() - 1) { //schiff ist am xmax des arrays plaziert
                 xmaxf = 1;
             }
             if (s.getYpos() == 0) { //schiff ist am ymin des arrays plaziert
                 yminf = 1;
             }
-            if (s.getYpos() == con.getSpielFeldHoehe() - 1) { //schiff ist am ymax des arrays plaziert
+            if (s.getYpos() == DataContainer.getSpielFeldHoehe() - 1) { //schiff ist am ymax des arrays plaziert
                 ymaxf = 1;
             }
             for (int i = s.getXpos()+1-xmaxf; i == s.getXpos()-s.getLength()-1+xmaxf+xminf; i--) { //entsprechende eingrenzung des suchbereichs
@@ -147,13 +146,13 @@ public class board implements boardinterface {
             if(s.getXpos()==0){ //schiff ist am xmin des arrays plaziert
                 xminf=1;
             }
-            if(s.getXpos()==con.getSpielFeldBreite()-1){ //schiff ist am xmax des arrays plaziert
+            if(s.getXpos()==DataContainer.getSpielFeldBreite()-1){ //schiff ist am xmax des arrays plaziert
                 xmaxf=1;
             }
             if(s.getYpos()-s.getLength()+1==0){ //schiff ist am ymin des arrays plaziert
                 yminf=1;
             }
-            if(s.getYpos()==con.getSpielFeldHoehe()-1){ //schiff ist am ymax des arrays plaziert
+            if(s.getYpos()==DataContainer.getSpielFeldHoehe()-1){ //schiff ist am ymax des arrays plaziert
                 ymaxf=1;
             }
             for(int i= s.getXpos()-1+xminf;i==s.getXpos()+1-xmaxf;i++){ //eingrenzung des suchbereichs

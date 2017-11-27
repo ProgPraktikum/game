@@ -20,27 +20,23 @@ public interface gameinterface {
 	*/
 	void placeFleet(int player);
 
-	/*erzeugt ein neues schiff mit länge l, sofern es nicht die maximale flottengröße überschreitet,
-	und speichert dieses ins fleet array des DataContainers an der nächsten stelle im array
+	/*erzeugt ein neues schiff mit länge l welche aus dem shiplengths stack gelesen wird
+	anschließend wird das schiff in dens chiffstack geschrieben
 	 */
-	void buildship(int l);
+	void buildship();
 
-	/* erzeugt flotte an schiffen bei parameterloser eingabe
-	wird standardflotte für 10*10 verwendet
-	 */
-	void createFleet();
 
 	/*
-	methode verschiebt schiff an andere koordinate und ueberprueft ob die verschiebung valide ist
+	methode verschiebt selectedShip an andere koordinate und ueberprueft ob die verschiebung valide ist
 	ansonsten wird die position zurueckgesetzt
 	bei erfolg wird true ausgegeben und bei misserfolg false
 	 */
-	boolean moveShip(int x, int y, ship s);
+	boolean moveShip(int x, int y);
 
 	/*
-	aendert orientierung des schiffs
+	aendert orientierung von selectedShip
 	*/
-	void rotateShip(ship s);
+	void rotateShip();
 
 	/*
 	plaziert schiff auf spielbrett

@@ -1,13 +1,18 @@
 package Data;
+
+import javax.xml.crypto.Data;
+
+/**
+ * enthält Hauptlogik des spiels
+ */
 public class game implements gameinterface{
 	private boolean is_online;
 	//konstruktor feldgroesse, online/ singleplayer game
-	private DataContainer con= new DataContainer();
 	private Gameboard.board map;
 
 	game (int x, int y, boolean o) {
-		con.setSpielFeldBreite(x);
-		con.setSpielFeldHoehe(y);
+		DataContainer.setSpielFeldBreite(x);
+		DataContainer.setSpielFeldHoehe(y);
 		is_online = o;
 		map = new Gameboard.board();
 	}
@@ -18,29 +23,10 @@ public class game implements gameinterface{
 	/*erzeugt ein neues schiff mit länge l, sofern es nicht die maximale flottengröße überschreitet,
 	und speichert dieses ins fleet array des DataContainers an der nächsten stelle im array
 	 */
-	public void buildship(int l) {
-		ship s;
-		if (con.getCurrFleetsize() + l <= con.getMaxFleetsize()){
-			con.addCurrFleetsize(l);
-			s = new ship(l);
-			con.addFleet(s);
-		}
-	}
-
-	/* erzeugt flotte an schiffen bei parameterloser eingabe
-	wird standardflotte für 10*10 verwendet
-	 */
-	public void createFleet(){
-		buildship(2);
-		buildship(2);
-		buildship(2);
-		buildship(2);
-		buildship(3);
-		buildship(3);
-		buildship(3);
-		buildship(4);
-		buildship(4);
-		buildship(5);
+	public void buildship() {
+		int l =  DataContainer.getShipLenghts().peek();
+		ship s =new ship(l);
+		DataContainer.getfleet().push(s);
 	}
 
 	/*
@@ -48,7 +34,8 @@ public class game implements gameinterface{
 	ansonsten wird die position zurückgesetzt
 	bei erfolg wird true ausgegeben und bei misserfolg false
 	 */
-	public boolean moveShip(int x, int y, ship s){
+	public boolean moveShip(int x, int y){
+		ship s = DataContainer.getSelectedShip();
 		int xold= s.getXpos();
 		int yold =s.getYpos();
 		s.setxpos(x);
@@ -63,7 +50,8 @@ public class game implements gameinterface{
 
 	}
 	//aendert orientierung des schiffs
-	public void rotateShip(ship s){
+	public void rotateShip(){
+		ship s = DataContainer.getSelectedShip();
 		if(s.getOrientation()==0){
 			s.setOrientation(1);
 		}
