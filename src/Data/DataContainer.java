@@ -37,6 +37,12 @@ public class DataContainer {
     private static Stack<Integer> shipLenghts;
 
     /*
+    *Dieser stack ist für die aus den schiffslängen generierten schiffe
+    *
+    */
+    private static Stack<ship> fleet;
+
+    /*
      * Dieser Stack ist für die gewaehlten schiffe für die AI
      * speichert die Anzahl der Schiffe mit der Länge xxx
      */
@@ -141,6 +147,13 @@ public class DataContainer {
     public static void setShipStack(){
         shipLenghts = new Stack<Integer>();
         shipLengthsAI = new Stack<Integer>();
+    }
+
+    /*
+    *erstellt schiffsstack
+    */
+    public static void  setFleet(){
+        fleet = new Stack<ship>;
     }
 
     public static void setMaxShipLength(){
