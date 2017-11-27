@@ -1,9 +1,3 @@
-/**
-*    klasse die die datenstruktur für das spielfeld enthält und
- *    entsprechende operationen zum spielen wie schüsse, treffer und das plazieren von schiffen
-*    @author Felix
-**/
-
 package Gameboard;
 
 import Data.*;
@@ -11,7 +5,10 @@ import javax.xml.crypto.Data;
 
 public class board implements boardinterface {
     /** (Java int Arrays werden default mit 0 initialisiert)
-    fuer jeden Spieler 2 Arrays um abgegebene Schuesse lokal zu speichern **/
+     * klasse die die datenstruktur für das spielfeld enthält und
+     * entsprechende operationen zum spielen wie schüsse, treffer und das plazieren von schiffen
+     * @author Felix
+    */
 
     // MEMBER VARIABLES
     private Abstracttile playerboard[][];
@@ -24,6 +21,12 @@ public class board implements boardinterface {
         int x = DataContainer.getSpielFeldBreite();
         int y = DataContainer.getSpielFeldHoehe();
         playerboard = new Abstracttile[x][y];
+        //feld wird mit wasser gefüllt
+        for(int i = 0; i< x; i++){
+            for(int j= 0; j < y; j++){
+                playerboard [i][j]=new Watertile();
+            }
+        }
 
         playershots = new int[x][y];
     }

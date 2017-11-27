@@ -182,12 +182,18 @@ public class DataContainer {
         this.shipLenghts = shipLenghts;
     }
     public void setShipLengthsKI(Stack<Integer>shipLengthsKI){
-        this.shipLengthsAI = shipLengthsKI;
+        this.shipLengthsAI = shipLengthsKI; 
     }
 
     //get für fleet stack
     public static Stack<ship> getfleet(){
         return fleet;
+    }
+
+    //fügt schiff zu stack fleet hinzu
+    public static void addShip(int l){
+        ship s = new ship(l);
+        fleet.push(s);
     }
     //set für selectedShip
     public static void setSelectedShip(){
@@ -216,7 +222,9 @@ public class DataContainer {
                     return false;
                 shipLenghts.push(shipCounter);
                 shipLengthsAI.push(shipCounter);
-
+                //fuegt paralel zu schiffslaengen
+                // entsprechende schiffe in stack zur spaeteren plazierung ein
+                addShip(shipLenghts.peek());
             }
 
             shipCounter--;

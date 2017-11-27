@@ -1,6 +1,7 @@
 package GUI;
 
 import Data.DataContainer;
+import Gameboard.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -96,7 +97,8 @@ public class SelectFieldSize {
                     DataContainer.setMaxShipLength();
 
                     new SelectShips();
-
+                    //erzeugt spielbrett objekt mit datenstruktur
+                    board b = new board();
                 }
         );
 
