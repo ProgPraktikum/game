@@ -73,8 +73,7 @@ public class SelectShips {
                 @Override
                 public void stateChanged(ChangeEvent e) {
                     JSpinner s = (JSpinner) e.getSource();
-                    belegung = f* (int) s.getValue();
-                    System.out.println(belegung);
+
                 }
             });
 
@@ -127,14 +126,7 @@ public class SelectShips {
                     selectships.dispose(); }
         );
 
-        /**
-         * Label für die anzeige der aktuellen Belegung
-         */
 
-            JLabel Beleg = new JLabel(belegung + "");
-            Beleg.setForeground(Color.WHITE);
-            Beleg.setBackground(Color.BLACK);
-            Beleg.setFont(new Font("Tahoma", Font.PLAIN, 30));
 
 
 
@@ -157,7 +149,7 @@ public class SelectShips {
         horizont.add(vbox_label);
         horizont.add(vbox_spinner);
         horizont.add(Box.createHorizontalStrut(40));
-        horizont.add(Beleg);
+
         vbox.add(horizont);
 
         selectships.add(vbox);
