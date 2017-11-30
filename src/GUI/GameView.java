@@ -1,9 +1,13 @@
 package GUI;
 
 import Data.DataContainer;
+import Backup.save;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 /**
  * Diese Klasse bildet das eigentliche Spielfenster.
@@ -57,8 +61,33 @@ public class GameView {
             {
                 JMenuItem item = new JMenuItem("Spiel speichern");
                 item.addActionListener(
-                        (e) -> { //Todo speichern aufrufen
-                             }
+                        (e) -> {
+                            if(DataContainer.getGameType().equals("bdf")) {
+                                JFileChooser filechooserSave = new JFileChooser();
+
+                                FileFilter filter = new FileFilter() {
+                                    public boolean accept(File f) {
+                                        return f.isDirectory()
+                                                || f.getName().toLowerCase().endsWith(".txt");
+                                    }
+
+                                    public String getDescription() {
+                                        return "TXT";
+                                    }
+                                };
+                                filechooserSave.setFileFilter(filter);
+                                int state = filechooserSave.showSaveDialog(null);
+
+                                if (state == JFileChooser.APPROVE_OPTION) {
+                                    File file = filechooserSave.getSelectedFile();
+                                    long timestamp = System.currentTimeMillis();
+                                    String filename = file.getAbsolutePath() + "-" + timestamp
+                                            + ".txt";
+                                    if (DataContainer.getGameType().equals("bdf"))
+                                    Backup.save.saveBDF(filename);
+                                }
+                            }
+                        }
                 );
                 menu.add(item);
             }
