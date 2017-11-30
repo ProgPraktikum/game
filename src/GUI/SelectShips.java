@@ -100,6 +100,7 @@ public class SelectShips {
         ok.addActionListener(
                 (e) -> {
                     DataContainer.setShipStack();
+                    DataContainer.setFleet();
                     if (DataContainer.setShipLengthPush(spinners,
                             DataContainer.getOccupancy())){
                         int belegung = 0 ;
@@ -111,6 +112,7 @@ public class SelectShips {
                         werden die Stacks neu erstellt
                          */
                         DataContainer.setShipStack();
+                        DataContainer.setFleet();
                     }
 
 
