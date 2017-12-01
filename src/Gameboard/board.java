@@ -24,7 +24,7 @@ public class board implements boardinterface {
         //feld wird mit wasser gefüllt
         for(int i = 0; i< x; i++){
             for(int j= 0; j < y; j++){
-                playerboard [i][j]=new Watertile();
+                playerboard [i][j]=new Abstracttile();
             }
         }
 
@@ -84,13 +84,13 @@ public class board implements boardinterface {
         if (checkPlace(s)){
             if(s.getOrientation()==0){
                 for(int i=s.getXpos();i>=s.getXpos()-s.getLength()+1;i--){
-                    playerboard[i][s.getYpos()] = new hullpiece(s);
+                    playerboard[i][s.getYpos()].setMaster(s);
                 }
                 return true;
             }
             else if(s.getOrientation()==1){
                 for(int i=s.getYpos();i>=s.getYpos()-s.getLength()+1;i--){
-                    playerboard[s.getXpos()][i] = new hullpiece(s);
+                    playerboard[s.getXpos()][i].setMaster(s);
                 }
                 return true;
             }
@@ -102,7 +102,7 @@ public class board implements boardinterface {
         if(s.getXpos() < 0 || s.getYpos() < 0){ //checkt ob schiff ausserhalb des arrays plaziert werden will
             return false;
         }
-        else if(s.getXpos()>DataContainer.getSpielFeldBreite() ||s.getYpos() > DataContainer.getSpielFeldHoehe()){ //checkt ob schiff ausserhalb des arrays plaziert werden will
+        else if(s.getXpos()>=DataContainer.getSpielFeldBreite() ||s.getYpos() >= DataContainer.getSpielFeldHoehe()){ //checkt ob schiff ausserhalb des arrays plaziert werden will
             return false;
         }
         else if (playerboard [s.getXpos()] [s.getYpos()].getStatus() == 1){ //checkt ob bereits schiff an stelle plaziert ist
@@ -137,7 +137,7 @@ public class board implements boardinterface {
             if (s.getYpos() == DataContainer.getSpielFeldHoehe() - 1) { //schiff ist am ymax des arrays plaziert
                 ymaxf = 1;
             }
-            for (int i = s.getXpos()+1-xmaxf; i >= s.getXpos()-s.getLength()+xminf; i--) { //entsprechende eingrenzung des suchbereichs
+            for (int i = s.getXpos()+1-xmaxf; i > s.getXpos()-s.getLength()+xminf; i--) { //entsprechende eingrenzung des suchbereichs
                 for (int j = s.getYpos() - 1 + yminf; j <= s.getYpos() + 1 - ymaxf;j++) {
                     if (playerboard[i][j].getStatus() == 1) { //sucht nach schiffen
                         return false; //fund
