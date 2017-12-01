@@ -76,6 +76,7 @@ public class PlaceShips {
 
 
         JButton weiter = new JButton("weiter");
+        weiter.setEnabled(false);
 
 
           /**
@@ -159,10 +160,7 @@ public class PlaceShips {
             }
             // wenn schon ein punkt als Startpunkt gewählt ist
             else{
-                if(table.getValueAt(row, column) != null){
-
-                    // korrekt gewählter Endpunkt
-                    if(table.getValueAt(row, column).equals(3)){
+                if(table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(3)){
 
                         /*
                         wenn zuvor durch endpoints() eine 3 gesetzt wurde
@@ -204,9 +202,10 @@ public class PlaceShips {
                          * falls auf keinen endpunkt geklickt wude sollen die möglichen wieder
                          * versteckt werden. TODO zetzt nur zurück wenn startpunkt wieder gedrückt wird ?!
                          */
-                        if(!table.getValueAt(row, column).equals(3)) {
-                            hideEndpoints(row, column);
-                            startingPoint = null;
+                        hideEndpoints(table.rowAtPoint(startingPoint),
+                                table.columnAtPoint(startingPoint)); {
+                            endpoints(row, column);
+                            startingPoint = x;
                         }
                     }
                 }
@@ -214,7 +213,7 @@ public class PlaceShips {
 
 
         }
-    }
+
 
     /**
      * die Methode Endpoints sucht und setzt mögliche Endpunkte der Schiffe, welche dann auf dem Spielfeld
