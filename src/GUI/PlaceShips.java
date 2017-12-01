@@ -225,11 +225,11 @@ public class PlaceShips {
                         startingPoint = null;
                     }else{
                         /**
-                         * falls auf keinen endpunkt geklickt wude sollen die möglichen wieder
-                         * versteckt werden. TODO zetzt nur zurück wenn startpunkt wieder gedrückt wird ?!
+                         * falls auf keinen endpunkt geklickt wurde sollen die möglichen angezeigten
+                         * Endpunkte wieder versteckt werden und die von dem aktuell geklickten punkt
+                         * möglichen Endpunkte anzeigen
                          */
-                        hideEndpoints(table.rowAtPoint(startingPoint),
-                                table.columnAtPoint(startingPoint)); {
+                        hideEndpoints(table.rowAtPoint(startingPoint), table.columnAtPoint(startingPoint)); {
                             endpoints(row, column);
                             startingPoint = x;
                         }
