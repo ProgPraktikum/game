@@ -10,9 +10,7 @@ public class game implements gameinterface{
 	//konstruktor feldgroesse, online/ singleplayer game
 	private Gameboard.board map;
 
-	game (int x, int y, boolean o) {
-		DataContainer.setSpielFeldBreite(x);
-		DataContainer.setSpielFeldHoehe(y);
+	game (boolean o) {
 		is_online = o;
 		map = new Gameboard.board();
 	}

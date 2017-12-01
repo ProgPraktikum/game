@@ -232,6 +232,11 @@ public class DataContainer {
 
         return true;
     }
+
+    //testfunktionen
+    public static void setSelectedShip(ship s){
+        selectedShip = s;
+    }
 }
 
 

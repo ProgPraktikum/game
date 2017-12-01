@@ -60,11 +60,12 @@ public class board implements boardinterface {
                     playerboard[x][y].hit();
                     if (s.getHitcounter() == 0) {//wenn schiff keine ungetroffenen felder mehr hat
                         if (s.getOrientation() == 0) {
-                            for (int j = s.getXpos(); j == s.getXpos() - s.getLength() + 1; j--) {
+                            for (int j = s.getXpos(); j >= s.getXpos() - s.getLength() + 1; j--) {
                                 playerboard[j][s.getYpos()].setStatus(2);
+                                System.out.println(playerboard[j][s.getYpos()]);
                             }
                         } else if (s.getOrientation() == 1) {
-                            for (int k = s.getYpos(); k == s.getYpos() - s.getLength() + 1; k++) {
+                            for (int k = s.getYpos(); k >= s.getYpos() - s.getLength() + 1; k++) {
                                 playerboard[s.getXpos()][k].setStatus(2);
                             }
                         }
@@ -82,13 +83,13 @@ public class board implements boardinterface {
     public boolean place(ship s) {
         if (checkPlace(s)){
             if(s.getOrientation()==0){
-                for(int i=s.getXpos();i==s.getXpos()-s.getLength()+1;i--){
+                for(int i=s.getXpos();i>=s.getXpos()-s.getLength()+1;i--){
                     playerboard[i][s.getYpos()] = new hullpiece(s);
                 }
                 return true;
             }
             else if(s.getOrientation()==1){
-                for(int i=s.getYpos();i==s.getYpos()-s.getLength()+1;i--){
+                for(int i=s.getYpos();i>=s.getYpos()-s.getLength()+1;i--){
                     playerboard[s.getXpos()][i] = new hullpiece(s);
                 }
                 return true;
@@ -107,10 +108,10 @@ public class board implements boardinterface {
         else if (playerboard [s.getXpos()] [s.getYpos()].getStatus() == 1){ //checkt ob bereits schiff an stelle plaziert ist
             return false;
         }
-        else if(s.getOrientation()==0 && s.getXpos()-s.getLength() < 0){ //checkt ob schiff in waagerechter orrientation arraygrenzen verlaesst
+        else if(s.getOrientation()==0 && s.getXpos()-s.getLength()+1 < 0){ //checkt ob schiff in waagerechter orrientation arraygrenzen verlaesst
             return false;
         }
-        else if(s.getOrientation()==1 && s.getYpos()-s.getLength() < 0){ //checkt ob schiff in senkrechter orrientation arraygrenzen verlaesst
+        else if(s.getOrientation()==1 && s.getYpos()-s.getLength()+1 < 0){ //checkt ob schiff in senkrechter orrientation arraygrenzen verlaesst
             return false;
         }
         else {
@@ -136,14 +137,14 @@ public class board implements boardinterface {
             if (s.getYpos() == DataContainer.getSpielFeldHoehe() - 1) { //schiff ist am ymax des arrays plaziert
                 ymaxf = 1;
             }
-            for (int i = s.getXpos()+1-xmaxf; i == s.getXpos()-s.getLength()-1+xmaxf+xminf; i--) { //entsprechende eingrenzung des suchbereichs
-                for (int j = s.getYpos() - 1 + yminf; j == s.getYpos() + 1 - ymaxf;j++) {
+            for (int i = s.getXpos()+1-xmaxf; i >= s.getXpos()-s.getLength()+xminf; i--) { //entsprechende eingrenzung des suchbereichs
+                for (int j = s.getYpos() - 1 + yminf; j <= s.getYpos() + 1 - ymaxf;j++) {
                     if (playerboard[i][j].getStatus() == 1) { //sucht nach schiffen
-                        return true; //fund
+                        return false; //fund
                     }
                 }
             }
-            return false; //keine schiffe gefunden
+            return true; //keine schiffe gefunden
         }
         else if(s.getOrientation()==1){
             if(s.getXpos()==0){ //schiff ist am xmin des arrays plaziert
@@ -158,15 +159,15 @@ public class board implements boardinterface {
             if(s.getYpos()==DataContainer.getSpielFeldHoehe()-1){ //schiff ist am ymax des arrays plaziert
                 ymaxf=1;
             }
-            for(int i= s.getXpos()-1+xminf;i==s.getXpos()+1-xmaxf;i++){ //eingrenzung des suchbereichs
-                for(int j=s.getYpos()+1-ymaxf;j== s.getYpos()-s.getLength()-1+yminf+ymaxf;j++){
+            for(int i= s.getXpos()-1+xminf;i<=s.getXpos()+1-xmaxf;i++){ //eingrenzung des suchbereichs
+                for(int j=s.getYpos()+1-ymaxf;j>= s.getYpos()-s.getLength()+yminf;j++){
                     if(playerboard[i][j].getStatus()== 1){ //suche nach schiffen
-                        return true; //fund
+                        return false; //fund
                     }
                 }
             }
-            return false; //keine schiffe gefunden
+            return true; //keine schiffe gefunden
         }
-    return false;
+        return true; //default val needed
     }
 }//close class
