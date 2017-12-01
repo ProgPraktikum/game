@@ -3,5 +3,5 @@ package Data;
 
 
 public enum Directions {
-    RECHTS, UNTEN;
+    LINKS, OBEN;
 }

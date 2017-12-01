@@ -1,9 +1,11 @@
 package GUI;
 
+import Data.*;
 import Data.DataContainer;
 import Data.Directions;
-
+import Data.game;
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -19,6 +21,7 @@ public class PlaceShips {
     private Point startingPoint;
     private JTextArea ta;
     private JScrollPane scrollPane;
+    //private game g1 = new game();
 
     public PlaceShips() {
 
@@ -175,8 +178,31 @@ public class PlaceShips {
                         int end_y = table.rowAtPoint(x);
                         int end_x = table.columnAtPoint(x);
 
+                        /**ausgewähltes schiff wird aus stack geholt
+                        * und in selectedship zwischengespeichert
+                         */
+                        //DataContainer.setSelectedShip();
+                        //ship s = DataContainer.getSelectedShip();
+                        /*if(start_y == end_y){
+                            g1.rotateShip(DataContainer.getSelectedShip());
+                        }
+                        g1.moveShip(start_x,start_y,DataContainer.getSelectedShip());
+                        boolean success =g1.placeShip(DataContainer.getSelectedShip());
 
-
+                        /**grafische darstellung des schiffs
+                         *
+                         */
+                        /*if(success) {
+                            if (s.getOrientation() == 0) {
+                                for (int i = s.getXpos(); i == s.getXpos() - s.getLength() + 1; i--) {
+                                    table.setValueAt(1,s.getYpos(),i);
+                                }
+                            } else if (s.getOrientation() == 1) {
+                                for (int i = s.getYpos(); i == s.getYpos() - s.getLength() + 1; i--) {
+                                    table.setValueAt(1,i,s.getXpos());
+                                }
+                            }
+                        }*/
 
                     /*
                     nach dem setzen soll das element entfernt werden und aus
@@ -228,30 +254,53 @@ public class PlaceShips {
 
         for (Directions directions : Directions.values()) {
             switch(directions){
-                case UNTEN:
+                case OBEN:
                     check = true;
          /*
         nach unten pruefen
          */
-                    if(DataContainer.getSpielFeldHoehe() >= (row + length)){
+
+                    /*if(DataContainer.getSpielFeldHoehe() >= (row + length)){
                         for(int i = row; i <= row + length -1; i++){
                             if(table.getValueAt(i , column).equals(1))
                                 check = false;
                         }
                         if(check == true) table.setValueAt(3,row + length -1 ,column);
+                        break;
+                    }*/
+                    if ( (row -length+1) >= 0){
+                        for(int i =row; i<= row - length +1;i--){
+                            if(table.getValueAt(i, column).equals(1)){
+                                check = false;
+                            }
+                        }
+                        if(check){
+                            table.setValueAt(3,row - length +1,column);
+                        }
                     }
-                    break;
-                case RECHTS:
+                        break;
+                case LINKS:
                     check = true;
          /*
         Rechts nach möglichen Endpunkten suchen
          */
-                    if(DataContainer.getSpielFeldBreite() >= (column + length)){
+                    /*if(DataContainer.getSpielFeldBreite() >= (column + length)){
                         for(int i = column; i <= column+length-1; i++){
                             if(table.getValueAt(row, i).equals(1))
                                 check = false;
                         }
                         if (check == true) table.setValueAt(3, row,column+length-1);
+                    }
+                    break;*/
+                    if( (column -length + 1) >= 0){
+                        for(int i= column;i <=column -length +1;i--){
+                            if(table.getValueAt(row,i).equals(1)){
+                                check=false;
+                            }
+                        }
+                        if(check){
+                            table.setValueAt(3, row,column-length+1);
+                        }
                     }
                     break;
                 default:
@@ -277,18 +326,30 @@ public class PlaceShips {
         for (Directions directions : Directions.values()) {
             switch (directions) {
 
-                case RECHTS:
+                case LINKS:
 
-                    if (x + size <= DataContainer.getSpielFeldBreite()) {
+                    /*if (x + size <= DataContainer.getSpielFeldBreite()) {
                         if (table.getValueAt(y, x + size - 1).equals(3))
                             table.setValueAt(0, y, x + size - 1);
                     }
+                    break;*/
+                    if(x -size+1 >= 0){
+                        if(table.getValueAt(y,x- size + 1).equals(3)){
+                            table.setValueAt(0,y,x - size + 1);
+                        }
+                    }
                     break;
-                case UNTEN:
+                case OBEN:
 
-                    if (y + size <= DataContainer.getSpielFeldHoehe()) {
+                    /*if (y + size <= DataContainer.getSpielFeldHoehe()) {
                         if (table.getValueAt(y + size - 1, x).equals(3))
                             table.setValueAt(0, y + size - 1, x);
+                    }
+                    break;*/
+                    if(y - size+1 >= 0){
+                        if(table.getValueAt(y - size + 1,x).equals(3)){
+                            table.setValueAt(0,y - size +1, x);
+                        }
                     }
                     break;
 

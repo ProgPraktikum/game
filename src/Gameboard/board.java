@@ -55,7 +55,6 @@ public class board implements boardinterface {
                 case 0: //wasser
                     return 0;
                 case 3: //schiff
-                    //if( playerboard[x][y] instanceof hullpiece){ //redundanz prüfen
                     ship s = playerboard[x][y].getMaster(); //hilfsvariable um leserlichkeit zu verbessern
                     playerboard[x][y].hit();
                     if (s.getHitcounter() == 0) {//wenn schiff keine ungetroffenen felder mehr hat
