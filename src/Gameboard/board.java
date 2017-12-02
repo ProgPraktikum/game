@@ -137,9 +137,9 @@ public class board implements boardinterface {
             if (s.getYpos() == DataContainer.getSpielFeldHoehe() - 1) { //schiff ist am ymax des arrays plaziert
                 ymaxf = 1;
             }
-            for (int i = s.getYpos()-1+yminf; i <= s.getYpos()+1-yminf; i++) { //entsprechende eingrenzung des suchbereichs
+            for (int i = s.getYpos()-1+yminf; i <= s.getYpos()+1-ymaxf; i++) { //entsprechende eingrenzung des suchbereichs
                 for (int j = s.getXpos() - 1 + xmaxf; j >= s.getXpos()-s.getLength()+xminf  ;j--) {
-                    if (playerboard[i][j].getStatus() == 1) { //sucht nach schiffen
+                    if (playerboard[i][j].getStatus() == 3) { //sucht nach schiffen
                         return false; //fund
                     }
                 }
@@ -161,7 +161,7 @@ public class board implements boardinterface {
             }
             for(int i= s.getYpos()+1-ymaxf;i>=s.getYpos()-s.getLength()+yminf;i--){ //eingrenzung des suchbereichs
                 for(int j=s.getXpos()-1+xminf;j<= s.getXpos()+1-xmaxf;j++){
-                    if(playerboard[i][j].getStatus()== 1){ //suche nach schiffen
+                    if(playerboard[i][j].getStatus()== 3){ //suche nach schiffen
                         return false; //fund
                     }
                 }

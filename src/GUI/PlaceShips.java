@@ -22,6 +22,9 @@ public class PlaceShips {
     private JTextArea ta;
     private JScrollPane scrollPane;
     private game g1 = new game(false);
+    //success gibt an ob die letzte plazierung erfolgreich war um zu verhindern,
+    // dass das nächste schiff ausgewählt wird bevor das vorherige platziert ist
+    private boolean success=true;
 
     public PlaceShips() {
 
@@ -63,16 +66,16 @@ public class PlaceShips {
 
         Iterator<Integer> ships = DataContainer.getShipLenghts().iterator();
 
-       /**
-        TextArea zum anzeigen der zu platzierenden schiffe + scrollpane
-         */
+        /**
+        *TextArea zum anzeigen der zu platzierenden schiffe + scrollpane
+        */
         scrollPane = new JScrollPane();
         ta = new JTextArea(5, 2);
         scrollPane.getViewport().add(ta);
 
         /**
-		 * Es werden alle ausgewaehlten Schiffstypen zur textArea hinzugefuegt.
-		 */
+		* Es werden alle ausgewaehlten Schiffstypen zur textArea hinzugefuegt.
+		*/
         while (ships.hasNext()) {
             ta.append(ships.next().toString() + "\n");
         }
@@ -82,10 +85,10 @@ public class PlaceShips {
         weiter.setEnabled(false);
 
 
-          /**
-          MouseAdapter wird hinzugefuegt. beim klicken wird TouchedMouse aufgerufen.
-          anschließend wird geprueft ob die schiffe platziert sind
-           */
+        /**
+        *MouseAdapter wird hinzugefuegt. beim klicken wird TouchedMouse aufgerufen.
+        *anschließend wird geprueft ob die schiffe platziert sind
+        */
         table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent event) {
                 TouchedMouse(event);
@@ -106,17 +109,16 @@ public class PlaceShips {
         weiter.setBackground(Color.BLACK);
         weiter.setFont(new Font("Tahoma", Font.PLAIN, 20));
         weiter.addActionListener(
-                (e) -> {
-                    DataContainer.setTable(table);
+            (e) -> {
+                DataContainer.setTable(table);
+                if (DataContainer.getGameType().equals("bdf") ||
+                    DataContainer.getGameType().equals("ss")) {
 
-                    if (DataContainer.getGameType().equals("bdf") ||
-                            DataContainer.getGameType().equals("ss")) {
-
-                        //Todo: Aufruf der AI damit sie die Schiffe platziert
-                    }
-                    setships.dispose();
-                    new GameView();
+                    //Todo: Aufruf der AI damit sie die Schiffe platziert
                 }
+                setships.dispose();
+                new GameView();
+            }
         );
 
 
@@ -157,95 +159,88 @@ public class PlaceShips {
             /*
             wenn noch kein Startpunkt gewählt wurde
              */
-            if(startingPoint == null){
+            if (startingPoint == null) {
                 startingPoint = x;
                 endpoints(row, column);
             }
             // wenn schon ein punkt als Startpunkt gewählt ist
             boolean clickedendpoint;
-            //if()
 
-            //else if(){
+            if (table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(3)) {
 
-                if(table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(3)){
+                /*
+                wenn zuvor durch endpoints() eine 3 gesetzt wurde
+                wird hier der x und y wert gesetzt als beginn
+                */
+                int start_y = table.rowAtPoint(startingPoint);
+                int start_x = table.columnAtPoint(startingPoint);
+                /*
+                y und x Endwert
+                */
+                int end_y = table.rowAtPoint(x);
+                int end_x = table.columnAtPoint(x);
+                hideEndpoints(start_y, start_x);
+                /**ausgewähltes schiff wird aus stack geholt
+                 * und in selectedship zwischengespeichert
+                 */
+                ship s = null;
+                if (!(DataContainer.getfleet().isEmpty()) && success) {
+                    DataContainer.setSelectedShip();
+                    s = DataContainer.getSelectedShip();
+                }
+                if (start_y != end_y) {
+                    g1.rotateShip();
+                }
+                g1.moveShip(start_x, start_y);
+                success = g1.placeShip(DataContainer.getSelectedShip());
 
-                        /*
-                        wenn zuvor durch endpoints() eine 3 gesetzt wurde
-                        wird hier der x und y wert gesetzt als beginn
-                         */
-                        int start_y = table.rowAtPoint(startingPoint);
-                        int start_x = table.columnAtPoint(startingPoint);
-
-                        /*
-                        y und x Endwert
-                         */
-                        int end_y = table.rowAtPoint(x);
-                        int end_x = table.columnAtPoint(x);
-
-                        /**ausgewähltes schiff wird aus stack geholt
-                        * und in selectedship zwischengespeichert
-                         */
-                        if(!(DataContainer.getfleet().isEmpty()) ) {
-                            DataContainer.setSelectedShip();
-                            ship s = DataContainer.getSelectedShip();
-                            if (start_y != end_y) {
-                                g1.rotateShip();
-                            }
-                            g1.moveShip(start_x, start_y);
-                            boolean success = g1.placeShip(DataContainer.getSelectedShip());
-
-                            /**grafische darstellung des schiffs
-                             *
-                             */
-                            if (success) {
-                                if (s.getOrientation() == 0) {
-                                    for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
-                                        table.setValueAt(1, s.getYpos(), i);
-                                    }
-                                } else if (s.getOrientation() == 1) {
-                                    for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
-                                        table.setValueAt(1, i, s.getXpos());
-                                    }
-                                }
-                                g1.getboard();
-                            }
+                /**grafische darstellung des schiffs
+                 *
+                 */
+                if (success) {
+                    if (s.getOrientation() == 0) {
+                        for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
+                            table.setValueAt(1, s.getYpos(), i);
                         }
-
+                    } else if (s.getOrientation() == 1) {
+                        for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
+                            table.setValueAt(1, i, s.getXpos());
+                        }
+                    }
+                    g1.getboard();
+                    if (DataContainer.getShipLenghts().isEmpty()) {
+                        return;
+                    }
                     /*
                     nach dem setzen soll das element entfernt werden und aus
                     dem Stack entfernt werden ( der Stack enthält alle längen der
                     schiffe) ebenso soll es aus der TextArea entfernt werden.
-                     */
-                        //DataContainer.getShipLenghts().pop();
-                        //Todo aus TextArea entfernen
-                     /*
-					 * Todo Das gesetzte Schiff soll aus der JTextArea entfernt.
-					 */
+                    */
+                    //DataContainer.getShipLenghts().pop();
+                    //Todo aus TextArea entfernen
+                    /*
+			        * Todo Das gesetzte Schiff soll aus der JTextArea entfernt.
+			        */
 
+                    /*
+                    wenn keine Schiffe mehr zu setzen sind wird hier abgebrochen
+                    */
 
-                     /*
-                     wenn keine Schiffe mehr zu setzen sind wird hier abgebrochen
-                      */
-                        if (DataContainer.getShipLenghts().isEmpty()) {
-                            return;
-                        }
-                        startingPoint = null;
-                    }else{
-                        /**
-                         * falls auf keinen endpunkt geklickt wude sollen die möglichen wieder
-                         * versteckt werden. TODO zetzt nur zurück wenn startpunkt wieder gedrückt wird ?!
-                         */
-                        hideEndpoints(table.rowAtPoint(startingPoint),
-                                table.columnAtPoint(startingPoint)); {
-                            endpoints(row, column);
-                            startingPoint = x;
-                        }
-                    }
+                    startingPoint = null;
                 }
-            //}
-
-
+            }
+            else{
+                /**
+                 * falls auf keinen endpunkt geklickt wude sollen die möglichen wieder
+                 * versteckt werden. TODO zetzt nur zurück wenn startpunkt wieder gedrückt wird ?!
+                 */
+                hideEndpoints(table.rowAtPoint(startingPoint), table.columnAtPoint(startingPoint));
+                endpoints(row, column);
+                startingPoint = x;//null
+            }
         }
+    }
+
 
 
     /**
