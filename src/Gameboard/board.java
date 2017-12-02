@@ -20,23 +20,23 @@ public class board implements boardinterface {
     public board(){
         int x = DataContainer.getSpielFeldBreite();
         int y = DataContainer.getSpielFeldHoehe();
-        playerboard = new Abstracttile[x][y];
+        playerboard = new Abstracttile[y][x];
         //feld wird mit wasser gefüllt
         for(int i = 0; i< x; i++){
             for(int j= 0; j < y; j++){
-                playerboard [i][j]=new Abstracttile();
+                playerboard [j][i]=new Abstracttile();
             }
         }
 
-        playershots = new int[x][y];
+        playershots = new int[y][x];
     }
     //methoden
     public void setPlayershots(int x, int y, int value) {
-        playershots[x][y]= value;
+        playershots[y][x]= value;
     }
 
     public int getPlayershots(int x, int y) {
-        return playershots[x][y];
+        return playershots[y][x];
     }
 
     public int checkboard(int x, int y) {
@@ -47,7 +47,7 @@ public class board implements boardinterface {
             return -1;
         } else {
 
-            i = playerboard[x][y].getStatus();
+            i = playerboard[y][x].getStatus();
 			
                 /*Wasser kann direkt zurueckgegeben werden, 
                 bei treffer muss aber ueberprueft werden ob schiff versenkt ist*/
@@ -55,17 +55,17 @@ public class board implements boardinterface {
                 case 0: //wasser
                     return 0;
                 case 3: //schiff
-                    ship s = playerboard[x][y].getMaster(); //hilfsvariable um leserlichkeit zu verbessern
-                    playerboard[x][y].hit();
+                    ship s = playerboard[y][x].getMaster(); //hilfsvariable um leserlichkeit zu verbessern
+                    playerboard[y][x].hit();
                     if (s.getHitcounter() == 0) {//wenn schiff keine ungetroffenen felder mehr hat
                         if (s.getOrientation() == 0) {
                             for (int j = s.getXpos(); j >= s.getXpos() - s.getLength() + 1; j--) {
-                                playerboard[j][s.getYpos()].setStatus(2);
-                                System.out.println(playerboard[j][s.getYpos()]);
+                                playerboard[s.getYpos()][j].setStatus(2);
+                                System.out.println(playerboard[s.getYpos()][j]);
                             }
                         } else if (s.getOrientation() == 1) {
                             for (int k = s.getYpos(); k >= s.getYpos() - s.getLength() + 1; k++) {
-                                playerboard[s.getXpos()][k].setStatus(2);
+                                playerboard[k][s.getXpos()].setStatus(2);
                             }
                         }
                         return 2; //versenkt
@@ -83,16 +83,17 @@ public class board implements boardinterface {
         if (checkPlace(s)){
             if(s.getOrientation()==0){
                 for(int i=s.getXpos();i>=s.getXpos()-s.getLength()+1;i--){
-                    playerboard[i][s.getYpos()].setMaster(s);
+                    playerboard[s.getYpos()][i].setMaster(s);
                 }
                 return true;
             }
             else if(s.getOrientation()==1){
                 for(int i=s.getYpos();i>=s.getYpos()-s.getLength()+1;i--){
-                    playerboard[s.getXpos()][i].setMaster(s);
+                    playerboard[i][s.getXpos()].setMaster(s);
                 }
                 return true;
             }
+            getPlayerboard();
         }
         return false;
     }
@@ -104,7 +105,7 @@ public class board implements boardinterface {
         else if(s.getXpos()>=DataContainer.getSpielFeldBreite() ||s.getYpos() >= DataContainer.getSpielFeldHoehe()){ //checkt ob schiff ausserhalb des arrays plaziert werden will
             return false;
         }
-        else if (playerboard [s.getXpos()] [s.getYpos()].getStatus() == 1){ //checkt ob bereits schiff an stelle plaziert ist
+        else if (playerboard [s.getYpos()] [s.getXpos()].getStatus() == 1){ //checkt ob bereits schiff an stelle plaziert ist
             return false;
         }
         else if(s.getOrientation()==0 && s.getXpos()-s.getLength()+1 < 0){ //checkt ob schiff in waagerechter orrientation arraygrenzen verlaesst
@@ -136,8 +137,8 @@ public class board implements boardinterface {
             if (s.getYpos() == DataContainer.getSpielFeldHoehe() - 1) { //schiff ist am ymax des arrays plaziert
                 ymaxf = 1;
             }
-            for (int i = s.getXpos()+1-xmaxf; i > s.getXpos()-s.getLength()+xminf; i--) { //entsprechende eingrenzung des suchbereichs
-                for (int j = s.getYpos() - 1 + yminf; j <= s.getYpos() + 1 - ymaxf;j++) {
+            for (int i = s.getYpos()-1+yminf; i <= s.getYpos()+1-yminf; i++) { //entsprechende eingrenzung des suchbereichs
+                for (int j = s.getXpos() - 1 + xmaxf; j >= s.getXpos()-s.getLength()+xminf  ;j--) {
                     if (playerboard[i][j].getStatus() == 1) { //sucht nach schiffen
                         return false; //fund
                     }
@@ -158,8 +159,8 @@ public class board implements boardinterface {
             if(s.getYpos()==DataContainer.getSpielFeldHoehe()-1){ //schiff ist am ymax des arrays plaziert
                 ymaxf=1;
             }
-            for(int i= s.getXpos()-1+xminf;i<=s.getXpos()+1-xmaxf;i++){ //eingrenzung des suchbereichs
-                for(int j=s.getYpos()+1-ymaxf;j>= s.getYpos()-s.getLength()+yminf;j++){
+            for(int i= s.getYpos()+1-ymaxf;i>=s.getYpos()-s.getLength()+yminf;i--){ //eingrenzung des suchbereichs
+                for(int j=s.getXpos()-1+xminf;j<= s.getXpos()+1-xmaxf;j++){
                     if(playerboard[i][j].getStatus()== 1){ //suche nach schiffen
                         return false; //fund
                     }
@@ -168,5 +169,16 @@ public class board implements boardinterface {
             return true; //keine schiffe gefunden
         }
         return true; //default val needed
+    }
+    //debug functions
+    public void getPlayerboard(){
+        System.out.println("Arraystatus:");
+        for(int y=0;y<DataContainer.getSpielFeldHoehe();y++){
+            for(int x=0; x< DataContainer.getSpielFeldBreite();x++){
+                System.out.print(playerboard[y][x].getStatus());
+            }
+            System.out.println();
+        }
+        System.out.println("--------------");
     }
 }//close class

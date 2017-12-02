@@ -35,6 +35,11 @@ public class DataContainer {
     * speicher die Anzahl der Schiffe mit Länge xxx
     */
     private static Stack<Integer> shipLenghts;
+/*
+*Stack speichert längen in umgekehrter reihenfolge zu fleet, um dafür zu sorgen dass in fleet das größte schiff
+ *  als letztes zum stack hinzugefügt wird
+ */
+    private static Stack<Integer> shiplengthsinverted;
 
     /*
     *Dieser stack ist für die aus den schiffslängen generierten schiffe
@@ -156,6 +161,7 @@ public class DataContainer {
     *erstellt schiffsstack
     */
     public static void  setFleet(){
+        shiplengthsinverted= new Stack<Integer>();
         fleet = new Stack<ship>();
     }
 
@@ -224,14 +230,18 @@ public class DataContainer {
                 shipLengthsAI.push(shipCounter);
                 //fuegt paralel zu schiffslaengen
                 // entsprechende schiffe in stack zur spaeteren plazierung ein
-                addShip(shipLenghts.peek());
+                shiplengthsinverted.push(shipCounter);
             }
 
             shipCounter--;
         }
-
+        while( !(shiplengthsinverted.isEmpty()) ){
+            addShip(shiplengthsinverted.pop());
+        }
         return true;
     }
+
+
 
     //testfunktionen
     public static void setSelectedShip(ship s){

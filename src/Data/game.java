@@ -10,7 +10,7 @@ public class game implements gameinterface{
 	//konstruktor feldgroesse, online/ singleplayer game
 	private Gameboard.board map;
 
-	game (boolean o) {
+	public game (boolean o) {
 		is_online = o;
 		map = new Gameboard.board();
 	}
@@ -27,26 +27,26 @@ public class game implements gameinterface{
 		DataContainer.getfleet().push(s);
 	}
 
-	/*
-	methode verschiebt schiff an andere koordinate und überprüft ob die verschiebung valide ist
-	ansonsten wird die position zurückgesetzt
-	bei erfolg wird true ausgegeben und bei misserfolg false
-	 */
-	public boolean moveShip(int x, int y){
-		ship s = DataContainer.getSelectedShip();
-		int xold= s.getXpos();
-		int yold =s.getYpos();
-		s.setxpos(x);
-		s.setypos(y);
-		if(map.checkPlace(s)){
-			return true;
-		}else{
-			s.setxpos(xold);
-			s.setypos(yold);
-			return false;
-		}
+    /*
+    methode verschiebt schiff an andere koordinate und überprüft ob die verschiebung valide ist
+    ansonsten wird die position zurückgesetzt
+    bei erfolg wird true ausgegeben und bei misserfolg false
+     */
+    public boolean moveShip(int x, int y){
+        ship s = DataContainer.getSelectedShip();
+        int xold= s.getXpos();
+        int yold =s.getYpos();
+        s.setxpos(x);
+        s.setypos(y);
+        if(map.checkPlace(s)){
+            return true;
+        }else{
+            s.setxpos(xold);
+            s.setypos(yold);
+            return false;
+        }
 
-	}
+    }
 	//aendert orientierung des schiffs
 	public void rotateShip(){
 		ship s = DataContainer.getSelectedShip();
@@ -86,4 +86,7 @@ public class game implements gameinterface{
 	public void save(int id){
 		//saving foo
 	}
+	public void getboard(){
+	    map.getPlayerboard();
+    }
 }

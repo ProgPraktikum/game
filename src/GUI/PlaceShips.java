@@ -1,6 +1,6 @@
 package GUI;
 
-import Data.*;
+import Data.ship;
 import Data.DataContainer;
 import Data.Directions;
 import Data.game;
@@ -21,7 +21,7 @@ public class PlaceShips {
     private Point startingPoint;
     private JTextArea ta;
     private JScrollPane scrollPane;
-    //private game g1 = new game();
+    private game g1 = new game(false);
 
     public PlaceShips() {
 
@@ -162,7 +162,11 @@ public class PlaceShips {
                 endpoints(row, column);
             }
             // wenn schon ein punkt als Startpunkt gewählt ist
-            else{
+            boolean clickedendpoint;
+            //if()
+
+            //else if(){
+
                 if(table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(3)){
 
                         /*
@@ -181,28 +185,31 @@ public class PlaceShips {
                         /**ausgewähltes schiff wird aus stack geholt
                         * und in selectedship zwischengespeichert
                          */
-                        //DataContainer.setSelectedShip();
-                        //ship s = DataContainer.getSelectedShip();
-                        /*if(start_y == end_y){
-                            g1.rotateShip(DataContainer.getSelectedShip());
-                        }
-                        g1.moveShip(start_x,start_y,DataContainer.getSelectedShip());
-                        boolean success =g1.placeShip(DataContainer.getSelectedShip());
-
-                        /**grafische darstellung des schiffs
-                         *
-                         */
-                        /*if(success) {
-                            if (s.getOrientation() == 0) {
-                                for (int i = s.getXpos(); i == s.getXpos() - s.getLength() + 1; i--) {
-                                    table.setValueAt(1,s.getYpos(),i);
-                                }
-                            } else if (s.getOrientation() == 1) {
-                                for (int i = s.getYpos(); i == s.getYpos() - s.getLength() + 1; i--) {
-                                    table.setValueAt(1,i,s.getXpos());
-                                }
+                        if(!(DataContainer.getfleet().isEmpty()) ) {
+                            DataContainer.setSelectedShip();
+                            ship s = DataContainer.getSelectedShip();
+                            if (start_y != end_y) {
+                                g1.rotateShip();
                             }
-                        }*/
+                            g1.moveShip(start_x, start_y);
+                            boolean success = g1.placeShip(DataContainer.getSelectedShip());
+
+                            /**grafische darstellung des schiffs
+                             *
+                             */
+                            if (success) {
+                                if (s.getOrientation() == 0) {
+                                    for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
+                                        table.setValueAt(1, s.getYpos(), i);
+                                    }
+                                } else if (s.getOrientation() == 1) {
+                                    for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
+                                        table.setValueAt(1, i, s.getXpos());
+                                    }
+                                }
+                                g1.getboard();
+                            }
+                        }
 
                     /*
                     nach dem setzen soll das element entfernt werden und aus
@@ -235,7 +242,7 @@ public class PlaceShips {
                         }
                     }
                 }
-            }
+            //}
 
 
         }
