@@ -89,6 +89,14 @@ public class DataContainer {
         isClient = b;
     }
 
+    public static String getNetworkIP(){
+        return networkIP;
+    }
+
+    public static void setNetworkIP(String s){
+        networkIP = s;
+    }
+
     /**
     Gibt die Spielfeldbreite zurueck
      */
