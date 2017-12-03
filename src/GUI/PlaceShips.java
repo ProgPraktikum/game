@@ -199,6 +199,7 @@ public class PlaceShips {
                  */
                 if (success) {
                     if (s.getOrientation() == 0) {
+                        //Todo do something about nullpointerexeption
                         for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
                             table.setValueAt(1, s.getYpos(), i);
                         }
@@ -208,6 +209,8 @@ public class PlaceShips {
                         }
                     }
                     g1.getboard();
+                    DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
+                    //DataContainer.getShipLenghts().pop();
                     if (DataContainer.getShipLenghts().isEmpty()) {
                         return;
                     }
@@ -227,6 +230,8 @@ public class PlaceShips {
                     */
 
                     startingPoint = null;
+                    ta.replaceRange("",0,2);
+
                 }
             }
             else{
@@ -271,7 +276,7 @@ public class PlaceShips {
                         break;
                     }*/
                     if ( (row -length+1) >= 0){
-                        for(int i =row; i<= row - length +1;i--){
+                        for(int i =row; i>= row - length +1;i--){
                             if(table.getValueAt(i, column).equals(1)){
                                 check = false;
                             }
@@ -295,7 +300,7 @@ public class PlaceShips {
                     }
                     break;*/
                     if( (column -length + 1) >= 0){
-                        for(int i= column;i <=column -length +1;i--){
+                        for(int i= column;i >=column -length +1;i--){
                             if(table.getValueAt(row,i).equals(1)){
                                 check=false;
                             }
