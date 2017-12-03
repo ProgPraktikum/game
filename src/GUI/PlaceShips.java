@@ -5,6 +5,7 @@ import Data.DataContainer;
 import Data.Directions;
 import Data.game;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -204,19 +205,20 @@ public class PlaceShips {
                             }
                         }*/
 
-                    /*
-                    nach dem setzen soll das element entfernt werden und aus
-                    dem Stack entfernt werden ( der Stack enthält alle längen der
-                    schiffe) ebenso soll es aus der TextArea entfernt werden.
+                    /**
+                     * Die eben gesetzte Schiffslänge wird aus der TextArea entfertn
                      */
-                        //DataContainer.getShipLenghts().pop();
-                        //Todo aus TextArea entfernen
-                     /*
-					 * Todo Das gesetzte Schiff soll aus der JTextArea entfernt.
-					 */
-
-
-                     /*
+                     textAreaRemoveLine();
+                    /**
+                     * angezeigten Endpunkte werden wieder versteckt
+                     */
+                    hideEndpoints(table.rowAtPoint(startingPoint), table.columnAtPoint(startingPoint));
+                    /**
+                     * Die eben gesetzte Schiffslänge wird aus dem Stack mit den Schiffslängen
+                     * gelöscht
+                     */
+                    DataContainer.getShipLenghts().pop();
+                     /**
                      wenn keine Schiffe mehr zu setzen sind wird hier abgebrochen
                       */
                         if (DataContainer.getShipLenghts().isEmpty()) {
@@ -356,6 +358,24 @@ public class PlaceShips {
                 default:
                     break;
             }
+        }
+    }
+
+    public void textAreaRemoveLine(){
+        int start;
+        int end;
+        int count = -1;
+
+        try{
+            count = ta.getLineCount();
+            if(count > 0){
+                start = ta.getLineStartOffset(0);
+                end = ta.getLineEndOffset(0);
+
+                ta.replaceRange(null, start,end);
+            }
+        }catch(BadLocationException e){
+            e.printStackTrace();
         }
     }
 
