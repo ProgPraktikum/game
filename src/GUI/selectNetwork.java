@@ -12,6 +12,9 @@ public class selectNetwork {
 
     public selectNetwork(){
 
+        /**
+         * Neuer JDialog wird erstellt und auf Modal gesetzt. Des Weiteren wird undecorated gesetzt.
+         */
         JDialog nw = new JDialog();
         nw.setModal(true);
         nw.setUndecorated(true);
@@ -19,8 +22,9 @@ public class selectNetwork {
         nw.setPreferredSize(new Dimension(400, 400));
         nw.setContentPane(Box.createVerticalBox());
 
-
-
+        /**
+         * Boxn um die JCheckBox'n und JButtons und JTextField aufzunehmen.
+         */
         Box horizontalBox = Box.createHorizontalBox();
         Box horizontalBox1 = Box.createHorizontalBox();
         Box tf = Box.createHorizontalBox();
@@ -62,7 +66,7 @@ public class selectNetwork {
         /**
          * JTextField für die Eingabe einer IP
          */
-        JTextField field = new JTextField();
+        JTextField field = new JTextField("IP des Host eingeben");
         field.setMaximumSize(new Dimension(200, 30));
         field.setMinimumSize(new Dimension(200, 30));
         field.setPreferredSize(new Dimension(200, 30));
@@ -121,6 +125,7 @@ public class selectNetwork {
          */
         horizontalBox1.add(Box.createHorizontalStrut(10));
         horizontalBox1.add(isHost);
+        horizontalBox1.add(Box.createHorizontalStrut(10));
         horizontalBox1.add(isClient);
 
         /**
