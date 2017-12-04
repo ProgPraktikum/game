@@ -50,12 +50,10 @@ public class game implements gameinterface{
 	//aendert orientierung des schiffs
 	public void rotateShip(){
 		ship s = DataContainer.getSelectedShip();
-		if(s.getOrientation()==0){
-			s.setOrientation(1);
-		}
-		else{
-			s.setOrientation(0);
-		}
+		int or =s.getOrientation();
+		or++;
+		or=or%4;
+		s.setOrientation(or);
 	}
 	/*
 	plaziert schiff auf spielbrett

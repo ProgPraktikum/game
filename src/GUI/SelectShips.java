@@ -104,7 +104,7 @@ public class SelectShips {
                             DataContainer.getOccupancy())){
                         int belegung = 0 ;
                         selectships.dispose();
-                        new PlaceShips();
+                            new PlaceShips();
                     }else{
                         /*
                         Falls die zulaessige Anzahl der Schiffe überschritten wurde

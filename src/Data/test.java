@@ -5,9 +5,15 @@ public class test {
         game g1 = new game(false);
         ship s = new ship(3);
         DataContainer.setSelectedShip(s);
-        g1.moveShip(3,4);
+        System.out.println("orientation"+s.getOrientation());
+        g1.rotateShip();
+        System.out.println("orientation"+s.getOrientation());
+        g1.rotateShip();System.out.println("orientation"+s.getOrientation());
+        g1.rotateShip();System.out.println("orientation"+s.getOrientation());
+        g1.rotateShip();System.out.println("orientation"+s.getOrientation());
+        //g1.rotateShip();System.out.println("orientation"+s.getOrientation());
+        g1.moveShip(2,0);
         g1.placeShip(DataContainer.getSelectedShip());
-        g1.getboard();
 
     }
 }
