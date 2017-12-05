@@ -78,7 +78,7 @@ public class SelectFieldSize {
         lblHoehe.setFont(new Font("Tahoma", Font.PLAIN, 18));
         lblHoehe.setVisible(true);
 
-        /*
+        /**
          Bestaetigen Button ( ließt die eingegebenen Werte ein und und speichert diese
         */
         JButton ok = new JButton("OK");

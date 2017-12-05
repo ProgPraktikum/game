@@ -81,6 +81,12 @@ public class SelectModi {
         vsHuman.setBackground(Color.BLACK);
         vsHuman.setForeground(Color.WHITE);
         vsHuman.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        vsHuman.addActionListener((e) -> {
+
+                    new_Game.setVisible(false);
+                    new selectNetwork();
+                }
+        );
         vbox.add(vsHuman);
 
         // Computer gegen Computer Button
@@ -94,6 +100,12 @@ public class SelectModi {
         comvsCom.setBackground(Color.BLACK);
         comvsCom.setForeground(Color.WHITE);
         comvsCom.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        comvsCom.addActionListener((e) -> {
+
+                    new_Game.setVisible(false);
+                    new selectNetwork();
+                }
+        );
 
         vbox.add(comvsCom);
 

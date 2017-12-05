@@ -68,30 +68,62 @@ public class DataContainer {
     // allowed variable dient zu prüfen ob man schießen darf oder nicht
     private static boolean allowed;
 
+    /**
+     * Für Netzwerk benötigte Variablen. IP, und ob man Host oder Client ist.
+     * Sowie die jeweiligen getter/setter Methoden
+     */
+    private static boolean isHost = false;
 
+    private static boolean isClient = false;
 
-    /*
+    private static String networkIP = null;
+
+    public static boolean getIsHost(){
+        return isHost;
+    }
+
+    public static void setIsHost(boolean b){
+        isHost = b;
+    }
+
+    public static boolean getIsClient(){
+        return isClient;
+    }
+
+    public static void setIsClient(boolean b){
+        isClient = b;
+    }
+
+    public static String getNetworkIP(){
+        return networkIP;
+    }
+
+    public static void setNetworkIP(String s){
+        networkIP = s;
+    }
+
+    /**
     Gibt die Spielfeldbreite zurueck
      */
     public static int getSpielFeldBreite(){
         return  spielFeldBreite;
     }
 
-    /*
+    /**
     setzt die Spielfeldbreite
      */
     public static void setSpielFeldBreite(int n){
         spielFeldBreite = n;
     }
 
-    /*
+    /**
     gibt die Spielfeldhoehe zurueck
      */
     public static int getSpielFeldHoehe(){
         return spielFeldHoehe;
     }
 
-    /*
+    /**
     setzt die Spielfeldhoehe
      */
     public static void setSpielFeldHoehe(int n){
@@ -99,7 +131,7 @@ public class DataContainer {
     }
 
 
-    /*
+    /**
     @return Spielfeld Spieler
      */
     public static TableView getTable(){
@@ -110,13 +142,14 @@ public class DataContainer {
         table = tabelle;
     }
 
-    /*
+    /**
     gibt den gameType zurück
      */
     public static String getGameType(){
         return gameType;
     }
-    /*
+
+    /**
     setzt den gameType
      */
     public static void setGameType(String typ){
@@ -124,14 +157,14 @@ public class DataContainer {
     }
 
 
-    /*
+    /**
     getter für die Variable allowed
      */
     public static boolean getAllowed(){
         return allowed;
     }
 
-    /*
+    /**
     setter für die Variable allowed
      */
     public static void setAllowed(boolean x){
@@ -141,7 +174,7 @@ public class DataContainer {
     public static void setOccupancy(int occupancy) {
         DataContainer.occupancy = occupancy;
     }
-    /*
+    /**
     gibt den max Belegungsfaktor zurück
      */
     public static int getOccupancy(){
@@ -149,7 +182,7 @@ public class DataContainer {
     }
 
 
-    /*
+    /**
    erstellt die stacks für die schiffe des Spielers und der AI
     */
     public static void setShipStack(){
@@ -157,7 +190,7 @@ public class DataContainer {
         shipLengthsAI = new Stack<Integer>();
     }
 
-    /*
+    /**
     *erstellt schiffsstack
     */
     public static void  setFleet(){
@@ -173,7 +206,11 @@ public class DataContainer {
             maxShipLength = DataContainer.getSpielFeldHoehe() / 2;
         }
     }
-    //getter für maxShipLength
+
+    /**
+     * getter für maxShipLength
+     */
+
     public static int getMaxShipLength(){
         return maxShipLength;
     }
@@ -191,27 +228,47 @@ public class DataContainer {
         this.shipLengthsAI = shipLengthsKI; 
     }
 
-    //get für fleet stack
+    /**
+     * get für fleet stack
+     * @return
+     */
     public static Stack<ship> getfleet(){
         return fleet;
     }
 
-    //fügt schiff zu stack fleet hinzu
+    /**
+     * fügt schiff zu stack fleet hinzu
+     * @param l
+     */
     public static void addShip(int l){
         ship s = new ship(l);
         fleet.push(s);
     }
-    //set für selectedShip
+
+    /**
+     * set für selectedShip
+     */
     public static void setSelectedShip(){
         selectedShip= fleet.pop();
     }
 
-    //get für selectedShip
+    /**
+     * get für selectedShip
+     * @return
+     */
     public static ship getSelectedShip(){
         return selectedShip;
     }
 
 
+    /**
+     * Speichert die ausgewählten Schiffslängen in die Stacks shipLengths und shipLengthsKi
+     * parallel dazu werden Schiffe mit den entsprechenden Längen gespeichert.
+     * Des Weiteren wird geprüft ob die maximal zu wählenden anzahl an Schiffen überschritten wird.
+     * @param spinners
+     * @param occupancy
+     * @return
+     */
     public static boolean setShipLengthPush(List<JSpinner> spinners, int occupancy) {
 
         Iterator<JSpinner> ships = spinners.iterator();

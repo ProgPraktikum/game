@@ -5,6 +5,7 @@ import Data.DataContainer;
 import Data.Directions;
 import Data.game;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -233,7 +234,7 @@ public class PlaceShips {
                                 break;
                         }
                     DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
-                        ta.replaceRange("",0,2);
+                        textAreaRemoveLine();
                     }
                 }
                 g1.getboard();
@@ -249,8 +250,6 @@ public class PlaceShips {
                 */
 
                 startingPoint = null;
-
-
             } else {
                 /**
                  * falls auf keinen endpunkt geklickt wude sollen die möglichen wieder
@@ -391,6 +390,24 @@ public class PlaceShips {
                 default:
                     break;
             }
+        }
+    }
+
+    public void textAreaRemoveLine(){
+        int start;
+        int end;
+        int count = -1;
+
+        try{
+            count = ta.getLineCount();
+            if(count > 0){
+                start = ta.getLineStartOffset(0);
+                end = ta.getLineEndOffset(0);
+
+                ta.replaceRange(null, start,end);
+            }
+        }catch(BadLocationException e){
+            e.printStackTrace();
         }
     }
 
