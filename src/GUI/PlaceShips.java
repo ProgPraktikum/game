@@ -15,9 +15,9 @@ import java.util.Iterator;
 
 public class PlaceShips {
 
-    /*
-          Variablen
-       */
+    /**
+     * Variablen
+     */
     private TableView table;
     private Point startingPoint;
     private JTextArea ta;
@@ -214,22 +214,22 @@ public class PlaceShips {
                         switch (s.getOrientation()) {
                             case 0:
                                 for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
-                                    table.setValueAt(1, s.getYpos(), i);
+                                    table.setValueAt(3, s.getYpos(), i);
                                 }
                                 break;
                             case 1:
                                 for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
-                                    table.setValueAt(1, i, s.getXpos());
+                                    table.setValueAt(3, i, s.getXpos());
                                 }
                                 break;
                             case 2:
                                 for (int i = s.getXpos(); i <= s.getXpos() + s.getLength() - 1; i++) {
-                                    table.setValueAt(1, s.getYpos(), i);
+                                    table.setValueAt(3, s.getYpos(), i);
                                 }
                                 break;
                             case 3:
                                 for (int i = s.getYpos(); i <= s.getYpos() + s.getLength() - 1; i++) {
-                                    table.setValueAt(1, i, s.getXpos());
+                                    table.setValueAt(3, i, s.getXpos());
                                 }
                                 break;
                         }
@@ -286,7 +286,7 @@ public class PlaceShips {
                             }
                         }
                         if(check){
-                            table.setValueAt(3, row,column-length+1);
+                            table.setValueAt(4, row,column-length+1);
                         }
                     }
                     break;
@@ -300,7 +300,7 @@ public class PlaceShips {
                             }
                         }
                         if(check){
-                            table.setValueAt(3,row - length +1,column);
+                            table.setValueAt(4,row - length +1,column);
                         }
                     }
                     break;
@@ -314,7 +314,7 @@ public class PlaceShips {
                             }
                         }
                         if(check){
-                            table.setValueAt(3,row,column+length-1);
+                            table.setValueAt(4,row,column+length-1);
                         }
                     }
                     break;
@@ -328,7 +328,7 @@ public class PlaceShips {
                             }
                         }
                         if(check){
-                            table.setValueAt(3,row + length -1 ,column);
+                            table.setValueAt(4,row + length -1 ,column);
                         }
                     }
                     break;
