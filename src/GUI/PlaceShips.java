@@ -166,7 +166,7 @@ public class PlaceShips {
             // wenn schon ein punkt als Startpunkt gewählt ist
             boolean clickedendpoint;
 
-            if (table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(3)) {
+            if (table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(4)) {
 
                 /*
                 wenn zuvor durch endpoints() eine 3 gesetzt wurde
