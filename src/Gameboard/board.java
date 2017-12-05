@@ -58,23 +58,35 @@ public class board implements boardinterface {
                     ship s = playerboard[y][x].getMaster(); //hilfsvariable um leserlichkeit zu verbessern
                     playerboard[y][x].hit();
                     if (s.getHitcounter() == 0) {//wenn schiff keine ungetroffenen felder mehr hat
-                        if (s.getOrientation() == 0) {
-                            for (int j = s.getXpos(); j >= s.getXpos() - s.getLength() + 1; j--) {
-                                playerboard[s.getYpos()][j].setStatus(2);
-                                System.out.println(playerboard[s.getYpos()][j]);
-                            }
-                        } else if (s.getOrientation() == 1) {
-                            for (int k = s.getYpos(); k >= s.getYpos() - s.getLength() + 1; k++) {
-                                playerboard[k][s.getXpos()].setStatus(2);
-                            }
+                        int orr= s.getOrientation();
+                        int pos;
+                        switch (orr){
+                            case 0:
+                                for (pos = s.getXpos(); pos >= s.getXpos() - s.getLength() + 1; i--) {
+                                    playerboard[s.getYpos()][pos].setStatus(2);
+                                }
+                                break;
+                            case 1:
+                                for (pos = s.getYpos(); pos >= s.getYpos() - s.getLength() + 1; pos++) {
+                                    playerboard[pos][s.getXpos()].setStatus(2);
+                                }
+                                break;
+                            case 2:
+                                for(pos = s.getXpos(); pos <=s.getXpos()+s.getLength()-1;pos++){
+                                    playerboard[s.getYpos()][pos].setStatus(2);
+                                }
+                                break;
+                            case 3:
+                                for(pos =s.getYpos(); pos <= s.getYpos()+s.getLength()-1; pos++){
+                                    playerboard[pos][s.getXpos()].setStatus(2);
+                                }
                         }
                         return 2; //versenkt
                     } else {
                         return 1; //normaler treffer
                     }
-                //} //close redundant if
                 default:
-                    return -1; //benötigt um kompilierfehler zu verähindern
+                    return -1; //benötigt um kompilierfehler zu verhindern
             }
         }
     }
