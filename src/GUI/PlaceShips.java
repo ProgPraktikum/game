@@ -25,6 +25,8 @@ public class PlaceShips {
     //success gibt an ob die letzte plazierung erfolgreich war um zu verhindern,
     // dass das nächste schiff ausgewählt wird bevor das vorherige platziert ist
     private boolean success = true;
+    //s ist hilfsvariable um ausgewähltes schiff zu speichern
+    ship s=null;
 
     public PlaceShips() {
 
@@ -180,12 +182,14 @@ public class PlaceShips {
                 /**ausgewähltes schiff wird aus stack geholt
                  * und in selectedship zwischengespeichert
                  */
-                ship s = null;
+
                 if (!(DataContainer.getfleet().isEmpty()) && success) {
+                    s = null;
                     DataContainer.setSelectedShip();
                     s = DataContainer.getSelectedShip();
                 }
                 if (s != null) {
+                    s.setOrientation(0);
                     if (start_y > end_y) { //orrientierung OBEN(=1)
                         g1.rotateShip();
                     } else if (end_x > start_x) { //orrientierung RECHTS (=2)
@@ -196,8 +200,10 @@ public class PlaceShips {
                         g1.rotateShip();
                         g1.rotateShip();
                     }
-                    g1.moveShip(start_x, start_y);
-                    success = g1.placeShip(DataContainer.getSelectedShip());
+                    success=false;
+                    if(g1.moveShip(start_x, start_y)){
+                        success = g1.placeShip(DataContainer.getSelectedShip());
+                    }
 
                     /**grafische darstellung des schiffs
                      *

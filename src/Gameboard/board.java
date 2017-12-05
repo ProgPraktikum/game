@@ -205,6 +205,7 @@ public class board implements boardinterface {
                     }
                 }
             }
+            return true;
         }
         else if(s.getOrientation() == 3){
             if(s.getXpos() == 0){
@@ -226,6 +227,7 @@ public class board implements boardinterface {
                     }
                 }
             }
+            return true;
         }
         return true; //default val needed
     }
