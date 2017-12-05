@@ -357,7 +357,7 @@ public class PlaceShips {
             switch (directions) {
                 case LINKS:
                     if(x - size + 1 >= 0){
-                        if(table.getValueAt(y,x- size + 1).equals(3)){
+                        if(table.getValueAt(y,x- size + 1).equals(4)){
                             table.setValueAt(0,y,x - size + 1);
                         }
                     }
@@ -365,7 +365,7 @@ public class PlaceShips {
 
                 case OBEN:
                     if(y - size + 1 >= 0){
-                        if(table.getValueAt(y - size + 1,x).equals(3)){
+                        if(table.getValueAt(y - size + 1,x).equals(4)){
                             table.setValueAt(0,y - size + 1, x);
                         }
                     }
@@ -373,7 +373,7 @@ public class PlaceShips {
 
                 case RECHTS:
                     if(x + size - 1 <= DataContainer.getSpielFeldBreite() - 1){
-                        if(table.getValueAt(y,x + size - 1).equals(3)){
+                        if(table.getValueAt(y,x + size - 1).equals(4)){
                             table.setValueAt(0,y,x + size - 1);
                         }
                     }
@@ -381,7 +381,7 @@ public class PlaceShips {
 
                 case UNTEN:
                     if(y + size - 1 <= DataContainer.getSpielFeldHoehe() - 1){
-                        if(table.getValueAt(y + size - 1, x).equals(3)){
+                        if(table.getValueAt(y + size - 1, x).equals(4)){
                             table.setValueAt(0,y + size - 1, x);
                         }
                     }

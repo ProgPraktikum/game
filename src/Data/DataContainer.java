@@ -65,7 +65,10 @@ public class DataContainer {
     // TextArea
     JTextArea textArea = null;
 
-    // allowed variable dient zu prüfen ob man schießen darf oder nicht
+    /**
+      *  allowed variable dient zu prüfen ob man schießen darf oder nicht
+      */
+
     private static boolean allowed;
 
     /**
