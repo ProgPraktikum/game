@@ -260,6 +260,7 @@ public class PlaceShips {
                 startingPoint = x;//null
             }
         }
+        // bei rechte maustaste
     }
 
 
