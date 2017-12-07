@@ -25,8 +25,6 @@ public class GameView {
         JDialog playView = new JDialog();
         playView.setModal(true);
         playView.setSize((DataContainer.getSpielFeldBreite()*2 + 100), (DataContainer.getSpielFeldHoehe() + 100));
-        playView.setBackground(Color.BLACK);
-        playView.setForeground(Color.WHITE);
         playView.setUndecorated(true);
         playView.setContentPane(Box.createVerticalBox());
 
