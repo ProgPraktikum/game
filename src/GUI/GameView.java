@@ -42,6 +42,11 @@ public class GameView {
             tablePlayer = DataContainer.getTable();          // das Place ships window wird die Table anlegen
         }
         PlayerShootTable = new TableView();
+        for(int i = 0; i <DataContainer.getSpielFeldHoehe(); i++){
+            for(int j = 0; j < DataContainer.getSpielFeldBreite(); j++){
+                PlayerShootTable.setValueAt(9,i,j);
+            }
+        }
 
 
         /**
