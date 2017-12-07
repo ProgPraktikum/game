@@ -84,7 +84,7 @@ import java.util.Random;
         }
 
         /**
-         * JLabel für Anleitungen
+         * JLabel für Anleitungen wie man ein Scheff zu setzen hat oder es entfernen kann.
          */
         JLabel info = new JLabel();
         info.setText("<html><body>Zum setzen eines Schiffes<br>beliebigen Startpunkt wählen<br>" +
@@ -96,6 +96,10 @@ import java.util.Random;
         JButton weiter = new JButton("weiter");
         weiter.setEnabled(false);
 
+
+        /**
+         * Button, welcher die Funktion aufruft, dass Schiffe automatisch gesetzt werden.
+         */
         JButton randomBtn = new JButton("zufällig");
         randomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         randomBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -110,8 +114,22 @@ import java.util.Random;
                 }
         );
 
+        /**
+         * Button, welcher alle gesetzten Schiffe löscht
+         */
+        JButton reset = new JButton("zurücksetzen");
+        reset.setAlignmentX(Component.CENTER_ALIGNMENT);
+        reset.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        reset.addActionListener(
+                (e) -> {
+                    for(int i = 0; i < DataContainer.getSpielFeldHoehe(); i++){
+                        for(int j = 0; i < DataContainer.getSpielFeldBreite(); j++){
+                            //TODO löschen in eine Methode packen und aufrufen.
+                        }
+                    }
 
-
+                }
+        );
 
 
         /**
@@ -151,6 +169,7 @@ import java.util.Random;
 
         Box verticalBox = Box.createVerticalBox();
         Box horzintalBox = Box.createHorizontalBox();
+        Box btnBox = Box.createHorizontalBox();
 
         horzintalBox.add(table);
         horzintalBox.add(info);
@@ -158,10 +177,13 @@ import java.util.Random;
         verticalBox.add(horzintalBox);
         verticalBox.add(scrollPane);
 
+        btnBox.add(randomBtn);
+        btnBox.add(Box.createHorizontalStrut(5));
+        btnBox.add(reset);
 
         setships.setJMenuBar(bar);              //JMenuBar wird hinzugefuegt
         setships.add(Box.createVerticalStrut(5));
-        setships.add(randomBtn);
+        setships.add(btnBox);
         setships.add(Box.createVerticalStrut(5));
         setships.add(verticalBox);              //die verticalBox wird hinzugefuegt
         setships.add(Box.createVerticalStrut(5));
