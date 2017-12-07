@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
+import java.util.Random;
 
 
 public class PlaceShips {
@@ -94,20 +95,25 @@ public class PlaceShips {
                 "rechten Maustaste klicken<br> <br>Für eine automatische Platzierung  <br>" +
                 "den Button \"zufällig\" drücken </body></html>");
 
+        JButton weiter = new JButton("weiter");
+        weiter.setEnabled(false);
 
         JButton randomBtn = new JButton("zufällig");
         randomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         randomBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         randomBtn.addActionListener(
                 (e) -> {
-
-                    //TODO aufruf Methode für Zufällige Schiffsplatzierung
+                    if(!(DataContainer.getfleet().isEmpty())){
+                        randomplace();//TODO aufruf Methode für Zufällige Schiffsplatzierung
+                        if (DataContainer.getShipLenghts().size() == 0) {
+                            weiter.setEnabled(true); //button wird ernabled
+                        }
+                    }
                 }
         );
 
 
-        JButton weiter = new JButton("weiter");
-        weiter.setEnabled(false);
+
 
 
         /**
@@ -474,4 +480,61 @@ public class PlaceShips {
         }
     }
 
+    public boolean randomplace() {
+        s = null;
+        if (!(DataContainer.getfleet().isEmpty()) && success) {
+            DataContainer.setSelectedShip();
+            s = DataContainer.getSelectedShip();
+        }
+        Random rand = new Random();
+        success=false;
+        while (!success) {
+            int randomX = rand.nextInt(DataContainer.getSpielFeldBreite());
+            int randomY = rand.nextInt(DataContainer.getSpielFeldHoehe());
+            int startorr = rand.nextInt(4);
+            if (s != null) {
+                s.setOrientation(startorr);
+                if (g1.moveShip(randomX, randomY)) {
+                    for (int i = 0; i < 4; i++) {
+                        success = g1.placeShip(s);
+                        if (success) {
+                            break;
+                        }
+                        s.setOrientation((startorr + i) % 4);
+                    }
+                }
+            }
+        }
+        switch (s.getOrientation()) {
+            case 0:
+                for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
+                    table.setValueAt(3, s.getYpos(), i);
+                }
+                break;
+            case 1:
+                for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
+                    table.setValueAt(3, i, s.getXpos());
+                }
+                break;
+            case 2:
+                for (int i = s.getXpos(); i <= s.getXpos() + s.getLength() - 1; i++) {
+                    table.setValueAt(3, s.getYpos(), i);
+                }
+                break;
+            case 3:
+                for (int i = s.getYpos(); i <= s.getYpos() + s.getLength() - 1; i++) {
+                    table.setValueAt(3, i, s.getXpos());
+                }
+                break;
+        }
+        DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
+        textAreaRemoveLine();
+
+        if (!(DataContainer.getfleet().isEmpty())) {
+            if (randomplace()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -1,6 +1,8 @@
 package Data;
 
+
 import javax.xml.crypto.Data;
+import java.util.Random;
 
 /**
  * enthält Hauptlogik des spiels
@@ -113,6 +115,7 @@ public class game implements gameinterface{
 	public void save(int id){
 		//saving foo
 	}
+
 	public void getboard(){
 	    map.getPlayerboard();
     }
