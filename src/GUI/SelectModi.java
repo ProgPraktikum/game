@@ -1,7 +1,7 @@
 package GUI;
 
 import Data.DataContainer;
-
+import GUI.PlaceShips;
 import javax.swing.*;
 import java.awt.*;
 
@@ -45,7 +45,8 @@ public class SelectModi {
         sSpiel.addActionListener(
                 (e) -> {
                     DataContainer.setGameType("ss");
-                    new GameView();
+                   // new PlaceShips();
+                    //new GameView();
                 }
         );
         vbox.add(sSpiel);

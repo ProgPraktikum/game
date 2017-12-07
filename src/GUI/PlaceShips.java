@@ -122,12 +122,15 @@ import java.util.Random;
         reset.setFont(new Font("Tahoma", Font.PLAIN, 20));
         reset.addActionListener(
                 (e) -> {
+
+                    /*
                     for(int i = 0; i < DataContainer.getSpielFeldHoehe(); i++){
-                        for(int j = 0; i < DataContainer.getSpielFeldBreite(); j++){
+                                             for(int j = 0; i < DataContainer.getSpielFeldBreite(); j++){
                             //TODO löschen in eine Methode packen und aufrufen.
+
                         }
                     }
-
+*/
                 }
         );
 
@@ -499,7 +502,7 @@ import java.util.Random;
         }
     }
 
-    private boolean randomplace() {
+    public boolean randomplace() {
         s = null;
         if (!(DataContainer.getfleet().isEmpty()) && success) {
             DataContainer.setSelectedShip();
