@@ -104,7 +104,7 @@ public class PlaceShips {
         randomBtn.addActionListener(
                 (e) -> {
                     if(!(DataContainer.getfleet().isEmpty())){
-                        randomplace();//TODO aufruf Methode für Zufällige Schiffsplatzierung
+                        randomplace();
                         if (DataContainer.getShipLenghts().size() == 0) {
                             weiter.setEnabled(true); //button wird ernabled
                         }
@@ -240,7 +240,6 @@ public class PlaceShips {
                      *
                      */
                     if (success) {
-                        //Todo do something about nullpointerexeption
                         switch (s.getOrientation()) {
                             case 0:
                                 for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
@@ -283,7 +282,7 @@ public class PlaceShips {
             } else {
                 /**
                  * falls auf keinen endpunkt geklickt wude sollen die möglichen wieder
-                 * versteckt werden. TODO zetzt nur zurück wenn startpunkt wieder gedrückt wird ?!
+                 * versteckt werden.
                  */
                 hideEndpoints(table.rowAtPoint(startingPoint), table.columnAtPoint(startingPoint));
                 endpoints(row, column);
