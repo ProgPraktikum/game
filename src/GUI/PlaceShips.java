@@ -4,10 +4,8 @@ import Data.ship;
 import Data.DataContainer;
 import Data.Directions;
 import Data.game;
-import Data.Abstracttile;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,7 +13,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 
-public class PlaceShips {
+ class PlaceShips {
 
     /**
      * Variablen
@@ -31,7 +29,7 @@ public class PlaceShips {
     //s ist hilfsvariable um ausgewähltes schiff zu speichern
     ship s=null;
 
-    public PlaceShips() {
+    PlaceShips() {
 
 
         JDialog setships = new JDialog();
@@ -338,7 +336,7 @@ public class PlaceShips {
      * @param row
      * @param column
      */
-    public void endpoints(int row, int column){
+    private void endpoints(int row, int column){
         boolean check;       //zur pruefung ob setzbar ist
         int length = DataContainer.getShipLenghts().firstElement();// länge des zu setzenden schiffs
 
@@ -411,7 +409,7 @@ public class PlaceShips {
     /**
     Die Methode hideEndpoints setzt zuvor gesetzte mögliche Endpunkte wieder auf den Wert Wasser
      */
-    public void hideEndpoints(int y, int x) {
+    private void hideEndpoints(int y, int x) {
 
 		/*
 		 * In dieser Variable wird die Laenge des letzten Schiffes gespeichert
@@ -461,7 +459,7 @@ public class PlaceShips {
         }
     }
 
-    public void textAreaRemoveLine(){
+    private void textAreaRemoveLine(){
         int start;
         int end;
         int count = -1;
@@ -479,7 +477,7 @@ public class PlaceShips {
         }
     }
 
-    public boolean randomplace() {
+    private boolean randomplace() {
         s = null;
         if (!(DataContainer.getfleet().isEmpty()) && success) {
             DataContainer.setSelectedShip();
