@@ -36,7 +36,7 @@ public class PlaceShips {
         setships.setModal(true);
         setships.setUndecorated(true);
         setships.setContentPane(Box.createVerticalBox());
-        setships.setBackground(Color.BLACK);
+       // setships.setBackground(Color.BLACK);
 
 
         startingPoint = null;
@@ -84,6 +84,19 @@ public class PlaceShips {
         }
 
 
+        JButton randomBtn = new JButton("zufällig");
+        randomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+       // randomBtn.setForeground(Color.WHITE);
+       // randomBtn.setBackground(Color.BLACK);
+        randomBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        randomBtn.addActionListener(
+                (e) -> {
+
+                    //TODO aufruf Methode für Zufällige Schiffsplatzierung
+                }
+        );
+
+
         JButton weiter = new JButton("weiter");
         weiter.setEnabled(false);
 
@@ -108,8 +121,8 @@ public class PlaceShips {
 
 
         weiter.setAlignmentX(Component.CENTER_ALIGNMENT);
-        weiter.setForeground(Color.WHITE);
-        weiter.setBackground(Color.BLACK);
+        //weiter.setForeground(Color.WHITE);
+        //weiter.setBackground(Color.BLACK);
         weiter.setFont(new Font("Tahoma", Font.PLAIN, 20));
         weiter.addActionListener(
                 (e) -> {
@@ -134,8 +147,13 @@ public class PlaceShips {
 
 
         setships.setJMenuBar(bar);              //JMenuBar wird hinzugefuegt
+        setships.add(Box.createVerticalStrut(5));
+        setships.add(randomBtn);
+        setships.add(Box.createVerticalStrut(5));
         setships.add(verticalBox);              //die verticalBox wird hinzugefuegt
+        setships.add(Box.createVerticalStrut(5));
         setships.add(weiter);                   //weiter Button hinzugefuegt
+        setships.add(Box.createVerticalStrut(5));
         setships.pack();
         setships.setLocationRelativeTo(null);
         setships.setVisible(true);
