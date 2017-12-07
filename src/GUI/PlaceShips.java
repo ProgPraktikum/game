@@ -36,7 +36,7 @@ public class PlaceShips {
         setships.setModal(true);
         setships.setUndecorated(true);
         setships.setContentPane(Box.createVerticalBox());
-       // setships.setBackground(Color.BLACK);
+
 
 
         startingPoint = null;
@@ -96,8 +96,6 @@ public class PlaceShips {
 
         JButton randomBtn = new JButton("zufällig");
         randomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-       // randomBtn.setForeground(Color.WHITE);
-       // randomBtn.setBackground(Color.BLACK);
         randomBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         randomBtn.addActionListener(
                 (e) -> {
@@ -131,8 +129,6 @@ public class PlaceShips {
 
 
         weiter.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //weiter.setForeground(Color.WHITE);
-        //weiter.setBackground(Color.BLACK);
         weiter.setFont(new Font("Tahoma", Font.PLAIN, 20));
         weiter.addActionListener(
                 (e) -> {
@@ -154,9 +150,7 @@ public class PlaceShips {
         horzintalBox.add(table);
         horzintalBox.add(info);
         verticalBox.add(Box.createHorizontalStrut(5));
-       // verticalBox.add(table);
         verticalBox.add(horzintalBox);
-
         verticalBox.add(scrollPane);
 
 
