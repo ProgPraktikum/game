@@ -83,6 +83,16 @@ public class PlaceShips {
             ta.append(ships.next().toString() + "\n");
         }
 
+        /**
+         * JLabel für Anleitungen
+         */
+        JLabel info = new JLabel();
+        info.setText("<html><body>Zum setzen eines Schiffes<br>beliebigen Startpunkt wählen<br>" +
+                "und anschließend einen der<br>grünen Punkte anklicken.<br>" +
+                " <br>zum Entfernen eines Schiffes,<br>das gewünschte Objekt mit der  <br>" +
+                "rechten Maustaste klicken<br> <br>Für eine automatische Platzierung  <br>" +
+                "den Button \"zufällig\" drücken </body></html>");
+
 
         JButton randomBtn = new JButton("zufällig");
         randomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -139,9 +149,13 @@ public class PlaceShips {
 
 
         Box verticalBox = Box.createVerticalBox();
+        Box horzintalBox = Box.createHorizontalBox();
 
+        horzintalBox.add(table);
+        horzintalBox.add(info);
         verticalBox.add(Box.createHorizontalStrut(5));
-        verticalBox.add(table);
+       // verticalBox.add(table);
+        verticalBox.add(horzintalBox);
 
         verticalBox.add(scrollPane);
 
