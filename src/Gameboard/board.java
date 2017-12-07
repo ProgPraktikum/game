@@ -243,6 +243,18 @@ public class board implements boardinterface {
         }
         return true; //default val needed
     }
+
+    public Abstracttile getPlayerboardAt(int x,int y){
+       return playerboard[y][x];
+    }
+
+    public void setPlayerboardAt(int x, int y, int value) {
+                playerboard[y][x].setStatus(value);
+    }
+    public void setPlayerboardAt(int x, int y, ship master){
+        playerboard[y][x].setMaster(master);
+    }
+
     //debug functions
     public void getPlayerboard(){
         System.out.println("Arraystatus:");

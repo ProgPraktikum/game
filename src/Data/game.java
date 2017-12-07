@@ -48,12 +48,9 @@ public class game implements gameinterface{
 
     }
 	//aendert orientierung des schiffs
-	public void rotateShip(){
+	public void rotateShip(int i){
 		ship s = DataContainer.getSelectedShip();
-		int or =s.getOrientation();
-		or++;
-		or=or%4;
-		s.setOrientation(or);
+		s.setOrientation(i);
 	}
 	/*
 	plaziert schiff auf spielbrett
@@ -79,6 +76,38 @@ public class game implements gameinterface{
 		}
 		else{
 			return -1;
+		}
+	}
+
+	public Abstracttile getplayereboard(int x,int y){
+		return map.getPlayerboardAt(x,y);
+	}
+	public void removeship(ship s) {
+		switch (s.getOrientation()) {
+			case 0:
+				for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
+					map.setPlayerboardAt(i,s.getYpos(),0);
+					map.setPlayerboardAt(i,s.getYpos(),null);
+				}
+				break;
+			case 1:
+				for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
+					map.setPlayerboardAt(s.getXpos(),i,0);
+					map.setPlayerboardAt(s.getXpos(),i,null);
+				}
+				break;
+			case 2:
+				for (int i = s.getXpos(); i <= s.getXpos() + s.getLength() - 1; i++) {
+					map.setPlayerboardAt(i,s.getYpos(),0);
+					map.setPlayerboardAt(i,s.getYpos(),null);
+				}
+				break;
+			case 3:
+				for (int i = s.getYpos(); i <= s.getYpos() + s.getLength() - 1; i++) {
+					map.setPlayerboardAt(s.getXpos(),i,0);
+					map.setPlayerboardAt(s.getXpos(),i,null);
+				}
+				break;
 		}
 	}
 	public void save(int id){

@@ -6,11 +6,11 @@ public class test {
         ship s = new ship(3);
         DataContainer.setSelectedShip(s);
         System.out.println("orientation"+s.getOrientation());
-        g1.rotateShip();
+        g1.rotateShip(1);
         System.out.println("orientation"+s.getOrientation());
-        g1.rotateShip();System.out.println("orientation"+s.getOrientation());
-        g1.rotateShip();System.out.println("orientation"+s.getOrientation());
-        g1.rotateShip();System.out.println("orientation"+s.getOrientation());
+        g1.rotateShip(1);System.out.println("orientation"+s.getOrientation());
+        g1.rotateShip(2);System.out.println("orientation"+s.getOrientation());
+        g1.rotateShip(1);System.out.println("orientation"+s.getOrientation());
         //g1.rotateShip();System.out.println("orientation"+s.getOrientation());
         g1.moveShip(2,0);
         g1.placeShip(DataContainer.getSelectedShip());

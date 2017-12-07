@@ -4,6 +4,7 @@ import Data.ship;
 import Data.DataContainer;
 import Data.Directions;
 import Data.game;
+import Data.Abstracttile;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.xml.crypto.Data;
@@ -210,14 +211,11 @@ public class PlaceShips {
                 if (s != null) {
                     s.setOrientation(0);
                     if (start_y > end_y) { //orrientierung OBEN(=1)
-                        g1.rotateShip();
+                        g1.rotateShip(1);
                     } else if (end_x > start_x) { //orrientierung RECHTS (=2)
-                        g1.rotateShip();
-                        g1.rotateShip();
+                        g1.rotateShip(2);
                     } else if (start_y < end_y) { //Orrientierung UNTEN (=3)
-                        g1.rotateShip();
-                        g1.rotateShip();
-                        g1.rotateShip();
+                        g1.rotateShip(3);
                     }
                     success=false;
                     if(g1.moveShip(start_x, start_y)){
@@ -278,8 +276,46 @@ public class PlaceShips {
                 startingPoint = x;//null
             }
         }
-        // bei rechte maustaste
+        else if(e.getButton() == MouseEvent.BUTTON3){// bei rechte maustaste
+                if(table.getValueAt(row,column)!=null && table.getValueAt(row, column).equals(3)){
+                    ship s=g1.getplayereboard(column, row).getMaster();
+                    //DataContainer.getfleet();
+                    String add= s.getLength()+"\n";
+                    ta.insert(add,0);
+                    switch (s.getOrientation()) {
+                        case 0:
+                            for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
+                                table.setValueAt(0, s.getYpos(), i);
+                            }
+                            break;
+                        case 1:
+                            for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
+                                table.setValueAt(0, i, s.getXpos());
+                            }
+                            break;
+                        case 2:
+                            for (int i = s.getXpos(); i <= s.getXpos() + s.getLength() - 1; i++) {
+                                table.setValueAt(0, s.getYpos(), i);
+                            }
+                            break;
+                        case 3:
+                            for (int i = s.getYpos(); i <= s.getYpos() + s.getLength() - 1; i++) {
+                                table.setValueAt(0, i, s.getXpos());
+                            }
+                            break;
+                    }
+                    g1.removeship(s);
+                    s.setOrientation(0);
+                    s.setxpos(0);
+                    s.setypos(0);
+                    DataContainer.getShipLenghts().add(0,s.getLength());
+                    DataContainer.getfleet().push(s);
+
+
+                }
+        }
     }
+
 
 
 
@@ -300,7 +336,7 @@ public class PlaceShips {
                     check = true;
                     if( (column -length + 1) >= 0){
                         for(int i= column;i >=column -length +1;i--){
-                            if(table.getValueAt(row,i).equals(1)){
+                            if(table.getValueAt(row,i).equals(3)){
                                 check=false;
                             }
                         }
@@ -314,7 +350,7 @@ public class PlaceShips {
                     check = true;
                     if ( row - length + 1 >= 0){
                         for(int i =row; i>= row - length +1;i--){
-                            if(table.getValueAt(i, column).equals(1)){
+                            if(table.getValueAt(i, column).equals(3)){
                                 check = false;
                             }
                         }
@@ -328,7 +364,7 @@ public class PlaceShips {
                     check=true;
                     if(DataContainer.getSpielFeldBreite()-1 >=(column + length-1)){
                         for(int i = column; i <=column + length - 1; i++){
-                            if(table.getValueAt(row, i).equals(1)){
+                            if(table.getValueAt(row, i).equals(3)){
                                 check= false;
                             }
                         }
@@ -342,7 +378,7 @@ public class PlaceShips {
                     check=true;
                     if(DataContainer.getSpielFeldHoehe() - 1 >= (row + length -1)){
                         for(int i = row; i <= row + length -1; i++) {
-                            if (table.getValueAt(i, column).equals(1)) {
+                            if (table.getValueAt(i, column).equals(3)) {
                                 check = false;
                             }
                         }

@@ -36,7 +36,7 @@ public interface gameinterface {
 	/*
 	aendert orientierung von selectedShip
 	*/
-	void rotateShip();
+	void rotateShip(int i);
 
 	/*
 	plaziert schiff auf spielbrett

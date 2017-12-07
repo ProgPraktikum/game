@@ -277,7 +277,7 @@ public class DataContainer {
         Iterator<JSpinner> ships = spinners.iterator();
 
         int shipLength;
-        int shipCounter = maxShipLength ;
+        int shipCounter =maxShipLength ;
 
         while (ships.hasNext()) {
             shipLength = Integer.parseInt(ships.next().getValue().toString());
@@ -288,9 +288,10 @@ public class DataContainer {
                     return false;
                 shipLenghts.push(shipCounter);
                 shipLengthsAI.push(shipCounter);
-                //fuegt paralel zu schiffslaengen
+                //fuegt paralell zu schiffslaengen
                 // entsprechende schiffe in stack zur spaeteren plazierung ein
                 shiplengthsinverted.push(shipCounter);
+                //addShip(shipCounter);
             }
 
             shipCounter--;
