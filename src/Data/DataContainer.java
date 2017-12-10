@@ -284,7 +284,7 @@ public class DataContainer {
 
             for (int i = 0; i < shipLength; i++) {
                 count -=shipLength;
-                if (count < 0)
+                if (count < -2)
                     return false;
                 shipLenghts.push(shipCounter);
                 shipLengthsAI.push(shipCounter);
