@@ -25,7 +25,7 @@ public class DataContainer {
     private static int spielFeldHoehe = 10;
 
     // Maximale Belegungsfaktor
-    private static int occupancy =  (spielFeldBreite * spielFeldHoehe)*30/100;
+    private static int occupancy =  ((spielFeldBreite * spielFeldHoehe)*30/100);
 
     // Variabe für die maximale Schiffslänge
     private static int maxShipLength;
@@ -269,22 +269,22 @@ public class DataContainer {
      * parallel dazu werden Schiffe mit den entsprechenden Längen gespeichert.
      * Des Weiteren wird geprüft ob die maximal zu wählenden anzahl an Schiffen überschritten wird.
      * @param spinners
-     * @param occupancy
+     * @param count
      * @return
      */
-    public static boolean setShipLengthPush(List<JSpinner> spinners, int occupancy) {
+    public static boolean setShipLengthPush(List<JSpinner> spinners, int count) {
 
-        Iterator<JSpinner> ships = spinners.iterator();
+        Iterator<JSpinner> spin = spinners.iterator();
 
         int shipLength;
         int shipCounter =maxShipLength ;
 
-        while (ships.hasNext()) {
-            shipLength = Integer.parseInt(ships.next().getValue().toString());
+        while (spin.hasNext()) {
+            shipLength = (int)(spin.next().getValue());
 
             for (int i = 0; i < shipLength; i++) {
-                occupancy = occupancy - shipLength;
-                if (occupancy < 0)
+                count = count - shipLength;
+                if (count < 0)
                     return false;
                 shipLenghts.push(shipCounter);
                 shipLengthsAI.push(shipCounter);
