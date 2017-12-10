@@ -3,6 +3,7 @@ package Data;
 
 import javax.xml.crypto.Data;
 import java.util.Random;
+import java.util.Stack;
 
 /**
  * enthält Hauptlogik des spiels
@@ -20,14 +21,6 @@ public class game implements gameinterface{
 
 	//Plazierungs methoden
 
-	/*erzeugt ein neues schiff mit länge l, sofern es nicht die maximale flottengröße überschreitet,
-	und speichert dieses ins fleet array des DataContainers an der nächsten stelle im array
-	 */
-	public void buildship() {
-		int l =  DataContainer.getShipLenghts().peek();
-		ship s =new ship(l);
-		DataContainer.getfleet().push(s);
-	}
 
     /*
     methode verschiebt schiff an andere koordinate und überprüft ob die verschiebung valide ist
@@ -60,10 +53,28 @@ public class game implements gameinterface{
 	public boolean placeShip(ship s){
 		return map.place(s);
 	}
-	//NOT IMPLEMENTED YET
-	public void placeFleet(int player) {
-		//NOT IMPLEMENTED YET
+
+	public void generatefleet(){
+		int occ=DataContainer.getOccupancy();
+		Stack<Integer> lengths= new Stack<>();
+		int highlen= 2;
+		occ -=DataContainer.getMaxShipLength();
+		while(occ>0){
+			for(int i = 2; i<=highlen;i++){
+				if(occ - i >= 0){
+					lengths.push(i);
+					occ -= i;
+				}
+				else if(occ - i == -1){
+					lengths.push(i - 1);
+					occ -= (i-1);
+				}
+			}
+			highlen++;
+		}
+		lengths.push(DataContainer.getMaxShipLength()); //größtes schiff soll oben auf stack liegen
 	}
+
 
 	//spielmethoden
 	public int shoot(int x, int y, int player) {

@@ -15,16 +15,6 @@ public interface gameinterface {
 
 	//methoden
 
-	/*
-	plaziert gesamte flotte per zufallsgenerierung solange bis alle schiffe erfolgreich plaziert sind
-	*/
-	void placeFleet(int player);
-
-	/*erzeugt ein neues schiff mit länge l welche aus dem shiplengths stack gelesen wird
-	anschließend wird das schiff in dens chiffstack geschrieben
-	 */
-	void buildship();
-
 
 	/*
 	methode verschiebt selectedShip an andere koordinate und ueberprueft ob die verschiebung valide ist

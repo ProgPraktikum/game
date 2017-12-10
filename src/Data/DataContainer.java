@@ -25,7 +25,7 @@ public class DataContainer {
     private static int spielFeldHoehe = 10;
 
     // Maximale Belegungsfaktor
-    private static int occupancy = (int)((spielFeldBreite * spielFeldHoehe)*0.3);
+    private static int occupancy =  (spielFeldBreite * spielFeldHoehe)*30/100;
 
     // Variabe für die maximale Schiffslänge
     private static int maxShipLength;
@@ -189,16 +189,16 @@ public class DataContainer {
    erstellt die stacks für die schiffe des Spielers und der AI
     */
     public static void setShipStack(){
-        shipLenghts = new Stack<Integer>();
-        shipLengthsAI = new Stack<Integer>();
+        shipLenghts = new Stack<>();
+        shipLengthsAI = new Stack<>();
     }
 
     /**
     *erstellt schiffsstack
     */
     public static void  setFleet(){
-        shiplengthsinverted= new Stack<Integer>();
-        fleet = new Stack<ship>();
+        shiplengthsinverted= new Stack<>();
+        fleet = new Stack<>();
     }
 
     public static void setMaxShipLength(){
