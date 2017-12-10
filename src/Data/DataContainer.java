@@ -283,7 +283,7 @@ public class DataContainer {
             shipLength = (int)(spin.next().getValue());
 
             for (int i = 0; i < shipLength; i++) {
-                count = count - shipLength;
+                count -=shipLength;
                 if (count < 0)
                     return false;
                 shipLenghts.push(shipCounter);

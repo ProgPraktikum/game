@@ -55,14 +55,14 @@ public class SelectShips {
 			 * und zusätzlich jeweils ein spinner
 			 */
 
-        for ( int i = DataContainer.getMaxShipLength(); i >=2; i--) {
+        for ( int i = DataContainer.getMaxShipLength(); i >= 2; i--) {
             int f = i;
 
             JLabel labelSize = new JLabel("Laenge " + i + " : ");
             labelSize.setForeground(Color.WHITE);
             labelSize.setBackground(Color.BLACK);
             labelSize.setFont(new Font("Tahoma", Font.PLAIN,20));
-            vbox_label.add(labelSize);
+
 
             final SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10, 1);
             final JSpinner Size = new JSpinner(model);
@@ -76,7 +76,7 @@ public class SelectShips {
 
                 }
             });
-
+            vbox_label.add(labelSize);
             vbox_spinner.add(Size);
 
 
@@ -101,7 +101,7 @@ public class SelectShips {
                     DataContainer.setShipStack();
                     DataContainer.setFleet();
                     if (DataContainer.setShipLengthPush(spinners,
-                            DataContainer.getOccupancy())){
+                            ((DataContainer.getSpielFeldBreite()*DataContainer.getSpielFeldHoehe())*30/100))){
                         int belegung = 0 ;
                         selectships.dispose();
                             new PlaceShips();
