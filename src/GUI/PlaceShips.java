@@ -105,15 +105,16 @@ import java.util.Random;
         randomBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         randomBtn.addActionListener(
                 (e) -> {
+
                     if(!(DataContainer.getfleet().isEmpty())){
-                        randomplace();
-                        if (DataContainer.getShipLenghts().size() == 0) {
-                            weiter.setEnabled(true); //button wird ernabled
-                        }
+                        randomplace(); // randomplace wird ausgeführt bis erfolgreiche platzierung gefunden wurde
                     }
                     else {
                         reset();
-                        randomplace();
+                       randomplace();
+                    }
+                    if (DataContainer.getShipLenghts().size() == 0) {
+                        weiter.setEnabled(true); //button wird ernabled
                     }
                 }
         );
@@ -464,64 +465,71 @@ import java.util.Random;
     }
 
     public boolean randomplace() {
-        s = null;
         if (!(DataContainer.getfleet().isEmpty()) && success) {
             DataContainer.setSelectedShip();
             s = DataContainer.getSelectedShip();
         }
         Random rand = new Random();
-        success=false;
-        int count=0;
-        while (!success && count < DataContainer.getSpielFeldBreite() * DataContainer.getSpielFeldHoehe() ) {
+        success = false;
+        int count = 0;
+        while (!success && count < DataContainer.getSpielFeldBreite() * DataContainer.getSpielFeldHoehe()) {
             int randomX = rand.nextInt(DataContainer.getSpielFeldBreite());
             int randomY = rand.nextInt(DataContainer.getSpielFeldHoehe());
             int startorr = rand.nextInt(4);
             if (s != null) {
                 s.setOrientation(startorr);
-                if (g1.moveShip(randomX, randomY)) {
                     for (int i = 0; i < 4; i++) {
+                        g1.moveShip(randomX, randomY);
                         success = g1.placeShip(s);
                         if (success) {
                             break;
                         }
                         s.setOrientation((startorr + i) % 4);
                     }
-                }
             }
             count++;
         }
-        switch (s.getOrientation()) {
-            case 0:
-                for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
-                    table.setValueAt(3, s.getYpos(), i);
-                }
-                break;
-            case 1:
-                for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
-                    table.setValueAt(3, i, s.getXpos());
-                }
-                break;
-            case 2:
-                for (int i = s.getXpos(); i <= s.getXpos() + s.getLength() - 1; i++) {
-                    table.setValueAt(3, s.getYpos(), i);
-                }
-                break;
-            case 3:
-                for (int i = s.getYpos(); i <= s.getYpos() + s.getLength() - 1; i++) {
-                    table.setValueAt(3, i, s.getXpos());
-                }
-                break;
-        }
-        DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
-        textAreaRemoveLine();
-
-        if (!(DataContainer.getfleet().isEmpty())) {
-            if (randomplace()) {
-                return true;
+        if (success) {
+            switch (s.getOrientation()) {
+                case 0:
+                    for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
+                        table.setValueAt(3, s.getYpos(), i);
+                    }
+                    break;
+                case 1:
+                    for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
+                        table.setValueAt(3, i, s.getXpos());
+                    }
+                    break;
+                case 2:
+                    for (int i = s.getXpos(); i <= s.getXpos() + s.getLength() - 1; i++) {
+                        table.setValueAt(3, s.getYpos(), i);
+                    }
+                    break;
+                case 3:
+                    for (int i = s.getYpos(); i <= s.getYpos() + s.getLength() - 1; i++) {
+                        table.setValueAt(3, i, s.getXpos());
+                    }
+                    break;
             }
+            s=null;
+            DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
+            textAreaRemoveLine();
+
+            if (!(DataContainer.getfleet().isEmpty())) {
+                if (randomplace()) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            reset();
+            return false;
         }
-        return false;
     }
+
+
+
 
     public void removeShip(int row,int  column){
         if(table.getValueAt(row,column)!=null && table.getValueAt(row, column).equals(3)){
