@@ -137,10 +137,6 @@ public class GameView {
         });
 
 
-
-
-
-
         Box hbox = Box.createHorizontalBox();
         hbox.add(tablePlayer);
         hbox.add(Box.createHorizontalStrut(10));
@@ -164,7 +160,7 @@ public class GameView {
 
         if (e.getButton() == MouseEvent.BUTTON1) {  //Linke Maustaste
 
-
+            //TODO aufruf schießen Methode
         }
         // rechte Maustaste
         else{
