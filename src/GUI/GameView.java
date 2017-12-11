@@ -2,11 +2,14 @@ package GUI;
 
 import Data.DataContainer;
 import Backup.save;
+import Data.Player;
 
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 /**
@@ -123,6 +126,21 @@ public class GameView {
                     + "rechten Spielfeldes klicken.\n");
         }
 
+
+        PlayerShootTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent event) {
+                TouchedMouse(event);
+            }
+            public void mouseReleased(MouseEvent event) {
+
+            }
+        });
+
+
+
+
+
+
         Box hbox = Box.createHorizontalBox();
         hbox.add(tablePlayer);
         hbox.add(Box.createHorizontalStrut(10));
@@ -135,5 +153,25 @@ public class GameView {
         playView.pack();
         playView.setLocationRelativeTo(null);
         playView.setVisible(true);
+    }
+    private void TouchedMouse(MouseEvent e) {
+        /*
+        speichert die angeklickte Zelle der Table
+         */
+        Point x = e.getPoint();
+        int column = PlayerShootTable.columnAtPoint(x);
+        int row = PlayerShootTable.rowAtPoint(x);
+
+        if (e.getButton() == MouseEvent.BUTTON1) {  //Linke Maustaste
+
+
+        }
+        // rechte Maustaste
+        else{
+
+        }
+
+
+
     }
 }
