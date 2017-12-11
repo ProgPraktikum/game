@@ -51,9 +51,7 @@ import java.util.Random;
             {
                 JMenuItem item = new JMenuItem("Beenden");
                 item.addActionListener(
-                        (e) -> {
-                            setships.dispose();
-                        }
+                        (e) -> setships.dispose()
                 );
                 menu.add(item);
             }
@@ -126,9 +124,7 @@ import java.util.Random;
         reset.setAlignmentX(Component.CENTER_ALIGNMENT);
         reset.setFont(new Font("Tahoma", Font.PLAIN, 20));
         reset.addActionListener(
-                (e) -> {
-                    randomplace();
-                }
+                (e) -> randomplace()
         );
 
 
@@ -449,7 +445,7 @@ import java.util.Random;
     private void textAreaRemoveLine(){
         int start;
         int end;
-        int count = -1;
+        int count;
 
         try{
             count = ta.getLineCount();
@@ -472,12 +468,12 @@ import java.util.Random;
         Random rand = new Random();
         success = false;
         int count = 0;
-        while (!success && count < DataContainer.getSpielFeldBreite() * DataContainer.getSpielFeldHoehe()) {
-            int randomX = rand.nextInt(DataContainer.getSpielFeldBreite());
-            int randomY = rand.nextInt(DataContainer.getSpielFeldHoehe());
-            int startorr = rand.nextInt(4);
-            if (s != null) {
-                s.setOrientation(startorr);
+        if(s != null) {
+            while (!success && count < DataContainer.getSpielFeldBreite() * DataContainer.getSpielFeldHoehe()) {
+                int randomX = rand.nextInt(DataContainer.getSpielFeldBreite());
+                int randomY = rand.nextInt(DataContainer.getSpielFeldHoehe());
+                int startorr = rand.nextInt(4);
+                    s.setOrientation(startorr);
                     for (int i = 0; i < 4; i++) {
                         g1.moveShip(randomX, randomY);
                         success = g1.placeShip(s);
@@ -486,8 +482,8 @@ import java.util.Random;
                         }
                         s.setOrientation((startorr + i) % 4);
                     }
+                count++;
             }
-            count++;
         }
         if (success) {
             switch (s.getOrientation()) {
