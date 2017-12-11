@@ -45,7 +45,25 @@ public class SelectModi {
         sSpiel.addActionListener(
                 (e) -> {
                     DataContainer.setGameType("ss");
-                   // new PlaceShips();
+
+                    DataContainer.setShipStack();
+                    DataContainer.setFleet();
+                    int anz = 1;
+                    for(int i = 5; i>=2; i--){
+
+
+                        for(int j = 1; j <= anz; j++){
+                            DataContainer.getShipLenghts().push(i);
+                            DataContainer.getShipLengthsAI().push(i);
+                            DataContainer.getShiplengthsinverted().push(i);
+                        }
+                        anz ++;
+                    }
+
+                    while( !(DataContainer.getShiplengthsinverted().isEmpty()) ){
+                        DataContainer.addShip(DataContainer.getShiplengthsinverted().pop());
+                    }
+                   new PlaceShips();
                     //new GameView();
                 }
         );

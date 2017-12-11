@@ -200,6 +200,9 @@ public class DataContainer {
         shiplengthsinverted= new Stack<>();
         fleet = new Stack<>();
     }
+    public static Stack<Integer> getShiplengthsinverted(){
+        return shiplengthsinverted;
+    }
 
     public static void setMaxShipLength(){
 
@@ -221,7 +224,7 @@ public class DataContainer {
     public static Stack<Integer> getShipLenghts(){
         return shipLenghts;
     }
-    public static Stack<Integer> getShipLengthsKI(){
+    public static Stack<Integer> getShipLengthsAI(){
         return shipLengthsAI;
     }
     public void setShipLenghts(Stack<Integer>shipLenghts){
