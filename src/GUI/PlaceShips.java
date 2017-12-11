@@ -111,6 +111,10 @@ import java.util.Random;
                             weiter.setEnabled(true); //button wird ernabled
                         }
                     }
+                    else {
+                        reset();
+                        randomplace();
+                    }
                 }
         );
 
@@ -122,42 +126,7 @@ import java.util.Random;
         reset.setFont(new Font("Tahoma", Font.PLAIN, 20));
         reset.addActionListener(
                 (e) -> {
-                    int currentlength = 2;
-                    boolean fieldempty = false;
-                    int rowempty;
-                    int columnempty;
-                    while (!(fieldempty)) {
-                        columnempty=0;
-                        for (int i = 0; i < DataContainer.getSpielFeldHoehe(); i++) {
-                            rowempty=0;
-                            for (int j = 0; j < DataContainer.getSpielFeldBreite(); j++) {
-                                if (table.getValueAt(i, j).equals(3)) {
-                                    rowempty =1;
-                                    if (currentlength == g1.getplayereboard(j, i).getMaster().getLength()) {
-                                        removeShip(i, j);
-                                    }
-                                } else {
-                                    rowempty += 0;
-                                }
-                                //TODO löschen in eine Methode packen und aufrufen.
-
-                            }
-                            //wenn treffer in reihe, dann wird er in spalte übertragen
-                            if(rowempty==1){
-                                columnempty = 1;
-                            }
-                            else{
-                                columnempty +=0;
-                            }
-                        }
-                        // wenn kein spaltentreffer, dann ist feld leer -> SCHLEIFENABBRUCH
-                        if(columnempty==0){
-                            fieldempty=true;
-                        }
-                        //schiffslänge wird nach komplettem durchlauf durch feld erhöht
-                        // (alle schiffe der vorherigen länge wurden bereits entfernt
-                        currentlength++;
-                    }
+                    randomplace();
                 }
         );
 
@@ -588,6 +557,42 @@ import java.util.Random;
             s.setypos(0);
             DataContainer.getShipLenghts().add(0,s.getLength());
             DataContainer.getfleet().push(s);
+        }
+    }
+    public void reset(){
+        int currentlength = 2;
+        boolean fieldempty = false;
+        int rowempty;
+        int columnempty;
+        while (!(fieldempty)) {
+            columnempty=0;
+            for (int i = 0; i < DataContainer.getSpielFeldHoehe(); i++) {
+                rowempty=0;
+                for (int j = 0; j < DataContainer.getSpielFeldBreite(); j++) {
+                    if (table.getValueAt(i, j).equals(3)) {
+                        rowempty =1;
+                        if (currentlength == g1.getplayereboard(j, i).getMaster().getLength()) {
+                            removeShip(i, j);
+                        }
+                    } else {
+                        rowempty += 0;
+                    }
+                }
+                //wenn treffer in reihe, dann wird er in spalte übertragen
+                if(rowempty==1){
+                    columnempty = 1;
+                }
+                else{
+                    columnempty +=0;
+                }
+            }
+            // wenn kein spaltentreffer, dann ist feld leer -> SCHLEIFENABBRUCH
+            if(columnempty==0){
+                fieldempty=true;
+            }
+            //schiffslänge wird nach komplettem durchlauf durch feld erhöht
+            // (alle schiffe der vorherigen länge wurden bereits entfernt
+            currentlength++;
         }
     }
 }
