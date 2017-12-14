@@ -91,6 +91,11 @@ public class Game implements GameInterface {
 			return -1;
 		}
 	}
+	public int getHit(int x, int y){
+		int i = map.checkboard(x,y);
+		DataContainer.getTable().setValueAt(i,y,x);
+		return i;
+	}
 
 	public AbstractTile getPlayerboard(int x, int y){
 		return map.getPlayerboardAt(x,y);

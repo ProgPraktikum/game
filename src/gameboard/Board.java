@@ -38,7 +38,7 @@ public class Board implements BoardInterface {
         return playershots[y][x];
     }
 
-    public int checkboard(int x, int y) {
+    public int checkboard(int x, int y){
         int i;
         if (x > DataContainer.getGameboardWidth() || x < 0) {
             return -1;
