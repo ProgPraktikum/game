@@ -1,13 +1,12 @@
 package GUI;
 
-import Data.DataContainer;
+import data.DataContainer;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -101,7 +100,7 @@ public class SelectShips {
                     DataContainer.setShipStack();
                     DataContainer.setFleet();
                     if (DataContainer.setShipLengthPush(spinners,
-                            ((DataContainer.getSpielFeldBreite()*DataContainer.getSpielFeldHoehe())*30/100))){
+                            ((DataContainer.getGameboardWidth()*DataContainer.getGameboardHeight())*30/100))){
                         int belegung = 0 ;
                         selectships.dispose();
                             new PlaceShips();

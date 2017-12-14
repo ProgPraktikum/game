@@ -1,11 +1,11 @@
-package Data;
+package data;
 
-public class Abstracttile {
+public class AbstractTile {
     //atribute
     private int status;
-    private ship master;
+    private Ship master;
 
-    public Abstracttile(){
+    public AbstractTile(){
         status=0;
         master=null;
     }
@@ -23,10 +23,10 @@ public class Abstracttile {
             master.hit();
         }
     }
-    public ship getMaster(){
+    public Ship getMaster(){
         return master;
     }
-    public void setMaster(ship master){
+    public void setMaster(Ship master){
         this.master=master;
         if(master!= null){
             setStatus(3);

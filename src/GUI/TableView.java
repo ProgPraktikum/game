@@ -1,6 +1,6 @@
 package GUI;
 
-import Data.DataContainer;
+import data.DataContainer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,18 +15,18 @@ public class TableView extends JTable {
     public TableView(){
 
         // Das array names wird über die Breite des Spielfeldes initialisiert
-        Object[] name = new Integer[DataContainer.getSpielFeldBreite()];
+        Object[] name = new Integer[DataContainer.getGameboardWidth()];
 
         // Das 2D Array wird über Spielfeldbreite und Hoehe initialisiert
-        Object[][] data = new Integer[DataContainer.getSpielFeldHoehe()][DataContainer.getSpielFeldBreite()];
+        Object[][] data = new Integer[DataContainer.getGameboardHeight()][DataContainer.getGameboardWidth()];
 
         // Array name wird mit 1 - breite numeriert
-        for(int i = 0; i < DataContainer.getSpielFeldBreite(); i++){
+        for(int i = 0; i < DataContainer.getGameboardWidth(); i++){
             name[i] = i;
         }
         // Array data wird komplett mit 0 befüllt. 0 steht hierbei für den Wert für WASSER
-        for(int i = 0; i < DataContainer.getSpielFeldHoehe();i++){
-            for(int j = 0; j < DataContainer.getSpielFeldBreite(); j++){
+        for(int i = 0; i < DataContainer.getGameboardHeight(); i++){
+            for(int j = 0; j < DataContainer.getGameboardWidth(); j++){
                 data[i][j] = 0;
             }
         }

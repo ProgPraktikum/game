@@ -1,4 +1,4 @@
-package Data;
+package data;
 
 import GUI.TableView;
 
@@ -21,11 +21,11 @@ public class DataContainer {
     private static String gameType = null;
 
     //Spielfeld
-    private static int spielFeldBreite = 10;
-    private static int spielFeldHoehe = 10;
+    private static int width = 10;
+    private static int height = 10;
 
     // Maximale Belegungsfaktor
-    private static int occupancy =  ((spielFeldBreite * spielFeldHoehe)*30/100);
+    private static int occupancy =  ((width * height)*30/100);
 
     // Variabe für die maximale Schiffslänge
     private static int maxShipLength;
@@ -39,13 +39,13 @@ public class DataContainer {
 *Stack speichert längen in umgekehrter reihenfolge zu fleet, um dafür zu sorgen dass in fleet das größte schiff
  *  als letztes zum stack hinzugefügt wird
  */
-    private static Stack<Integer> shiplengthsinverted;
+    private static Stack<Integer> shipLengthsInverted;
 
     /*
     *Dieser stack ist für die aus den schiffslängen generierten schiffe
     *
     */
-    private static Stack<ship> fleet;
+    private static Stack<Ship> fleet;
 
     /*
      * Dieser Stack ist für die gewaehlten schiffe für die AI
@@ -54,7 +54,7 @@ public class DataContainer {
     private static Stack<Integer> shipLengthsAI;
 
     //aktuelles schiff für plazierung
-    private static ship selectedShip;
+    private static Ship selectedShip;
 
     // Spieler Table
     private static TableView table = null;
@@ -108,29 +108,29 @@ public class DataContainer {
     /**
     Gibt die Spielfeldbreite zurueck
      */
-    public static int getSpielFeldBreite(){
-        return  spielFeldBreite;
+    public static int getGameboardWidth(){
+        return width;
     }
 
     /**
     setzt die Spielfeldbreite
      */
-    public static void setSpielFeldBreite(int n){
-        spielFeldBreite = n;
+    public static void setGameboardWidth(int n){
+        width = n;
     }
 
     /**
     gibt die Spielfeldhoehe zurueck
      */
-    public static int getSpielFeldHoehe(){
-        return spielFeldHoehe;
+    public static int getGameboardHeight(){
+        return height;
     }
 
     /**
     setzt die Spielfeldhoehe
      */
-    public static void setSpielFeldHoehe(int n){
-        spielFeldHoehe = n;
+    public static void setGameboardHeight(int n){
+        height = n;
     }
 
 
@@ -197,19 +197,19 @@ public class DataContainer {
     *erstellt schiffsstack
     */
     public static void  setFleet(){
-        shiplengthsinverted= new Stack<>();
+        shipLengthsInverted= new Stack<>();
         fleet = new Stack<>();
     }
-    public static Stack<Integer> getShiplengthsinverted(){
-        return shiplengthsinverted;
+    public static Stack<Integer> getShipLengthsInverted(){
+        return shipLengthsInverted;
     }
 
     public static void setMaxShipLength(){
 
-        if(DataContainer.getSpielFeldHoehe() < DataContainer.getSpielFeldBreite()){
-            maxShipLength = DataContainer.getSpielFeldBreite() / 2;
+        if(DataContainer.getGameboardHeight() < DataContainer.getGameboardWidth()){
+            maxShipLength = DataContainer.getGameboardWidth() / 2;
         }else{
-            maxShipLength = DataContainer.getSpielFeldHoehe() / 2;
+            maxShipLength = DataContainer.getGameboardHeight() / 2;
         }
     }
 
@@ -238,7 +238,7 @@ public class DataContainer {
      * get für fleet stack
      * @return
      */
-    public static Stack<ship> getfleet(){
+    public static Stack<Ship> getfleet(){
         return fleet;
     }
 
@@ -247,7 +247,7 @@ public class DataContainer {
      * @param l
      */
     public static void addShip(int l){
-        ship s = new ship(l);
+        Ship s = new Ship(l);
         fleet.push(s);
     }
 
@@ -262,7 +262,7 @@ public class DataContainer {
      * get für selectedShip
      * @return
      */
-    public static ship getSelectedShip(){
+    public static Ship getSelectedShip(){
         return selectedShip;
     }
 
@@ -293,14 +293,14 @@ public class DataContainer {
                 shipLengthsAI.push(shipCounter);
                 //fuegt paralell zu schiffslaengen
                 // entsprechende schiffe in stack zur spaeteren plazierung ein
-                shiplengthsinverted.push(shipCounter);
+                shipLengthsInverted.push(shipCounter);
                 //addShip(shipCounter);
             }
 
             shipCounter--;
         }
-        while( !(shiplengthsinverted.isEmpty()) ){
-            addShip(shiplengthsinverted.pop());
+        while( !(shipLengthsInverted.isEmpty()) ){
+            addShip(shipLengthsInverted.pop());
         }
         return true;
     }
@@ -308,7 +308,7 @@ public class DataContainer {
 
 
     //testfunktionen
-    public static void setSelectedShip(ship s){
+    public static void setSelectedShip(Ship s){
         selectedShip = s;
     }
 }

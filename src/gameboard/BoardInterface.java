@@ -3,10 +3,10 @@
  * @author Felix
  */
 
-package Gameboard;
-import Data.*;
+package gameboard;
+import data.*;
 
-public interface boardinterface {
+public interface BoardInterface {
 
     int getPlayershots(int x, int y);
     /* gibt wert an x,y stelle im array playershots aus
@@ -16,12 +16,12 @@ public interface boardinterface {
     /*setzt wert an x,y stelle in playershots auf value
     */
 
-    boolean place(ship s);
+    boolean place(Ship s);
     /*place plaziert ein schiff im spielfeld an der stelle x, y mit orientation o
     und länge l und gibt bei erfolg true und bei fehler false zurück
     */
 
-    boolean checkPlace(ship s);
+    boolean checkPlace(Ship s);
     /* checkplace überprüft ob ein schiff an stelle x,y mit orientation o und
     länge l ins feld plaziert werden kann
     */

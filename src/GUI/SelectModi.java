@@ -1,7 +1,7 @@
 package GUI;
 
-import Data.DataContainer;
-import GUI.PlaceShips;
+import data.DataContainer;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -55,13 +55,13 @@ public class SelectModi {
                         for(int j = 1; j <= anz; j++){
                             DataContainer.getShipLenghts().push(i);
                             DataContainer.getShipLengthsAI().push(i);
-                            DataContainer.getShiplengthsinverted().push(i);
+                            DataContainer.getShipLengthsInverted().push(i);
                         }
                         anz ++;
                     }
 
-                    while( !(DataContainer.getShiplengthsinverted().isEmpty()) ){
-                        DataContainer.addShip(DataContainer.getShiplengthsinverted().pop());
+                    while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
+                        DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
                     }
                    new PlaceShips();
                     //new GameView();

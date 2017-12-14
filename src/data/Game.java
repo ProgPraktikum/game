@@ -1,21 +1,21 @@
-package Data;
+package data;
 
 
-import javax.xml.crypto.Data;
-import java.util.Random;
+import gameboard.Board;
+
 import java.util.Stack;
 
 /**
  * enthält Hauptlogik des spiels
  */
-public class game implements gameinterface{
+public class Game implements GameInterface {
 	private boolean is_online;
-	//konstruktor feldgroesse, online/ singleplayer game
-	private Gameboard.board map;
+	//konstruktor feldgroesse, online/ singleplayer Game
+	private Board map;
 
-	public game (boolean o) {
+	public Game(boolean o) {
 		is_online = o;
-		map = new Gameboard.board();
+		map = new Board();
 	}
 	//methoden
 
@@ -28,7 +28,7 @@ public class game implements gameinterface{
     bei erfolg wird true ausgegeben und bei misserfolg false
      */
     public boolean moveShip(int x, int y){
-        ship s = DataContainer.getSelectedShip();
+        Ship s = DataContainer.getSelectedShip();
         int xold= s.getXpos();
         int yold =s.getYpos();
         s.setxpos(x);
@@ -44,13 +44,13 @@ public class game implements gameinterface{
     }
 	//aendert orientierung des schiffs
 	public void rotateShip(int i){
-		ship s = DataContainer.getSelectedShip();
+		Ship s = DataContainer.getSelectedShip();
 		s.setOrientation(i);
 	}
 	/*
 	plaziert schiff auf spielbrett
 		 */
-	public boolean placeShip(ship s){
+	public boolean placeShip(Ship s){
 		return map.place(s);
 	}
 
@@ -92,10 +92,10 @@ public class game implements gameinterface{
 		}
 	}
 
-	public Abstracttile getplayereboard(int x,int y){
+	public AbstractTile getPlayerboard(int x, int y){
 		return map.getPlayerboardAt(x,y);
 	}
-	public void removeship(ship s) {
+	public void removeShip(Ship s) {
 		switch (s.getOrientation()) {
 			case 0:
 				for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
@@ -127,7 +127,7 @@ public class game implements gameinterface{
 		//saving foo
 	}
 
-	public void getboard(){
+	public void getBoard(){
 	    map.getPlayerboard();
     }
 }

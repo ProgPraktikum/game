@@ -1,7 +1,7 @@
 package GUI;
 
-import Data.DataContainer;
-import Gameboard.*;
+import data.DataContainer;
+import gameboard.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,8 +88,8 @@ public class SelectFieldSize {
         ok.addActionListener(
                 (e) -> {
 
-                    DataContainer.setSpielFeldBreite((int) spinnerBreite.getValue());
-                    DataContainer.setSpielFeldHoehe((int) spinnerHoehe.getValue());
+                    DataContainer.setGameboardWidth((int) spinnerBreite.getValue());
+                    DataContainer.setGameboardHeight((int) spinnerHoehe.getValue());
 
                     eingaben.setVisible(false);
 
@@ -98,7 +98,7 @@ public class SelectFieldSize {
 
                     new SelectShips();
                     //erzeugt spielbrett objekt mit datenstruktur
-                    board b = new board();
+                    Board b = new Board();
                 }
         );
 

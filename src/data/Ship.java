@@ -1,9 +1,9 @@
-package Data;
+package data;
 /*
 @author: Felix
 desc: Datenklasse zum zusammenfassen der schiffsatribute beim plazieren
 */
-public class ship{
+public class Ship{
 
 //atribute
 	private int length = 0;
@@ -12,7 +12,7 @@ public class ship{
 	private int orientation =0;
 	private int hitcounter =0;
 //konstruktor
-	public ship(int l){
+	public Ship(int l){
 		if (l != 0){
 			length = l;
 			hitcounter=l;

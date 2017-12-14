@@ -1,6 +1,6 @@
 package GUI;
 
-import Data.DataContainer;
+import data.DataContainer;
 
 import javax.swing.*;
 import java.awt.*;

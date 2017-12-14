@@ -1,8 +1,6 @@
 package GUI;
 
-import Data.DataContainer;
-import Backup.save;
-import Data.Player;
+import data.DataContainer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +25,7 @@ public class GameView {
 
         JDialog playView = new JDialog();
         playView.setModal(true);
-        playView.setSize((DataContainer.getSpielFeldBreite()*2 + 100), (DataContainer.getSpielFeldHoehe() + 100));
+        playView.setSize((DataContainer.getGameboardWidth()*2 + 100), (DataContainer.getGameboardHeight() + 100));
         playView.setUndecorated(true);
         playView.setContentPane(Box.createVerticalBox());
 
@@ -43,8 +41,8 @@ public class GameView {
             tablePlayer = DataContainer.getTable();          // das Place ships window wird die Table anlegen
         }
         PlayerShootTable = new TableView();
-        for(int i = 0; i <DataContainer.getSpielFeldHoehe(); i++){
-            for(int j = 0; j < DataContainer.getSpielFeldBreite(); j++){
+        for(int i = 0; i <DataContainer.getGameboardHeight(); i++){
+            for(int j = 0; j < DataContainer.getGameboardWidth(); j++){
                 PlayerShootTable.setValueAt(9,i,j);
             }
         }

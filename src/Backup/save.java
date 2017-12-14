@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import Data.DataContainer;
+import data.DataContainer;
 
 
 /**
@@ -34,14 +34,14 @@ public static void saveBDF(String file){
          * Die Spielfeldbreite wird in file geschrieben
          */
         save.write("Fieldwidth ");
-        save.write("" + DataContainer.getSpielFeldBreite());
+        save.write("" + DataContainer.getGameboardWidth());
         save.write("\r\n");
 
         /**
          * Die Spielfeldhoehe wird in file geschrieben
          */
         save.write("Fieldheight ");
-        save.write("" + DataContainer.getSpielFeldHoehe());
+        save.write("" + DataContainer.getGameboardHeight());
         save.write("\r\n");
 
 

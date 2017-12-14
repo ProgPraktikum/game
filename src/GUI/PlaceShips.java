@@ -1,9 +1,10 @@
 package GUI;
 
-import Data.ship;
-import Data.DataContainer;
-import Data.Directions;
-import Data.game;
+import data.Game;
+import data.Ship;
+import data.DataContainer;
+import data.Directions;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
@@ -22,12 +23,12 @@ import java.util.Random;
     private Point startingPoint;
     private JTextArea ta;
     private JScrollPane scrollPane;
-    private game g1 = new game(false);
+    private Game g1 = new Game(false);
     //success gibt an ob die letzte plazierung erfolgreich war um zu verhindern,
     // dass das nächste schiff ausgewählt wird bevor das vorherige platziert ist
     private boolean success = true;
     //s ist hilfsvariable um ausgewähltes schiff zu speichern
-    ship s=null;
+    Ship s=null;
 
     PlaceShips() {
 
@@ -282,7 +283,7 @@ import java.util.Random;
                         textAreaRemoveLine();
                     }
                 }
-                g1.getboard();
+                g1.getBoard();
                 if (DataContainer.getShipLenghts().isEmpty()) {
                     return;
                 }
@@ -356,7 +357,7 @@ import java.util.Random;
 
                 case RECHTS:
                     check=true;
-                    if(DataContainer.getSpielFeldBreite()-1 >=(column + length-1)){
+                    if(DataContainer.getGameboardWidth()-1 >=(column + length-1)){
                         for(int i = column; i <=column + length - 1; i++){
                             if(table.getValueAt(row, i).equals(3)){
                                 check= false;
@@ -370,7 +371,7 @@ import java.util.Random;
 
                 case UNTEN:
                     check=true;
-                    if(DataContainer.getSpielFeldHoehe() - 1 >= (row + length -1)){
+                    if(DataContainer.getGameboardHeight() - 1 >= (row + length -1)){
                         for(int i = row; i <= row + length -1; i++) {
                             if (table.getValueAt(i, column).equals(3)) {
                                 check = false;
@@ -421,7 +422,7 @@ import java.util.Random;
                     break;
 
                 case RECHTS:
-                    if(x + size - 1 <= DataContainer.getSpielFeldBreite() - 1){
+                    if(x + size - 1 <= DataContainer.getGameboardWidth() - 1){
                         if(table.getValueAt(y,x + size - 1).equals(4)){
                             table.setValueAt(0,y,x + size - 1);
                         }
@@ -429,7 +430,7 @@ import java.util.Random;
                     break;
 
                 case UNTEN:
-                    if(y + size - 1 <= DataContainer.getSpielFeldHoehe() - 1){
+                    if(y + size - 1 <= DataContainer.getGameboardHeight() - 1){
                         if(table.getValueAt(y + size - 1, x).equals(4)){
                             table.setValueAt(0,y + size - 1, x);
                         }
@@ -469,9 +470,9 @@ import java.util.Random;
         success = false;
         int count = 0;
         if(s != null) {
-            while (!success && count < DataContainer.getSpielFeldBreite() * DataContainer.getSpielFeldHoehe()) {
-                int randomX = rand.nextInt(DataContainer.getSpielFeldBreite());
-                int randomY = rand.nextInt(DataContainer.getSpielFeldHoehe());
+            while (!success && count < DataContainer.getGameboardWidth() * DataContainer.getGameboardHeight()) {
+                int randomX = rand.nextInt(DataContainer.getGameboardWidth());
+                int randomY = rand.nextInt(DataContainer.getGameboardHeight());
                 int startorr = rand.nextInt(4);
                     s.setOrientation(startorr);
                     for (int i = 0; i < 4; i++) {
@@ -529,7 +530,7 @@ import java.util.Random;
 
     public void removeShip(int row,int  column){
         if(table.getValueAt(row,column)!=null && table.getValueAt(row, column).equals(3)){
-            ship s=g1.getplayereboard(column, row).getMaster();
+            Ship s=g1.getPlayerboard(column, row).getMaster();
             //DataContainer.getfleet();
             String add= s.getLength()+"\n";
             ta.insert(add,0);
@@ -555,7 +556,7 @@ import java.util.Random;
                     }
                     break;
             }
-            g1.removeship(s);
+            g1.removeShip(s);
             s.setOrientation(0);
             s.setxpos(0);
             s.setypos(0);
@@ -570,12 +571,12 @@ import java.util.Random;
         int columnempty;
         while (!(fieldempty)) {
             columnempty=0;
-            for (int i = 0; i < DataContainer.getSpielFeldHoehe(); i++) {
+            for (int i = 0; i < DataContainer.getGameboardHeight(); i++) {
                 rowempty=0;
-                for (int j = 0; j < DataContainer.getSpielFeldBreite(); j++) {
+                for (int j = 0; j < DataContainer.getGameboardWidth(); j++) {
                     if (table.getValueAt(i, j).equals(3)) {
                         rowempty =1;
-                        if (currentlength == g1.getplayereboard(j, i).getMaster().getLength()) {
+                        if (currentlength == g1.getPlayerboard(j, i).getMaster().getLength()) {
                             removeShip(i, j);
                         }
                     } else {

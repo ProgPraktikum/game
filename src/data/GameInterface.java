@@ -1,5 +1,5 @@
-package Data;
-public interface gameinterface {
+package data;
+public interface GameInterface {
 	/* 
 	@Author: Felix
 	Desc: Hauptkomponente des spiels komuniziert mit spielfeld, netzwerk
@@ -31,7 +31,7 @@ public interface gameinterface {
 	/*
 	plaziert schiff auf spielbrett
 	*/
-	boolean placeShip(ship s);
+	boolean placeShip(Ship s);
 
 
 	/* methode um schüsse abzugeben, übergeben wird die zielkoordinate und der zielspieler
