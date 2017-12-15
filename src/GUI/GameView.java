@@ -1,7 +1,7 @@
 package GUI;
 
 import data.DataContainer;
-
+import data.Game;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JFileChooser;
@@ -33,7 +33,6 @@ public class GameView {
          * erstellung der TableView abhängig des gewählten GameTyp
          */
         if(DataContainer.getGameType().equals("ss")) {   //SS steht für schnelles Spiel
-            DataContainer.setTable(new TableView());
             tablePlayer = DataContainer.getTable();
 
         }else if(DataContainer.getGameType().equals("bdf")){ // bdf steht für Benutzerdefiniert
@@ -46,6 +45,7 @@ public class GameView {
                 PlayerShootTable.setValueAt(9,i,j);
             }
         }
+        DataContainer.setPlayerShootTable(PlayerShootTable);
 
 
         /**
@@ -91,6 +91,8 @@ public class GameView {
                                     Backup.save.saveBDF(filename);
                                 }
                             }
+                            //DEBUG
+                            DataContainer.debugOpponent= Game.getMap();
                         }
                 );
                 menu.add(item);
@@ -125,7 +127,7 @@ public class GameView {
         }
 
 
-        PlayerShootTable.addMouseListener(new MouseAdapter() {
+        DataContainer.getPlayerShootTable().addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent event) {
                 TouchedMouse(event);
             }
@@ -138,7 +140,7 @@ public class GameView {
         Box hbox = Box.createHorizontalBox();
         hbox.add(tablePlayer);
         hbox.add(Box.createHorizontalStrut(10));
-        hbox.add(PlayerShootTable);
+        hbox.add(DataContainer.getPlayerShootTable());
 
 
         playView.setJMenuBar(bar);
@@ -157,7 +159,11 @@ public class GameView {
         int row = PlayerShootTable.rowAtPoint(x);
 
         if (e.getButton() == MouseEvent.BUTTON1) {  //Linke Maustaste
-
+            //DEBUG
+            DataContainer.setAllowed(true);
+            if(DataContainer.getPlayerShootTable().getValueAt(row,column).equals(9)) {
+                Game.shoot(column, row);
+            }
             //TODO aufruf schießen Methode
         }
         // rechte Maustaste

@@ -61,12 +61,12 @@ public class Board implements BoardInterface {
                         int pos;
                         switch (orr){
                             case 0:
-                                for (pos = s.getXpos(); pos >= s.getXpos() - s.getLength() + 1; i--) {
+                                for (pos = s.getXpos(); pos >= s.getXpos() - s.getLength() + 1; pos--) {
                                     playerboard[s.getYpos()][pos].setStatus(2);
                                 }
                                 break;
                             case 1:
-                                for (pos = s.getYpos(); pos >= s.getYpos() - s.getLength() + 1; pos++) {
+                                for (pos = s.getYpos(); pos >= s.getYpos() - s.getLength() + 1; pos--) {
                                     playerboard[pos][s.getXpos()].setStatus(2);
                                 }
                                 break;
@@ -254,6 +254,9 @@ public class Board implements BoardInterface {
         playerboard[y][x].setMaster(master);
     }
 
+    public Ship getMasterAt(int x,int y){
+        return playerboard[y][x].getMaster();
+    }
     //debug functions
     public void getPlayerboard(){
         System.out.println("Arraystatus:");

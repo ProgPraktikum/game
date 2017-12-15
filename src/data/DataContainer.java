@@ -1,6 +1,7 @@
 package data;
 
 import GUI.TableView;
+import gameboard.Board;
 
 import javax.swing.*;
 import java.util.Iterator;
@@ -18,6 +19,11 @@ import java.util.Stack;
 public class DataContainer {
 
     //Gametyp
+    /**"ss" = schnelles Spiel
+     * "bdf" = benutzerdefinert
+     * "mp" = multiplayer
+     * "mps"= Ki gegen Ki modus
+     */
     private static String gameType = null;
 
     //Spielfeld
@@ -58,7 +64,10 @@ public class DataContainer {
 
     // Spieler Table
     private static TableView table = null;
+    private static TableView playerShootTable=null;
 
+    //Debug board
+    public static Board debugOpponent = new Board();
     // ScrollPane
     JScrollPane scrollPane = null;
 
@@ -81,6 +90,12 @@ public class DataContainer {
 
     private static String networkIP = null;
 
+    public static TableView getPlayerShootTable(){
+        return playerShootTable;
+    }
+    public static void setPlayerShootTable(TableView t){
+        playerShootTable = t;
+    }
     public static boolean getIsHost(){
         return isHost;
     }

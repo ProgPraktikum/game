@@ -23,7 +23,6 @@ import java.util.Random;
     private Point startingPoint;
     private JTextArea ta;
     private JScrollPane scrollPane;
-    private Game g1 = new Game(false);
     //success gibt an ob die letzte plazierung erfolgreich war um zu verhindern,
     // dass das nächste schiff ausgewählt wird bevor das vorherige platziert ist
     private boolean success = true;
@@ -125,7 +124,7 @@ import java.util.Random;
         reset.setAlignmentX(Component.CENTER_ALIGNMENT);
         reset.setFont(new Font("Tahoma", Font.PLAIN, 20));
         reset.addActionListener(
-                (e) -> randomplace()
+                (e) -> reset()
         );
 
 
@@ -242,15 +241,15 @@ import java.util.Random;
                 if (s != null) {
                     s.setOrientation(0);
                     if (start_y > end_y) { //orrientierung OBEN(=1)
-                        g1.rotateShip(1);
+                        Game.rotateShip(1);
                     } else if (end_x > start_x) { //orrientierung RECHTS (=2)
-                        g1.rotateShip(2);
+                        Game.rotateShip(2);
                     } else if (start_y < end_y) { //Orrientierung UNTEN (=3)
-                        g1.rotateShip(3);
+                        Game.rotateShip(3);
                     }
                     success=false;
-                    if(g1.moveShip(start_x, start_y)){
-                        success = g1.placeShip(DataContainer.getSelectedShip());
+                    if(Game.moveShip(start_x, start_y)){
+                        success = Game.placeShip(DataContainer.getSelectedShip());
                     }
 
                     /**grafische darstellung des schiffs
@@ -283,7 +282,6 @@ import java.util.Random;
                         textAreaRemoveLine();
                     }
                 }
-                g1.getBoard();
                 if (DataContainer.getShipLenghts().isEmpty()) {
                     return;
                 }
@@ -475,13 +473,12 @@ import java.util.Random;
                 int randomY = rand.nextInt(DataContainer.getGameboardHeight());
                 int startorr = rand.nextInt(4);
                     s.setOrientation(startorr);
-                    for (int i = 0; i < 4; i++) {
-                        g1.moveShip(randomX, randomY);
-                        success = g1.placeShip(s);
-                        if (success) {
-                            break;
-                        }
-                        s.setOrientation((startorr + i) % 4);
+                    int i =0;
+                    while(i <4 && !success){
+                        Game.moveShip(randomX,randomY);
+                        s.setOrientation((startorr + i)%4);
+                        success= Game.placeShip(s);
+                        i++;
                     }
                 count++;
             }
@@ -530,7 +527,7 @@ import java.util.Random;
 
     public void removeShip(int row,int  column){
         if(table.getValueAt(row,column)!=null && table.getValueAt(row, column).equals(3)){
-            Ship s=g1.getPlayerboard(column, row).getMaster();
+            Ship s=Game.getPlayerboard(column, row).getMaster();
             //DataContainer.getfleet();
             String add= s.getLength()+"\n";
             ta.insert(add,0);
@@ -556,7 +553,7 @@ import java.util.Random;
                     }
                     break;
             }
-            g1.removeShip(s);
+            Game.removeShip(s);
             s.setOrientation(0);
             s.setxpos(0);
             s.setypos(0);
@@ -576,7 +573,7 @@ import java.util.Random;
                 for (int j = 0; j < DataContainer.getGameboardWidth(); j++) {
                     if (table.getValueAt(i, j).equals(3)) {
                         rowempty =1;
-                        if (currentlength == g1.getPlayerboard(j, i).getMaster().getLength()) {
+                        if (currentlength == Game.getPlayerboard(j, i).getMaster().getLength()) {
                             removeShip(i, j);
                         }
                     } else {
@@ -599,5 +596,6 @@ import java.util.Random;
             // (alle schiffe der vorherigen länge wurden bereits entfernt
             currentlength++;
         }
+        success= true;
     }
 }
