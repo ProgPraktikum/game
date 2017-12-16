@@ -27,23 +27,13 @@ public class Game{
      */
     public static boolean moveShip(int x, int y){
         Ship s = DataContainer.getSelectedShip();
-        int xold= s.getXpos();
-        int yold =s.getYpos();
-        s.setxpos(x);
-        s.setypos(y);
-        if(map.checkPlace(s)){
-            return true;
-        }else{
-            s.setxpos(xold);
-            s.setypos(yold);
-            return false;
-        }
+        return map.moveShip(x,y,s);
 
     }
 	//aendert orientierung des schiffs
 	public static void rotateShip(int i){
 		Ship s = DataContainer.getSelectedShip();
-		s.setOrientation(i);
+		map.rotateShip(i, s);
 	}
 	/*
 	plaziert schiff auf spielbrett
@@ -119,32 +109,7 @@ public class Game{
 		return map.getPlayerboardAt(x,y);
 	}
 	public static void removeShip(Ship s) {
-		switch (s.getOrientation()) {
-			case 0:
-				for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
-					map.setPlayerboardAt(i,s.getYpos(),0);
-					map.setPlayerboardAt(i,s.getYpos(),null);
-				}
-				break;
-			case 1:
-				for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
-					map.setPlayerboardAt(s.getXpos(),i,0);
-					map.setPlayerboardAt(s.getXpos(),i,null);
-				}
-				break;
-			case 2:
-				for (int i = s.getXpos(); i <= s.getXpos() + s.getLength() - 1; i++) {
-					map.setPlayerboardAt(i,s.getYpos(),0);
-					map.setPlayerboardAt(i,s.getYpos(),null);
-				}
-				break;
-			case 3:
-				for (int i = s.getYpos(); i <= s.getYpos() + s.getLength() - 1; i++) {
-					map.setPlayerboardAt(s.getXpos(),i,0);
-					map.setPlayerboardAt(s.getXpos(),i,null);
-				}
-				break;
-		}
+		map.removeShip(s);
 	}
 
 	/**

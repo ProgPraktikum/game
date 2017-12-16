@@ -89,6 +89,57 @@ public class Board implements BoardInterface {
             }
         }
     }
+    //methoden zur schiffsmanipulation
+    //bewegt schiff s an x, y koordinate
+    public boolean moveShip(int x, int y, Ship s){
+        int xold= s.getXpos();
+        int yold =s.getYpos();
+        s.setxpos(x);
+        s.setypos(y);
+        if(checkPlace(s)){
+            return true;
+        }else{
+            s.setxpos(xold);
+            s.setypos(yold);
+            return false;
+        }
+
+    }
+    //aendert orientierung des schiffs
+    public void rotateShip(int i, Ship s){
+        if(i == 0 || i ==1 || i == 2 || i== 3) {
+            s.setOrientation(i);
+        }
+    }
+
+    public void removeShip(Ship s) {
+        switch (s.getOrientation()) {
+            case 0:
+                for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
+                    setPlayerboardAt(i,s.getYpos(),0);
+                    setPlayerboardAt(i,s.getYpos(),null);
+                }
+                break;
+            case 1:
+                for (int i = s.getYpos(); i >= s.getYpos() - s.getLength() + 1; i--) {
+                    setPlayerboardAt(s.getXpos(),i,0);
+                    setPlayerboardAt(s.getXpos(),i,null);
+                }
+                break;
+            case 2:
+                for (int i = s.getXpos(); i <= s.getXpos() + s.getLength() - 1; i++) {
+                    setPlayerboardAt(i,s.getYpos(),0);
+                    setPlayerboardAt(i,s.getYpos(),null);
+                }
+                break;
+            case 3:
+                for (int i = s.getYpos(); i <= s.getYpos() + s.getLength() - 1; i++) {
+                    setPlayerboardAt(s.getXpos(),i,0);
+                    setPlayerboardAt(s.getXpos(),i,null);
+                }
+                break;
+        }
+    }
 
     public boolean place(Ship s) {
         if (checkPlace(s)){
@@ -242,6 +293,7 @@ public class Board implements BoardInterface {
         }
         return true; //default val needed
     }
+
 
     public AbstractTile getPlayerboardAt(int x,int y){
        return playerboard[y][x];
