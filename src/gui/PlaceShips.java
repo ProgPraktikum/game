@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import data.Game;
 import data.Ship;

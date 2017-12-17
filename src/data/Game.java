@@ -1,7 +1,7 @@
 package data;
 
 
-import GUI.TableView;
+import gui.TableView;
 import gameboard.Board;
 
 import java.util.Stack;

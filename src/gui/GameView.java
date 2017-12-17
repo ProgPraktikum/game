@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import data.DataContainer;
 import data.Game;
@@ -88,7 +88,7 @@ public class GameView {
                                     String filename = file.getAbsolutePath() + "-" + timestamp
                                             + ".txt";
                                     if (DataContainer.getGameType().equals("bdf"))
-                                    Backup.save.saveBDF(filename);
+                                    backup.save.saveBDF(filename);
                                 }
                             }
                             //DEBUG
