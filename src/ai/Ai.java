@@ -3,9 +3,8 @@ package ai;
 import data.DataContainer;
 
 
-public class AI {
+public class Ai {
     // MEMBER VARIABLES
-    private DataContainer settings = new DataContainer();
     private static int boardWidth;
     private static int boardHeight;
 
@@ -13,9 +12,9 @@ public class AI {
     private static int aiStrikes[][];
 
     // CONSTRUCTOR
-    public AI() {
-        boardWidth = settings.getGameboardWidth();
-        boardHeight = settings.getGameboardHeight();
+    public Ai() {
+        boardWidth = data.DataContainer.getGameboardWidth();
+        boardHeight = data.DataContainer.getGameboardHeight();
         aiBoard = new int[boardWidth][boardHeight];
         aiStrikes = new int[boardWidth][boardHeight];
     }

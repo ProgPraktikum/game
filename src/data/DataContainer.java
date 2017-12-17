@@ -54,7 +54,7 @@ public class DataContainer {
     private static Stack<Ship> fleet;
 
     /*
-     * Dieser Stack ist für die gewaehlten schiffe für die AI
+     * Dieser Stack ist für die gewaehlten schiffe für die Ai
      * speichert die Anzahl der Schiffe mit der Länge xxx
      */
     private static Stack<Integer> shipLengthsAI;
@@ -201,7 +201,7 @@ public class DataContainer {
 
 
     /**
-   erstellt die stacks für die schiffe des Spielers und der AI
+   erstellt die stacks für die schiffe des Spielers und der Ai
     */
     public static void setShipStack(){
         shipLenghts = new Stack<>();
