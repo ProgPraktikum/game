@@ -1,8 +1,6 @@
 package ai;
 
-import Gameboard.board;
-import Data.DataContainer;
-import Data.game;
+import data.DataContainer;
 
 
 public class AI {
@@ -16,8 +14,8 @@ public class AI {
 
     // CONSTRUCTOR
     public AI() {
-        boardWidth = settings.getSpielFeldBreite();
-        boardHeight = settings.getSpielFeldHoehe();
+        boardWidth = settings.getGameboardWidth();
+        boardHeight = settings.getGameboardHeight();
         aiBoard = new int[boardWidth][boardHeight];
         aiStrikes = new int[boardWidth][boardHeight];
     }
@@ -51,6 +49,6 @@ public class AI {
     }
 
     private void place() {
-        /* place ships on board */
+        /* place ships on Board */
     }
 }

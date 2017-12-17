@@ -1,8 +1,9 @@
 package GUI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-
+import java.io.IOException;
 
 
 /** Diese Klasse bildet das Startfenster, also quasi das Hauptmenü.
@@ -20,22 +21,31 @@ public class GUIMain {
     public GUIMain(){
 
         mainFrame = new JFrame();
-
+        mainFrame.setTitle("Schiffe versenken");
         mainFrame.setUndecorated(true);
         mainFrame.setBackground(Color.BLACK);
-        mainFrame.setOpacity(0.8f);
         mainFrame.setContentPane(Box.createVerticalBox());
 
-        /*
+        /**
         Schlachtschiff Bild (Startbildschirm)
          */
-        Icon cover = new ImageIcon("Schlachtschiff.jpg");
+        ImageIcon cover = null;
+        try{
+            Image image = ImageIO.read(getClass().getResource("Schlachtschiff.jpg"));
+            cover = new ImageIcon(image);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+
         JLabel schlachtschiff = new JLabel(cover);
         schlachtschiff.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainFrame.add(schlachtschiff);
 
-        /*
-         ButtonBox
+
+
+        /**
+         ButtonBox nimmt sämtliche vorhanden JButtons auf
          */
         Box btn_box = Box.createVerticalBox();
 

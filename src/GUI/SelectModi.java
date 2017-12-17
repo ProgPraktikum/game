@@ -1,6 +1,6 @@
 package GUI;
 
-import GUI.SelectFieldSize;
+import data.DataContainer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,11 +44,31 @@ public class SelectModi {
         sSpiel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         sSpiel.addActionListener(
                 (e) -> {
+                    DataContainer.setGameType("ss");
 
+                    DataContainer.setShipStack();
+                    DataContainer.setFleet();
+                    int anz = 1;
+                    for(int i = 5; i>=2; i--){
+
+
+                        for(int j = 1; j <= anz; j++){
+                            DataContainer.getShipLenghts().push(i);
+                            DataContainer.getShipLengthsAI().push(i);
+                            DataContainer.getShipLengthsInverted().push(i);
+                        }
+                        anz ++;
+                    }
+
+                    while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
+                        DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
+                    }
+                   new PlaceShips();
+                    //new GameView();
                 }
         );
         vbox.add(sSpiel);
-        // Einzelspieler Button
+        // Benutzerdefiniert Button
         vbox.add(Box.createVerticalStrut(7));   //Abstand zwischen Buttons
         JButton vsCom = new JButton("Benutzerdefiniert");
         vsCom.setToolTipText("Spiel gegen den Computer mit selbst gewaehlter Feldgroesse und selbst" +
@@ -62,6 +82,7 @@ public class SelectModi {
         vsCom.setFont(new Font("Tahoma", Font.PLAIN, 20));
         vsCom.addActionListener(
                 (e) -> {
+                    DataContainer.setGameType("bdf");
                     new_Game.setVisible(false);
                     new SelectFieldSize();
                 }
@@ -79,6 +100,12 @@ public class SelectModi {
         vsHuman.setBackground(Color.BLACK);
         vsHuman.setForeground(Color.WHITE);
         vsHuman.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        vsHuman.addActionListener((e) -> {
+
+                    new_Game.setVisible(false);
+                    new selectNetwork();
+                }
+        );
         vbox.add(vsHuman);
 
         // Computer gegen Computer Button
@@ -92,6 +119,12 @@ public class SelectModi {
         comvsCom.setBackground(Color.BLACK);
         comvsCom.setForeground(Color.WHITE);
         comvsCom.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        comvsCom.addActionListener((e) -> {
+
+                    new_Game.setVisible(false);
+                    new selectNetwork();
+                }
+        );
 
         vbox.add(comvsCom);
 
