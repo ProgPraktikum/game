@@ -1,5 +1,7 @@
 package gui;
 
+import ai.Ai;
+
 import data.DataContainer;
 import data.Game;
 import javax.swing.*;
@@ -161,10 +163,12 @@ public class GameView {
         if (e.getButton() == MouseEvent.BUTTON1) {  //Linke Maustaste
             //DEBUG
             DataContainer.setAllowed(true);
-            if(DataContainer.getPlayerShootTable().getValueAt(row,column).equals(9)) {
+            if (DataContainer.getPlayerShootTable().getValueAt(row, column).equals(9)) {
                 Game.shoot(column, row);
             }
             //TODO aufruf schießen Methode
+            Ai ai = new Ai();
+            ai.draw();
         }
         // rechte Maustaste
         else{
