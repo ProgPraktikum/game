@@ -2,31 +2,38 @@ package ai;
 
 import util.Tuple;
 
+import java.util.ArrayList;
+
 public class Trace {
-    private static Tuple[] values;
-    private static int arrTrack;
+    private ArrayList<Tuple> values;
 
     public Trace() {
-        values = new Tuple[10];
-        arrTrack = 0;
-        //System.out.println("Maxshipsize:" + data.DataContainer.getMaxShipLength());
+        values = new ArrayList<>();
     }
 
     public void addTile(int x, int y) {
-        values[arrTrack] = new Tuple(x, y);
-        arrTrack += 1;
+        values.add(new Tuple(x, y));
+    }
+
+    public int[] getTile(int i) {
+        int[] result = new int[2];
+
+        Tuple value = values.get(i);
+        result[0] = value.get(0);
+        result[1] = value.get(1);
+
+        return result;
     }
 
     public int getSize() {
-        return values.length;
+        return values.size();
     }
 
     public void clear() {
-        values = new Tuple[10];
-        arrTrack = 0;
+        values.clear();
     }
 
-    public Tuple[] getTrace() {
+    public ArrayList<Tuple> getTrace() {
         return values;
     }
 }
