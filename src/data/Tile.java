@@ -1,11 +1,11 @@
 package data;
 
-public class AbstractTile {
+public class Tile {
     //atribute
     private int status;
     private Ship master;
 
-    public AbstractTile(){
+    public Tile(){
         status=0;
         master=null;
     }

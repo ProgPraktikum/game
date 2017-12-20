@@ -2,6 +2,8 @@ package gameboard;
 
 import data.*;
 
+import java.util.Arrays;
+
 public class Board implements BoardInterface {
     /** (Java int Arrays werden default mit 0 initialisiert)
      * klasse die die datenstruktur für das spielfeld enthält und
@@ -10,7 +12,7 @@ public class Board implements BoardInterface {
     */
 
     // MEMBER VARIABLES
-    private AbstractTile playerboard[][];
+    private Tile playerboard[][];
     private int playershots[][];
 
 
@@ -19,15 +21,24 @@ public class Board implements BoardInterface {
     public Board(){
         int x = DataContainer.getGameboardWidth();
         int y = DataContainer.getGameboardHeight();
-        playerboard = new AbstractTile[y][x];
-        //feld wird mit wasser gefüllt
-        for(int i = 0; i< x; i++){
-            for(int j= 0; j < y; j++){
-                playerboard [j][i]=new AbstractTile();
-            }
+        playerboard = new Tile[y][x];
+        playershots = new int[y][x];
+        for(int i=0; i<x; i++){
+            Arrays.fill(playerboard[i], new Tile());
+            Arrays.fill(playershots[i], 9); // empty state
         }
 
-        playershots = new int[y][x];
+        //feld wird mit wasser gefüllt
+        /*
+        for(int i = 0; i< x; i++){
+            for(int j= 0; j < y; j++){
+                playerboard [j][i]=new Tile();
+            }
+        }
+        */
+
+
+
     }
     //methoden
     public void setPlayershots(int x, int y, int value) {
@@ -82,6 +93,7 @@ public class Board implements BoardInterface {
                         }
                         return 2; //versenkt
                     } else {
+                        playerboard[y][x].setStatus(1);
                         return 1; //normaler treffer
                     }
                 default:
@@ -295,7 +307,7 @@ public class Board implements BoardInterface {
     }
 
 
-    public AbstractTile getPlayerboardAt(int x,int y){
+    public Tile getPlayerboardAt(int x, int y){
        return playerboard[y][x];
     }
 
