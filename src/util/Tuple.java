@@ -1,13 +1,13 @@
 package util;
 
 public class Tuple {
-    private Object[] data;
+    private int[] data;
 
-    public Tuple (Object... members) {
+    public Tuple (int... members) {
         this.data = members;
     }
 
-    public Object get(int index) {
+    public int get(int index) {
         return data[index];
     }
 
