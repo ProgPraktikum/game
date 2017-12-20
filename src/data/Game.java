@@ -112,10 +112,11 @@ public class Game{
 		if(i==2){
 			displayHits(x,y,0,DataContainer.getTable());
 		}
+		map.setPlayershots(x,y,i);
 		return i;
 	}
 
-	public static AbstractTile getPlayerboard(int x, int y){
+	public static Tile getPlayerboard(int x, int y){
 		return map.getPlayerboardAt(x,y);
 	}
 	public static void removeShip(Ship s) {
@@ -155,6 +156,7 @@ public class Game{
 	 * @param table
 	 */
 	private static void displayHits(int x, int y,int direction, TableView table) {
+		//todo optimierung der ecken anzeige
 		table.setValueAt(2, y, x);
 		if (x - 1 >= 0) {
 			if (table.getValueAt(y, x - 1).equals(1) && (direction == 0 || direction == 1)) {
