@@ -2,6 +2,8 @@ package gameboard;
 
 import data.*;
 
+import java.util.Arrays;
+
 public class Board implements BoardInterface {
     /** (Java int Arrays werden default mit 0 initialisiert)
      * klasse die die datenstruktur für das spielfeld enthält und
@@ -28,6 +30,10 @@ public class Board implements BoardInterface {
         }
 
         playershots = new int[y][x];
+        for (int i = 0; i < x; i++) {
+            Arrays.fill(playershots[i], -1);
+        }
+
     }
     //methoden
     public void setPlayershots(int x, int y, int value) {
