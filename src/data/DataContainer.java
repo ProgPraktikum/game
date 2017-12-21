@@ -40,6 +40,7 @@ public class DataContainer {
     * Dieser Stack ist für die gewaehlten schiffe des Spielers.
     * speicher die Anzahl der Schiffe mit Länge xxx
     */
+
     private static Stack<Integer> shipLenghts;
 /*
 *Stack speichert längen in umgekehrter reihenfolge zu fleet, um dafür zu sorgen dass in fleet das größte schiff
@@ -52,6 +53,11 @@ public class DataContainer {
     *
     */
     private static Stack<Ship> fleet;
+
+    /*flotte der ai identisch zur spielerflotte
+    *
+     */
+    private static Stack<Ship> aiFleet;
 
     /*
      * Dieser Stack ist für die gewaehlten schiffe für die Ai
@@ -214,6 +220,8 @@ public class DataContainer {
     public static void  setFleet(){
         shipLengthsInverted= new Stack<>();
         fleet = new Stack<>();
+        aiFleet = new Stack<>();
+
     }
     public static Stack<Integer> getShipLengthsInverted(){
         return shipLengthsInverted;
@@ -248,6 +256,9 @@ public class DataContainer {
     public void setShipLengthsKI(Stack<Integer>shipLengthsKI){
         this.shipLengthsAI = shipLengthsKI; 
     }
+    public Stack<Ship> getAiFleet(){
+        return aiFleet;
+    }
 
     /**
      * get für fleet stack
@@ -257,13 +268,17 @@ public class DataContainer {
         return fleet;
     }
 
+
+
     /**
      * fügt schiff zu stack fleet hinzu
      * @param l
      */
     public static void addShip(int l){
         Ship s = new Ship(l);
+        Ship aiS = new Ship(l);
         fleet.push(s);
+        aiFleet.push(aiS);
     }
 
     /**

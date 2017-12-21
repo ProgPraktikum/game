@@ -72,7 +72,8 @@ public class Game{
 			if(DataContainer.getGameType().equals("ss") ||DataContainer.getGameType().equals("bdf")) {
 				val=0;
 				//DEBUG
-				val = map.checkboard(x,y);
+				//val = map.checkboard(x,y);
+
 			}
 			else if (DataContainer.getGameType().equals("mp")) {
 				val=0;
