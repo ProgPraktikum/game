@@ -95,6 +95,9 @@ public class Game{
 
 	public static int getHit(int x, int y){
 		int i = map.checkboard(x,y);
+		/*if(i == -1){
+			i= 1;
+		}*/
 		DataContainer.getTable().setValueAt(i,y,x);
 		if(i==0){
 			DataContainer.setAllowed(true);
@@ -170,6 +173,8 @@ public class Game{
 			}
 		}
 	}
+
+
 
 	public static Board getMap(){
 	return map;

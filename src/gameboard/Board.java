@@ -88,6 +88,7 @@ public class Board implements BoardInterface {
                         }
                         return 2; //versenkt
                     } else {
+                        playerboard[y][x].setStatus(1);
                         return 1; //normaler treffer
                     }
                 default:
