@@ -1,6 +1,6 @@
 package data;
 
-
+import ai.Ai;
 import gui.TableView;
 import gameboard.Board;
 
@@ -65,7 +65,7 @@ public class Game{
 
 
 	//spielmethoden
-	public static int shoot(int x, int y) {
+	public static int shoot(int x, int y, Ai ai) {
 		if(DataContainer.getAllowed()) {
 			//getHit(x,y);
 			int val;
@@ -73,7 +73,7 @@ public class Game{
 				val=0;
 				//DEBUG
 				//val = map.checkboard(x,y);
-
+				val = ai.hit(x, y);
 			}
 			else if (DataContainer.getGameType().equals("mp")) {
 				val=0;

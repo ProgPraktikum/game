@@ -2,6 +2,8 @@ package ai;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import data.DataContainer;
 import gameboard.Board;
 import data.Game;
 import util.Tuple;
@@ -42,10 +44,10 @@ public class Ai {
         switch (field) {
             case 0:         // Wasser
                 return 0;
-            case 2:         // Schiff
+            case 1:         // Schiff
+                return 1;
+            case 2:         // Bereits versenktes Schiff
                 return 2;
-            case 3:         // Bereits versenktes Schiff
-                return 3;
             default:
                 return -1;  // To prevent compiler warnings and for the case of errors
         }
@@ -71,106 +73,182 @@ public class Ai {
                 int y1 = trace.getTile(0)[1];
                 int y2 = trace.getTile(1)[1];
 
-                if (x1 == x2) {
-                    // orientation vertical
+                if (y1 == y2) {
+                    // orientation horizontal
                     int step = 0;
                     int diff = x1 - x2;
                     if (diff > 0) {
                         // direction left
                         if (diff == 1) {
                             step = 2;
-                        }
-                        else if (diff >= 2) {
+                        } else if (diff >= 2) {
                             step = 1;
                         }
 
-                        while(aiStrikes.getPlayershots((x1 - step), y1) != -1 ) {
+                        while (aiStrikes.getPlayershots((x1 - step), y1)
+                                != -1 && (x1 - step) >= 0) {
                             step += 1;
+                            x = x1 - step;
+                            if (aiStrikes.getPlayershots((x1 - step),
+                                    y1) == 0) {
+                                step = 1;
+                                while (aiStrikes.getPlayershots((x1 +
+                                        step), y1) != -1) {
+                                    step += 1;
+                                }
+                                x = x1 + step;
+                            }
                         }
-                        x = x1 - step;
+
+                        if ((x1 - step) < 0) {
+                            step = 1;
+                            while (aiStrikes.getPlayershots((x1 + step),
+                                    y1) != -1) {
+                                step += 1;
+                            }
+                            x = x1 + step;
+                        }
+
                         y = y1;
-                    }
-                    else if (diff < 0) {
+                    } else if (diff < 0) {
                         // direction right
                         if (diff == -1) {
                             step = 2;
-                        }
-                        else if (diff <= 2) {
+                        } else if (diff <= 2) {
                             step = 1;
                         }
 
-                        while(aiStrikes.getPlayershots((x1 + step), y1) != -1 ) {
+                        while (aiStrikes.getPlayershots((x1 + step), y1)
+                                != -1 && (x1 + step) < boardWidth) {
                             step += 1;
+                            x = x1 + step; // set here for testing purpose
+                            if (aiStrikes.getPlayershots((x1 + step),
+                                    y1) == 0) {
+                                step = 1;
+                                while (aiStrikes.getPlayershots((x1 -
+                                        step), y1) != -1) {
+                                    step += 1;
+                                }
+                                x = x1 - step;
+                            }
                         }
-                        x = x1 + step;
+
+                        if ((x1 + step) >= boardWidth) {
+                            step = 1;
+                            while (aiStrikes.getPlayershots((x1 - step),
+                                    y1) != -1) {
+                                step += 1;
+                            }
+                            x = x1 - step;
+                        }
+
                         y = y1;
                     }
-                }
-                else if (y1 == y2) {
-                    //orientation horizontal
+                } else if (x1 == x2) {
+                    //orientation vertical
                     int step = 0;
                     int diff = y1 - y2;
                     if (diff > 0) {
                         // direction left
                         if (diff == 1) {
                             step = 2;
-                        }
-                        else if (diff >= 2) {
+                        } else if (diff >= 2) {
                             step = 1;
                         }
 
-                        while(aiStrikes.getPlayershots(x1, (y1 - step)) != -1 ) {
+                        while (aiStrikes.getPlayershots(x1, (y1 - step))
+                                != -1 && (y1 - step) >= 0) {
                             step += 1;
+                            y = y1 - step;
+                            if (aiStrikes.getPlayershots(x1, (y1 - step))
+                                    == 0) {
+                                step = 1;
+                                while (aiStrikes.getPlayershots(x1, (y1
+                                        + step)) != -1) {
+                                    step += 1;
+                                }
+                                y = y1 + step;
+                            }
                         }
+
+                        if ((y1 - step) < 0) {
+                            step = 1;
+                            while (aiStrikes.getPlayershots(x1, (y1 +
+                                    step)) != -1) {
+                                step += 1;
+                            }
+                            y = y1 + step;
+                        }
+
                         x = x1;
-                        y = y1 - step;
-                    }
-                    else if (diff < 0) {
+                    } else if (diff < 0) {
                         // direction right
                         if (diff == -1) {
                             step = 2;
-                        }
-                        else if (diff <= 2) {
+                        } else if (diff <= 2) {
                             step = 1;
                         }
 
-                        while(aiStrikes.getPlayershots(x1, (y1 + step)) != -1 ) {
+                        while (aiStrikes.getPlayershots(x1, (y1 + step))
+                                != -1 && (y1 + step) < boardHeight) {
                             step += 1;
+                            y = y1 - step;
+                            if (aiStrikes.getPlayershots(x1, (y1 +
+                                    step)) == 0) {
+                                step = 1;
+                                while (aiStrikes.getPlayershots(x1, (y1
+                                        - step)) != -1) {
+                                    step += 1;
+                                }
+                                y = y1 - step;
+                            }
                         }
+
+                        if ((y1 + step) >= boardHeight) {
+                            step = 1;
+                            while (aiStrikes.getPlayershots(x1, (y1 -
+                                    step)) != -1) {
+                                step += 1;
+                            }
+                            y = y1 - step;
+                        }
+
                         x = x1;
-                        y = y1 + step;
                     }
                 }
-            }
-            else if (traceLen == 1) {
+            } else if (traceLen == 1) {
                 // try any direction
                 int x1 = trace.getTile(0)[0];
                 int y1 = trace.getTile(0)[1];
-                int direction = randomGenerator.nextInt(3);
-                switch (direction) {
+                //int direction = randomGenerator.nextInt(3);
+                switch (0) {
                     case 0: // top
-                        if ((y1 - 1) >= 0 && aiStrikes.getPlayershots(x1, (y1 - 1)) == -1) {
+                        if ((y1 - 1) >= 0 &&
+                                aiStrikes.getPlayershots(x1, (y1 - 1)) == -1) {
                             x = x1;
                             y = y1 - 1;
                             break;
                         }
                         // fall-through intended
                     case 1: // right
-                        if ((x1 + 1) <= boardWidth && aiStrikes.getPlayershots((x1 + 1), y1) == -1) {
+                        if ((x1 + 1) <= boardWidth &&
+                                aiStrikes.getPlayershots((x1 + 1), y1) == -1) {
                             x = x1 + 1;
                             y = y1;
                             break;
                         }
                         // fall-through intended
                     case 2: // bottom
-                        if ((y1 + 1) <= boardHeight && aiStrikes.getPlayershots(x1, (y1 + 1)) == -1) {
+                        if ((y1 + 1) <= boardHeight &&
+                                aiStrikes.getPlayershots(x1, (y1 + 1)) == -1) {
                             x = x1;
                             y = y1 + 1;
                             break;
                         }
                         // fall-through intended
                     case 3: // left
-                        if ((x1 - 1) >= 0 && aiStrikes.getPlayershots((x1 - 1), y1) == -1) {
+                        if ((x1 - 1) >= 0 &&
+                                aiStrikes.getPlayershots((x1 - 1), y1) == -1) {
                             x = x1 - 1;
                             y = y1;
                             break;

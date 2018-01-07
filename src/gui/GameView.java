@@ -162,12 +162,12 @@ public class GameView {
 
         if (e.getButton() == MouseEvent.BUTTON1) {  //Linke Maustaste
             //DEBUG
+            Ai ai = new Ai();
             DataContainer.setAllowed(true);
             if (DataContainer.getPlayerShootTable().getValueAt(row, column).equals(9)) {
-                Game.shoot(column, row);
+                Game.shoot(column, row, ai);
             }
             //TODO aufruf schießen Methode
-            Ai ai = new Ai();
             ai.draw();
         }
         // rechte Maustaste
