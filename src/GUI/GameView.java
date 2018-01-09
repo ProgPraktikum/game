@@ -39,6 +39,8 @@ public class GameView {
         }else if(DataContainer.getGameType().equals("bdf")){ // bdf steht für Benutzerdefiniert
 
             tablePlayer = DataContainer.getTable();          // das Place ships window wird die Table anlegen
+        }else if(DataContainer.getGameType().equals("mp")){
+            tablePlayer = DataContainer.getTable();
         }
         PlayerShootTable = new TableView();
         for(int i = 0; i <DataContainer.getGameboardHeight(); i++){
