@@ -180,12 +180,21 @@ public class Network {
         for (int i = 2; i < startData.length; i++) {
             String[] ship = startData[i].split(" ");
             shipStack.push(Integer.parseInt(ship[1]));
+
+            //test
+            DataContainer.getShipLenghts().push(Integer.parseInt(ship[1]));
+            DataContainer.getShipLengthsAI().push(Integer.parseInt(ship[1]));
+            DataContainer.getShipLengthsInverted().push(Integer.parseInt(ship[1]));
         }
 
-
+        while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
+            DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
+        }
+/*
         DataContainer.setShipLenghts(shipStack);
         DataContainer.setShipLengthsAI(shipStack);
         DataContainer.setShipLengtsInverted(shipStack);
+*/
 
        /*
        while(!(DataContainer.getShipLengthsInverted().isEmpty())){
