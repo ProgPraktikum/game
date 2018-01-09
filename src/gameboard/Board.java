@@ -23,9 +23,11 @@ public class Board implements BoardInterface {
         int y = DataContainer.getGameboardHeight();
         playerboard = new Tile[y][x];
         playershots = new int[y][x];
-        for(int i=0; i<x; i++){
-            Arrays.fill(playerboard[i], new Tile());
-            Arrays.fill(playershots[i], 9); // empty state
+        for(int i = 0; i < x; i++){
+            for(int j = 0; j < y; j++ ) {
+                playerboard[j][i]= new Tile();
+                playershots [j][i]= 9;
+            }
         }
 
         //feld wird mit wasser gefüllt
