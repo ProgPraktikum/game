@@ -13,11 +13,11 @@ import java.net.SocketException;
  *
  * @author Christopher Kisch, Jan Riedel, Felix Graeber
  */
-public class SelectModi {
+class SelectModi {
 
-    JDialog new_Game;
+    private JDialog new_Game;
 
-    public SelectModi(){
+     SelectModi(){
 
         new_Game = new JDialog();
 

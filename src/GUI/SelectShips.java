@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SelectShips {
+ class SelectShips {
 
-   JDialog selectships;
-    List<JSpinner> spinners;
+    private JDialog selectships;
+    private List<JSpinner> spinners;
 
 
-    public SelectShips() {
+     SelectShips() {
 
         // Fenster für die Auswahl der Schiffe
         selectships = new JDialog();
@@ -57,7 +57,6 @@ public class SelectShips {
 			 */
 
         for ( int i = DataContainer.getMaxShipLength(); i >= 2; i--) {
-            int f = i;
 
             JLabel labelSize = new JLabel("Laenge " + i + " : ");
             labelSize.setForeground(Color.WHITE);

@@ -17,12 +17,12 @@ import java.io.File;
  * Es enthält zwei Spielfelder, wobei das linke das des Spielers ist
  * und das rechte ist das um Schüsse abzufeuern.
  */
-public class GameView {
+ class GameView {
 
     private TableView tablePlayer;
     private TableView PlayerShootTable;
 
-    public GameView(){
+     GameView(){
 
         JDialog playView = new JDialog();
         playView.setModal(true);
@@ -33,15 +33,20 @@ public class GameView {
         /**
          * erstellung der TableView abhängig des gewählten GameTyp
          */
-        if(DataContainer.getGameType().equals("ss")) {   //SS steht für schnelles Spiel
-            tablePlayer = DataContainer.getTable();
+         switch (DataContainer.getGameType()) {
+             case "ss":    //SS steht für schnelles Spiel
+                 tablePlayer = DataContainer.getTable();
 
-        }else if(DataContainer.getGameType().equals("bdf")){ // bdf steht für Benutzerdefiniert
+                 break;
+             case "bdf":  // bdf steht für Benutzerdefiniert
 
-            tablePlayer = DataContainer.getTable();          // das Place ships window wird die Table anlegen
-        }else if(DataContainer.getGameType().equals("mp")){
-            tablePlayer = DataContainer.getTable();
-        }
+                 tablePlayer = DataContainer.getTable();          // das Place ships window wird die Table anlegen
+
+                 break;
+             case "mp":
+                 tablePlayer = DataContainer.getTable();
+                 break;
+         }
         PlayerShootTable = new TableView();
         for(int i = 0; i <DataContainer.getGameboardHeight(); i++){
             for(int j = 0; j < DataContainer.getGameboardWidth(); j++){

@@ -4,13 +4,13 @@ package network;
 import GUI.SelectFieldSize;
 import data.DataContainer;
 import GUI.PlaceShips;
-import gameboard.Board;
+
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.UnknownHostException;
+
 import java.util.Stack;
 import java.util.Iterator;
 
@@ -102,8 +102,6 @@ public class Network {
 
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -181,7 +179,7 @@ public class Network {
             String[] ship = startData[i].split(" ");
             shipStack.push(Integer.parseInt(ship[1]));
 
-            //test
+
             DataContainer.getShipLenghts().push(Integer.parseInt(ship[1]));
             DataContainer.getShipLengthsAI().push(Integer.parseInt(ship[1]));
             DataContainer.getShipLengthsInverted().push(Integer.parseInt(ship[1]));
@@ -190,19 +188,7 @@ public class Network {
         while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
             DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
         }
-/*
-        DataContainer.setShipLenghts(shipStack);
-        DataContainer.setShipLengthsAI(shipStack);
-        DataContainer.setShipLengtsInverted(shipStack);
-*/
 
-       /*
-       while(!(DataContainer.getShipLengthsInverted().isEmpty())){
-
-            DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
-        }
-    */
-       //DataContainer.createShips();
 
         new PlaceShips();
     }

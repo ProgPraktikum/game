@@ -4,9 +4,7 @@ import data.Game;
 import data.Ship;
 import data.DataContainer;
 import data.Directions;
-import gameboard.Board;
 import network.Network;
-
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
@@ -21,16 +19,15 @@ import java.util.Random;
     /**
      * Variablen
      */
-    JDialog setships;
+    private JDialog setships;
     private TableView table;
     private Point startingPoint;
     private JTextArea ta;
-    private JScrollPane scrollPane;
-    //success gibt an ob die letzte plazierung erfolgreich war um zu verhindern,
+     //success gibt an ob die letzte plazierung erfolgreich war um zu verhindern,
     // dass das nächste schiff ausgewählt wird bevor das vorherige platziert ist
     private boolean success = true;
     //s ist hilfsvariable um ausgewähltes schiff zu speichern
-    Ship s=null;
+    private Ship s=null;
 
     public PlaceShips() {
 
@@ -80,7 +77,7 @@ import java.util.Random;
         /**
          *TextArea zum anzeigen der zu platzierenden schiffe + scrollpane
          */
-        scrollPane = new JScrollPane();
+        JScrollPane scrollPane = new JScrollPane();
         ta = new JTextArea(5, 2);
         scrollPane.getViewport().add(ta);
 
@@ -162,7 +159,7 @@ import java.util.Random;
         weiter.addActionListener(
                 (e) -> {
                     DataContainer.setTable(table);
-                    if (DataContainer.getGameType().equals("bdf") ||
+                    if(DataContainer.getGameType().equals("bdf") ||
                             DataContainer.getGameType().equals("ss")) {
 
                         //Todo: Aufruf der AI damit sie die Schiffe platziert
@@ -469,7 +466,7 @@ import java.util.Random;
         }
     }
 
-    public boolean randomplace() {
+    private boolean randomplace() {
         if (!(DataContainer.getfleet().isEmpty()) && success) {
             DataContainer.setSelectedShip();
             s = DataContainer.getSelectedShip();
@@ -521,9 +518,7 @@ import java.util.Random;
             textAreaRemoveLine();
 
             if (!(DataContainer.getfleet().isEmpty())) {
-                if (randomplace()) {
-                    return true;
-                }
+                return randomplace();
             }
             return false;
         } else {
@@ -535,7 +530,7 @@ import java.util.Random;
 
 
 
-    public void removeShip(int row,int  column){
+    private void removeShip(int row,int  column){
         if(table.getValueAt(row,column)!=null && table.getValueAt(row, column).equals(3)){
             Ship s=Game.getPlayerboard(column, row).getMaster();
             //DataContainer.getfleet();
@@ -571,7 +566,7 @@ import java.util.Random;
             DataContainer.getfleet().push(s);
         }
     }
-    public void reset(){
+    private void reset(){
         int currentlength = 2;
         boolean fieldempty = false;
         int rowempty;
