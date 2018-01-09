@@ -33,14 +33,6 @@ import java.util.Random;
 
     public PlaceShips() {
 
-        if(DataContainer.getGameType().equals("mp")|| DataContainer.getGameType().equals("mps") &&
-                DataContainer.getIsClient() == true){
-            DataContainer.setShipStack();
-            DataContainer.setFleet();
-            while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
-                DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
-            }
-        }
 
         setships = new JDialog();
         setships.setModal(true);
