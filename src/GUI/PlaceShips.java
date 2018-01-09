@@ -4,6 +4,7 @@ import data.Game;
 import data.Ship;
 import data.DataContainer;
 import data.Directions;
+import network.Network;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -14,11 +15,12 @@ import java.util.Iterator;
 import java.util.Random;
 
 
- class PlaceShips {
+ public class PlaceShips {
 
     /**
      * Variablen
      */
+    JDialog setships;
     private TableView table;
     private Point startingPoint;
     private JTextArea ta;
@@ -29,10 +31,10 @@ import java.util.Random;
     //s ist hilfsvariable um ausgewähltes schiff zu speichern
     Ship s=null;
 
-    PlaceShips() {
+    public PlaceShips() {
 
 
-        JDialog setships = new JDialog();
+        setships = new JDialog();
         setships.setModal(true);
         setships.setUndecorated(true);
         setships.setContentPane(Box.createVerticalBox());
@@ -51,7 +53,14 @@ import java.util.Random;
             {
                 JMenuItem item = new JMenuItem("Beenden");
                 item.addActionListener(
-                        (e) -> setships.dispose()
+                        (e) -> {
+                            setships.dispose();
+                            if(DataContainer.getGameType().equals("mp") || DataContainer.getGameType()
+                                    .equals("mps")) {
+                                Network.closeClientConnection();
+                                Network.closeHostConnection();
+                            }
+                        }
                 );
                 menu.add(item);
             }

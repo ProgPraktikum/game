@@ -9,10 +9,12 @@ import java.awt.*;
 
 public class SelectFieldSize {
 
+    static JDialog eingaben;
+
     public SelectFieldSize(){
 
         // Fenster für die eingabe der Spielfeldgröße
-        JDialog eingaben = new JDialog();
+        eingaben = new JDialog();
         eingaben.setModal(true);
         eingaben.setContentPane(Box.createVerticalBox());
         eingaben.setMinimumSize(new Dimension(400,400));
@@ -135,5 +137,11 @@ public class SelectFieldSize {
         eingaben.setLocationRelativeTo(null);
         eingaben.setVisible(true);
 
+    }
+    public static void buildWaitingFrame() {
+
+        JOptionPane.showMessageDialog(eingaben,
+                "Waiting for Client Connection...\nSie muessen mit OK bestaetigen",
+                "Information", JOptionPane.PLAIN_MESSAGE);
     }
 }

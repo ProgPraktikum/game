@@ -1,21 +1,25 @@
 package GUI;
 
+
 import data.DataContainer;
+import network.Network;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class selectNetwork {
 
+    JDialog nw;
     JCheckBox isHost;
     JCheckBox isClient;
+
 
     public selectNetwork(){
 
         /**
          * Neuer JDialog wird erstellt und auf Modal gesetzt. Des Weiteren wird undecorated gesetzt.
          */
-        JDialog nw = new JDialog();
+        nw = new JDialog();
         nw.setModal(true);
         nw.setUndecorated(true);
         nw.setBackground(Color.BLACK);
@@ -97,12 +101,25 @@ public class selectNetwork {
 
                     nw.setVisible(false);
                     if(DataContainer.getIsHost()){
+                        /**
+                         * Aufbau HostVerindung
+                         */
+                        Network.createHostConnection();
                         new SelectFieldSize();
                     }else{
                         /**
                          * TODO vor Aufruf new PlaceShip() muss der stack ShipLengths im DataContainer
                          * TODO befüllt werden. Die notwendigen Daten müsen von dem Host übermittelt werden.
                          */
+
+                        /**
+                         * Aufbau einer ClientConnection
+                         */
+                        Network.createClientConnection(field.getText());
+                        /**
+                         * Empfangen der übermittelten StartDaten
+                         */
+                        Network.recieveStartData();
                       //  new PlaceShips();
                     }
                 }
@@ -148,4 +165,6 @@ public class selectNetwork {
         nw.setVisible(true);
 
     }
+
+
 }

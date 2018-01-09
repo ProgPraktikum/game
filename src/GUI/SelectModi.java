@@ -14,9 +14,11 @@ import java.awt.*;
  */
 public class SelectModi {
 
+    JDialog new_Game;
+
     public SelectModi(){
 
-        JDialog new_Game = new JDialog();
+        new_Game = new JDialog();
 
         new_Game.setModal(true);
         new_Game.setUndecorated(true);
@@ -30,7 +32,9 @@ public class SelectModi {
         vbox.add(Box.createVerticalStrut(20));
 
 
-        // Schnelles Spiel
+        /**
+         *  Schnelles Spiel
+         */
         vbox.add(Box.createVerticalStrut(7));   //Abstand zwischen Buttons
         JButton sSpiel = new JButton("Schnellestart");
         sSpiel.setToolTipText("Spiel gegen den Computer mit einer Standartfeldgroesse von 10x10 und der dazugehoerigen" +
@@ -68,7 +72,11 @@ public class SelectModi {
                 }
         );
         vbox.add(sSpiel);
-        // Benutzerdefiniert Button
+
+
+        /**
+         * Benutzerdefiniert Button
+         */
         vbox.add(Box.createVerticalStrut(7));   //Abstand zwischen Buttons
         JButton vsCom = new JButton("Benutzerdefiniert");
         vsCom.setToolTipText("Spiel gegen den Computer mit selbst gewaehlter Feldgroesse und selbst" +
@@ -89,7 +97,9 @@ public class SelectModi {
         );
         vbox.add(vsCom);
 
-        // Spieler gegen Spieler Button
+        /**
+         *  Spieler gegen Spieler Button
+         */
         vbox.add(Box.createVerticalStrut(7));   //Abstand zwischen Buttons
         JButton vsHuman = new JButton("Multiplayer");
         vsHuman.setToolTipText("Spiel gegen einen anderen Spieler (benötigt Netzwerk)");
@@ -103,6 +113,7 @@ public class SelectModi {
         vsHuman.addActionListener((e) -> {
 
                     new_Game.setVisible(false);
+                    DataContainer.setGameType("mp");
                     new selectNetwork();
                 }
         );
@@ -122,6 +133,7 @@ public class SelectModi {
         comvsCom.addActionListener((e) -> {
 
                     new_Game.setVisible(false);
+                    DataContainer.setGameType("mps");
                     new selectNetwork();
                 }
         );

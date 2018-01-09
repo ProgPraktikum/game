@@ -1,6 +1,7 @@
 package GUI;
 
 import data.DataContainer;
+import network.Network;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -12,13 +13,13 @@ import java.util.List;
 
 public class SelectShips {
 
-   private int belegung = 0;
+   JDialog selectships;
 
 
     public SelectShips() {
 
         // Fenster für die Auswahl der Schiffe
-        JDialog selectships = new JDialog();
+        selectships = new JDialog();
         selectships.setModal(true);
         selectships.setUndecorated(true);
         selectships.setContentPane(Box.createVerticalBox());
@@ -101,8 +102,16 @@ public class SelectShips {
                     DataContainer.setFleet();
                     if (DataContainer.setShipLengthPush(spinners,
                             ((DataContainer.getGameboardWidth()*DataContainer.getGameboardHeight())*30/100))){
-                        int belegung = 0 ;
+
                         selectships.dispose();
+                        /**
+                         * Daten übermitteln falls Netzwerkspiel
+                         */
+                        if(DataContainer.getGameType().equals("mp")|| DataContainer.getGameType()
+                                .equals("mps")){
+                            Network.sendStartData(DataContainer.getGameboardWidth(),DataContainer.getGameboardHeight(),
+                                    DataContainer.getShipLenghts());
+                        }
                             new PlaceShips();
                     }else{
                         /*
@@ -123,7 +132,7 @@ public class SelectShips {
         abbrechen.setFont(new Font("Tahoma", Font.PLAIN, 20));
         abbrechen.addActionListener(
                 (e) -> {
-                    belegung = 0;
+
                     selectships.dispose(); }
         );
 

@@ -1,6 +1,7 @@
 package GUI;
 
 import data.DataContainer;
+import network.Network;
 import data.Game;
 import javax.swing.*;
 import java.awt.*;
@@ -102,6 +103,11 @@ public class GameView {
                 item.addActionListener(
                         (e) -> {
                             playView.dispose();
+                            if(DataContainer.getGameType().equals("mp") || DataContainer.getGameType()
+                                    .equals("mps")) {
+                                Network.closeClientConnection();
+                                Network.closeHostConnection();
+                            }
                         }
                 );
                 menu.add(item);
