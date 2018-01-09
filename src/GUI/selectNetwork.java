@@ -107,8 +107,8 @@ public class selectNetwork {
          * DisplayIp zeigt die eigene Ip Adresse wenn man hosted. wird nur für die
          * Clientverindung benötigt
          */
-        displayIp = new JLabel("My IP: "+ myIp);
-        displayIp.setForeground(Color.WHITE);
+       // displayIp = new JLabel("My IP: "+ myIp);
+        //displayIp.setForeground(Color.WHITE);
 
 
         /**
@@ -131,6 +131,7 @@ public class selectNetwork {
                     if(isClient.isSelected()){
                         if(field.getText() != null)
                         DataContainer.setNetworkIP(field.getText());
+                        // ausgaben nur für debug
                         System.out.println("dc " +DataContainer.getNetworkIP());
                         System.out.println("tf " +field.getText());
 
@@ -203,7 +204,7 @@ public class selectNetwork {
 
         nw.add(horizontalBox1);
         nw.add(tf);
-        nw.add(displayIp);
+     //   nw.add(displayIp);
         nw.add(horizontalBox);
         nw.pack();
         nw.setLocationRelativeTo(null);
