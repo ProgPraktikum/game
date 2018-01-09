@@ -10,17 +10,19 @@ import java.awt.*;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.Collections;
 import java.util.Enumeration;
 
-public class selectNetwork {
+ class selectNetwork {
 
-    JDialog nw;
-    JLabel displayIp;
-    JCheckBox isHost;
-    JCheckBox isClient;
+    private JDialog nw;
+    private JTextField field;
+    private JLabel displayIp;
+    private JCheckBox isHost;
+    private JCheckBox isClient;
 
 
-    public selectNetwork() throws SocketException {
+     selectNetwork() throws SocketException {
 
         /**
          * Neuer JDialog wird erstellt und auf Modal gesetzt. Des Weiteren wird undecorated gesetzt.
@@ -49,7 +51,7 @@ public class selectNetwork {
         isHost.addActionListener(
                 (e) -> {
 
-                    if (isHost.isSelected() == true) {
+                    if (isHost.isSelected()) {
                         isClient.setSelected(false);
                     }
                 }
@@ -66,7 +68,7 @@ public class selectNetwork {
         isClient.addActionListener(
                 (e) -> {
 
-                    if (isClient.isSelected() == true) {
+                    if (isClient.isSelected()) {
                         isHost.setSelected(false);
                     }
                 }
@@ -76,30 +78,28 @@ public class selectNetwork {
         /**
          * JTextField für die Eingabe einer IP
          */
-        JTextField field = new JTextField("IP des Host eingeben");
+        field = new JTextField("IP des Host eingeben");
         field.setMaximumSize(new Dimension(200, 30));
         field.setMinimumSize(new Dimension(200, 30));
         field.setPreferredSize(new Dimension(200, 30));
 
         /**
-         * eigene IP
+         * eigene IP ermitteln
          */
-
+        Enumeration<NetworkInterface> netInter = NetworkInterface.getNetworkInterfaces();
         String myIp = null;
-        System.out.print("My IP address(es):");
+        while ( netInter.hasMoreElements() )
+        {
+            NetworkInterface ni = netInter.nextElement();
 
-        Enumeration nis =  NetworkInterface.getNetworkInterfaces();
-        while (nis.hasMoreElements()) {
-            NetworkInterface ni =(NetworkInterface) nis.nextElement();
-            Enumeration ias = ni.getInetAddresses();
-            while (ias.hasMoreElements()) {
-                InetAddress ia = (InetAddress)ias.nextElement();
-                if (!ia.isLoopbackAddress()) {
-                   System.out.println(" " + ia.getHostAddress());
-                    myIp = ia.getHostAddress();
+            for ( InetAddress iaddress : Collections.list(ni.getInetAddresses()) )
+            {
+                if(iaddress.isSiteLocalAddress() && !(iaddress.isLoopbackAddress())){
+                    System.out.println( "IP: " + iaddress.getHostAddress() );
+                    myIp = iaddress.getHostAddress();
                 }
-            }
 
+            }
         }
 
 
@@ -107,8 +107,9 @@ public class selectNetwork {
          * DisplayIp zeigt die eigene Ip Adresse wenn man hosted. wird nur für die
          * Clientverindung benötigt
          */
-       // displayIp = new JLabel("My IP: "+ myIp);
-        //displayIp.setForeground(Color.WHITE);
+        displayIp = new JLabel("My IP: "+ myIp);
+        displayIp.setForeground(Color.GREEN);
+        displayIp.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 
         /**
@@ -145,10 +146,6 @@ public class selectNetwork {
                         Network.createHostConnection();
                         new SelectFieldSize();
                     }else{
-                        /**
-                         * TODO vor Aufruf new PlaceShip() muss der stack ShipLengths im DataContainer
-                         * TODO befüllt werden. Die notwendigen Daten müsen von dem Host übermittelt werden.
-                         */
 
                         Board b = new Board();
                         DataContainer.setShipStack();
@@ -201,10 +198,11 @@ public class selectNetwork {
          * Box welche das JTextField aufnimmt
          */
         tf.add(field);
-
+        tf.add(Box.createHorizontalStrut(5));   //abstand zwischen TextField und Label
+        tf.add(displayIp);
         nw.add(horizontalBox1);
         nw.add(tf);
-     //   nw.add(displayIp);
+
         nw.add(horizontalBox);
         nw.pack();
         nw.setLocationRelativeTo(null);
