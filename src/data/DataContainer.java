@@ -327,7 +327,11 @@ public class DataContainer {
         return true;
     }
 
-
+    public static void createShips(){
+        while( !(shipLengthsInverted.isEmpty()) ){
+            addShip(shipLengthsInverted.pop());
+        }
+    }
 
     //testfunktionen
     public static void setSelectedShip(Ship s){

@@ -4,6 +4,7 @@ import data.Game;
 import data.Ship;
 import data.DataContainer;
 import data.Directions;
+import gameboard.Board;
 import network.Network;
 
 import javax.swing.*;

@@ -14,6 +14,7 @@ import java.util.List;
 public class SelectShips {
 
    JDialog selectships;
+    List<JSpinner> spinners;
 
 
     public SelectShips() {
@@ -30,7 +31,7 @@ public class SelectShips {
         /**
         ArrayList nimmt die ganzen JSpinner auf welche für die Anzahl der Schiffe genutzt werden.
          */
-        List<JSpinner> spinners = new ArrayList<JSpinner>();
+        spinners = new ArrayList<JSpinner>();
 
 
         /**

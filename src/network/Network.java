@@ -4,6 +4,7 @@ package network;
 import GUI.SelectFieldSize;
 import data.DataContainer;
 import GUI.PlaceShips;
+import gameboard.Board;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -173,16 +174,26 @@ public class Network {
         DataContainer.setGameboardWidth(Integer.parseInt(size[1]));
         DataContainer.setGameboardHeight(Integer.parseInt(size[2]));
 
+
         
         Stack<Integer> shipStack = new Stack<Integer>();
         for (int i = 2; i < startData.length; i++) {
             String[] ship = startData[i].split(" ");
             shipStack.push(Integer.parseInt(ship[1]));
         }
+
+
         DataContainer.setShipLenghts(shipStack);
         DataContainer.setShipLengthsAI(shipStack);
         DataContainer.setShipLengtsInverted(shipStack);
 
+       /*
+       while(!(DataContainer.getShipLengthsInverted().isEmpty())){
+
+            DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
+        }
+    */
+       //DataContainer.createShips();
 
         new PlaceShips();
     }

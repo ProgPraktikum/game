@@ -2,6 +2,7 @@ package GUI;
 
 
 import data.DataContainer;
+import gameboard.Board;
 import network.Network;
 
 import javax.swing.*;
@@ -148,11 +149,17 @@ public class selectNetwork {
                          * TODO befüllt werden. Die notwendigen Daten müsen von dem Host übermittelt werden.
                          */
 
+                        Board b = new Board();
+                        DataContainer.setShipStack();
+                        DataContainer.setFleet();
+
 
                         /**
                          * Aufbau einer ClientConnection
                          */
                         Network.createClientConnection(DataContainer.getNetworkIP());
+
+
                         /**
                          * Empfangen der übermittelten StartDaten
                          */
