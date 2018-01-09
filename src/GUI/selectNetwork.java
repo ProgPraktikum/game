@@ -48,7 +48,7 @@ public class selectNetwork {
         isHost.addActionListener(
                 (e) -> {
 
-                    if(isHost.isSelected()==true){
+                    if (isHost.isSelected() == true) {
                         isClient.setSelected(false);
                     }
                 }
@@ -65,7 +65,7 @@ public class selectNetwork {
         isClient.addActionListener(
                 (e) -> {
 
-                    if(isClient.isSelected()==true){
+                    if (isClient.isSelected() == true) {
                         isHost.setSelected(false);
                     }
                 }
@@ -86,18 +86,19 @@ public class selectNetwork {
 
         String myIp = null;
         System.out.print("My IP address(es):");
-        Enumeration<NetworkInterface> nis =
-                NetworkInterface.getNetworkInterfaces();
+
+        Enumeration nis =  NetworkInterface.getNetworkInterfaces();
         while (nis.hasMoreElements()) {
-            NetworkInterface ni = nis.nextElement();
-            Enumeration<InetAddress> ias = ni.getInetAddresses();
+            NetworkInterface ni =(NetworkInterface) nis.nextElement();
+            Enumeration ias = ni.getInetAddresses();
             while (ias.hasMoreElements()) {
-                InetAddress ia = ias.nextElement();
+                InetAddress ia = (InetAddress)ias.nextElement();
                 if (!ia.isLoopbackAddress()) {
-                   System.out.print(" " + ia.getHostAddress());
-                    myIp = ia.getHostAddress().toString();
+                   System.out.println(" " + ia.getHostAddress());
+                    myIp = ia.getHostAddress();
                 }
             }
+
         }
 
 
@@ -129,6 +130,8 @@ public class selectNetwork {
                     if(isClient.isSelected()){
                         if(field.getText() != null)
                         DataContainer.setNetworkIP(field.getText());
+                        System.out.println("dc " +DataContainer.getNetworkIP());
+                        System.out.println("tf " +field.getText());
                     }
 
                     nw.setVisible(false);
@@ -147,7 +150,7 @@ public class selectNetwork {
                         /**
                          * Aufbau einer ClientConnection
                          */
-                        Network.createClientConnection(field.getText());
+                        Network.createClientConnection(DataContainer.getNetworkIP());
                         /**
                          * Empfangen der übermittelten StartDaten
                          */
