@@ -200,6 +200,7 @@ public class DataContainer {
     }
 
 
+
     /**
    erstellt die stacks für die schiffe des Spielers und der AI
     */
@@ -219,6 +220,10 @@ public class DataContainer {
         return shipLengthsInverted;
     }
 
+    public static void setShipLengtsInverted(Stack<Integer>inverted){
+        shipLengthsInverted = inverted;
+    }
+
     public static void setMaxShipLength(){
 
         if(DataContainer.getGameboardHeight() < DataContainer.getGameboardWidth()){
@@ -226,6 +231,12 @@ public class DataContainer {
         }else{
             maxShipLength = DataContainer.getGameboardHeight() / 2;
         }
+    }
+    public static void setShipLenghts(Stack<Integer>shipLenght){
+        shipLenghts = shipLenght;
+    }
+    public static void setShipLengthsAI(Stack<Integer>shipLengthsKI){
+        shipLengthsAI = shipLengthsKI;
     }
 
     /**
@@ -242,12 +253,8 @@ public class DataContainer {
     public static Stack<Integer> getShipLengthsAI(){
         return shipLengthsAI;
     }
-    public void setShipLenghts(Stack<Integer>shipLenghts){
-        this.shipLenghts = shipLenghts;
-    }
-    public void setShipLengthsKI(Stack<Integer>shipLengthsKI){
-        this.shipLengthsAI = shipLengthsKI; 
-    }
+
+
 
     /**
      * get für fleet stack
