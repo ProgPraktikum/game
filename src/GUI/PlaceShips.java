@@ -88,7 +88,7 @@ import java.util.Random;
          * Es werden alle ausgewaehlten Schiffstypen zur textArea hinzugefuegt.
          */
         while (ships.hasNext()) {
-            ta.append(ships.next().toString() + "\n");
+            ta.append("Setze Schiff der Länge: " + ships.next().toString() + "\n");
         }
 
         /**
