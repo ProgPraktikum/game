@@ -148,11 +148,7 @@ public class selectNetwork {
                          * TODO befüllt werden. Die notwendigen Daten müsen von dem Host übermittelt werden.
                          */
 
-                        DataContainer.setShipStack();
-                        DataContainer.setFleet();
-                        while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
-                            DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
-                        }
+
                         /**
                          * Aufbau einer ClientConnection
                          */

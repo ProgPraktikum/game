@@ -173,6 +173,9 @@ public class Network {
         DataContainer.setGameboardWidth(Integer.parseInt(size[1]));
         DataContainer.setGameboardHeight(Integer.parseInt(size[2]));
 
+        DataContainer.setShipStack();
+        DataContainer.setFleet();
+
         Stack<Integer> shipStack = new Stack<Integer>();
         for (int i = 2; i < startData.length; i++) {
             String[] ship = startData[i].split(" ");
@@ -181,6 +184,10 @@ public class Network {
         DataContainer.setShipLenghts(shipStack);
         DataContainer.setShipLengthsAI(shipStack);
         DataContainer.setShipLengtsInverted(shipStack);
+
+        while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
+            DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
+        }
 
         new PlaceShips();
     }
