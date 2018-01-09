@@ -6,15 +6,20 @@ import network.Network;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 public class selectNetwork {
 
     JDialog nw;
+    JLabel displayIp;
     JCheckBox isHost;
     JCheckBox isClient;
 
 
-    public selectNetwork(){
+    public selectNetwork() throws SocketException {
 
         /**
          * Neuer JDialog wird erstellt und auf Modal gesetzt. Des Weiteren wird undecorated gesetzt.
@@ -75,6 +80,33 @@ public class selectNetwork {
         field.setMinimumSize(new Dimension(200, 30));
         field.setPreferredSize(new Dimension(200, 30));
 
+        /**
+         * eigene IP
+         */
+
+        String myIp = null;
+        System.out.print("My IP address(es):");
+        Enumeration<NetworkInterface> nis =
+                NetworkInterface.getNetworkInterfaces();
+        while (nis.hasMoreElements()) {
+            NetworkInterface ni = nis.nextElement();
+            Enumeration<InetAddress> ias = ni.getInetAddresses();
+            while (ias.hasMoreElements()) {
+                InetAddress ia = ias.nextElement();
+                if (!ia.isLoopbackAddress()) {
+                   System.out.print(" " + ia.getHostAddress());
+                    myIp = ia.getHostAddress().toString();
+                }
+            }
+        }
+
+
+        /**
+         * DisplayIp zeigt die eigene Ip Adresse wenn man hosted. wird nur für die
+         * Clientverindung benötigt
+         */
+        displayIp = new JLabel("My IP: "+ myIp);
+        displayIp.setForeground(Color.WHITE);
 
 
         /**
@@ -159,6 +191,7 @@ public class selectNetwork {
 
         nw.add(horizontalBox1);
         nw.add(tf);
+        nw.add(displayIp);
         nw.add(horizontalBox);
         nw.pack();
         nw.setLocationRelativeTo(null);

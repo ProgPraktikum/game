@@ -4,6 +4,7 @@ import data.DataContainer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.SocketException;
 
 
 /** Hier wird ein neuer JDialog erstellt um ein Auswahlfenster für diverse SpielModi
@@ -114,7 +115,11 @@ public class SelectModi {
 
                     new_Game.setVisible(false);
                     DataContainer.setGameType("mp");
-                    new selectNetwork();
+                    try {
+                        new selectNetwork();
+                    } catch (SocketException e1) {
+                        e1.printStackTrace();
+                    }
                 }
         );
         vbox.add(vsHuman);
@@ -134,7 +139,11 @@ public class SelectModi {
 
                     new_Game.setVisible(false);
                     DataContainer.setGameType("mps");
-                    new selectNetwork();
+                    try {
+                        new selectNetwork();
+                    } catch (SocketException e1) {
+                        e1.printStackTrace();
+                    }
                 }
         );
 
