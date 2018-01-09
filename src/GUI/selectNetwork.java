@@ -132,6 +132,7 @@ public class selectNetwork {
                         DataContainer.setNetworkIP(field.getText());
                         System.out.println("dc " +DataContainer.getNetworkIP());
                         System.out.println("tf " +field.getText());
+
                     }
 
                     nw.setVisible(false);
@@ -147,6 +148,11 @@ public class selectNetwork {
                          * TODO befüllt werden. Die notwendigen Daten müsen von dem Host übermittelt werden.
                          */
 
+                        DataContainer.setShipStack();
+                        DataContainer.setFleet();
+                        while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
+                            DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
+                        }
                         /**
                          * Aufbau einer ClientConnection
                          */
