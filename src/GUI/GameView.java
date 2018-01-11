@@ -162,14 +162,9 @@ import java.io.File;
         playView.pack();
         playView.setLocationRelativeTo(null);
         playView.setVisible(true);
-        hitloop();
+        Game.hitloop();
     }
 
-    private void hitloop(){
-         while(!DataContainer.getAllowed()){
-             Network.networkHit();
-         }
-    }
     private void TouchedMouse(MouseEvent e) {
         /*
         speichert die angeklickte Zelle der Table
@@ -182,7 +177,7 @@ import java.io.File;
             if(DataContainer.getPlayerShootTable().getValueAt(row,column).equals(9)) {
                 int i= Game.shoot(column, row);
                 if(i==0){
-                    hitloop();
+                    Game.hitloop();
                 }
             }
             //TODO aufruf schießen Methode

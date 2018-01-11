@@ -109,6 +109,11 @@ public class Game{
 		}
 		return i;
 	}
+	public static void hitloop(){
+		while(!DataContainer.getAllowed()){
+			Network.networkHit();
+		}
+	}
 
 	public static Tile getPlayerboard(int x, int y){
 		return map.getPlayerboardAt(x,y);
