@@ -162,7 +162,7 @@ public class Network {
 
         /*
          * Der String wird an den Leerzeilen getrennt und die Werte werden im
-         * OptionsController gespeichert.
+         * DataContainer gespeichert.
          */
         String[] startData = line.split(", ");
         String[] size = startData[0].split(" ");
