@@ -94,7 +94,7 @@ import java.util.Enumeration;
 
             for ( InetAddress iaddress : Collections.list(ni.getInetAddresses()) )
             {
-                if(iaddress.isSiteLocalAddress() && !(iaddress.isLoopbackAddress())){
+                if(!(iaddress.isLoopbackAddress())){
                     System.out.println( "IP: " + iaddress.getHostAddress() );
                     myIp = iaddress.getHostAddress();
                 }
