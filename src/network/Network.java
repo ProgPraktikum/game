@@ -205,7 +205,7 @@ public class Network {
         String[] inputLine = new String[1]; //1 zeichen return wert von shoot des gegners
 
         try {
-            inputLine[1] = reader.readLine();
+            inputLine[0] = reader.readLine();
         } catch (SocketException e) {
 
         } catch (IOException e) {
