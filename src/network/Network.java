@@ -191,17 +191,19 @@ public class Network {
         }
         new PlaceShips();
     }
-    public static int networkShoot(int x,int y){
+    public static void networkShoot(int x,int y) {
         StringBuffer line = new StringBuffer();
-        line.append("shot "+y+" "+x);
+        line.append("shot " + y + " " + x);
         try {
             writer.write(String.format("%s%n", line));
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /*String inputLine = ""; //1 zeichen return wert von shoot des gegners
-
+        shootanswer();
+    }
+    public static int shootanswer(){
+    String inputLine = ""; //1 zeichen return wert von shoot des gegners
         try {
             inputLine = reader.readLine();
         } catch (SocketException e) {
@@ -209,8 +211,7 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Integer.parseInt(inputLine); */
-        return 0;
+        return Integer.parseInt(inputLine);
     }
 
     public static void networkHit(){
