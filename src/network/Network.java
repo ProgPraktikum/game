@@ -4,6 +4,7 @@ package network;
 import GUI.SelectFieldSize;
 import data.DataContainer;
 import GUI.PlaceShips;
+import data.Game;
 
 
 import java.io.*;
@@ -139,8 +140,8 @@ public class Network {
         }
 
         try {
-            writer.write(String.format("%s%n", line));
             writer.flush();
+            writer.write(String.format("%s%n", line));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -191,6 +192,51 @@ public class Network {
 
 
         new PlaceShips();
+    }
+    public static int networkShoot(int x,int y){
+        StringBuffer line = new StringBuffer();
+        line.append("shot "+y+" "+x);
+        try {
+            writer.write(String.format("%s%n", line));
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] inputLine = new String[1]; //1 zeichen return wert von shoot des gegners
+
+        try {
+            inputLine[1] = reader.readLine();
+        } catch (SocketException e) {
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Integer.parseInt(inputLine[1]);
+    }
+
+    public static void NetworkHit(){
+        String inputLine = "";
+
+        try {
+            inputLine = reader.readLine();
+        } catch (SocketException e) {
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] input =inputLine.split(" ");
+        int y = Integer.parseInt(input[1]);
+        int x = Integer.parseInt(input[2]);
+        //int value = Game.getHit(x,y);
+        //String outputLine = Integer.toString(Game.getHit(x,y));
+        StringBuffer outputLine= new StringBuffer();
+        outputLine.append(Integer.toString(Game.getHit(x,y)));
+        try {
+            writer.write(String.format("%s%n", outputLine));
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

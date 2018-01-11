@@ -3,6 +3,7 @@ package data;
 
 import GUI.TableView;
 import gameboard.Board;
+import network.Network;
 
 import java.util.Stack;
 
@@ -67,7 +68,6 @@ public class Game{
 	//spielmethoden
 	public static int shoot(int x, int y) {
 		if(DataContainer.getAllowed()) {
-			//getHit(x,y);
 			int val;
 			if(DataContainer.getGameType().equals("ss") ||DataContainer.getGameType().equals("bdf")) {
 				val=0;
@@ -75,7 +75,12 @@ public class Game{
 				val = map.checkboard(x,y);
 			}
 			else if (DataContainer.getGameType().equals("mp")) {
-				val=0;
+				//val=0;
+				val = Network.networkShoot(x,y);
+				if(val == 0){
+					DataContainer.setAllowed(false);
+				}
+				//multiplayer shoot
 			}
 			else{
 				return -1;
