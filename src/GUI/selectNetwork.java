@@ -126,10 +126,8 @@ import java.util.Enumeration;
                 (e) -> {
                     if(isHost.isSelected()){
                         DataContainer.setIsHost(true);
-                        DataContainer.setAllowed(false);
                     }else{
                         DataContainer.setIsClient(true);
-                        DataContainer.setAllowed(true);
                     }
 
                     if(isClient.isSelected()){
@@ -140,7 +138,7 @@ import java.util.Enumeration;
                         System.out.println("tf " +field.getText());
 
                     }
-
+                    DataContainer.setAllowed(DataContainer.getIsClient());
                     nw.setVisible(false);
                     if(DataContainer.getIsHost()){
                         /**
