@@ -109,11 +109,12 @@ import java.io.File;
                 JMenuItem item = new JMenuItem("Beenden");
                 item.addActionListener(
                         (e) -> {
+                            Network.closeClientConnection();
+                            Network.closeHostConnection();
                             playView.dispose();
                             if(DataContainer.getGameType().equals("mp") || DataContainer.getGameType()
                                     .equals("mps")) {
-                                Network.closeClientConnection();
-                                Network.closeHostConnection();
+
                             }
                         }
                 );
