@@ -218,7 +218,7 @@ public class Network {
         try {
             inputLine = reader.readLine();
         } catch (SocketException e) {
-
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
