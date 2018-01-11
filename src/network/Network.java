@@ -140,8 +140,8 @@ public class Network {
         }
 
         try {
-            writer.flush();
             writer.write(String.format("%s%n", line));
+            writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -191,7 +191,7 @@ public class Network {
         }
         new PlaceShips();
     }
-  /*  public static int networkShoot(int x,int y){
+    public static int networkShoot(int x,int y){
         StringBuffer line = new StringBuffer();
         line.append("shot "+y+" "+x);
         try {
@@ -237,6 +237,6 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } */
+    }
 
 }
