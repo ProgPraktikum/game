@@ -189,8 +189,6 @@ public class Network {
         while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
             DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
         }
-
-
         new PlaceShips();
     }
     public static int networkShoot(int x,int y){
