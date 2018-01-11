@@ -211,7 +211,7 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Integer.parseInt(inputLine[1]);
+        return Integer.parseInt(inputLine[0]);
     }
 
     public static void NetworkHit(){
