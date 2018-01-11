@@ -79,7 +79,6 @@ public class Game{
 				val = Network.networkShoot(x,y);
 				if(val == 0){
 					DataContainer.setAllowed(false);
-					Network.networkHit();
 				}
 				//multiplayer shoot
 			}

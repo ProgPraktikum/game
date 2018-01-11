@@ -162,6 +162,13 @@ import java.io.File;
         playView.pack();
         playView.setLocationRelativeTo(null);
         playView.setVisible(true);
+        hitloop();
+    }
+
+    private void hitloop(){
+         while(!DataContainer.getAllowed()){
+             Network.networkHit();
+         }
     }
     private void TouchedMouse(MouseEvent e) {
         /*
@@ -172,10 +179,11 @@ import java.io.File;
         int row = PlayerShootTable.rowAtPoint(x);
 
         if (e.getButton() == MouseEvent.BUTTON1) {  //Linke Maustaste
-            //DEBUG
-            DataContainer.setAllowed(true);
             if(DataContainer.getPlayerShootTable().getValueAt(row,column).equals(9)) {
-                Game.shoot(column, row);
+                int i= Game.shoot(column, row);
+                if(i==0){
+                    hitloop();
+                }
             }
             //TODO aufruf schießen Methode
         }
