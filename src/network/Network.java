@@ -191,7 +191,7 @@ public class Network {
         }
         new PlaceShips();
     }
-    public static int networkShoot(int x,int y){
+  /*  public static int networkShoot(int x,int y){
         StringBuffer line = new StringBuffer();
         line.append("shot "+y+" "+x);
         try {
@@ -237,6 +237,6 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    } */
 
 }

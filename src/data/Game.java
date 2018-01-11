@@ -75,8 +75,8 @@ public class Game{
 				val = map.checkboard(x,y);
 			}
 			else if (DataContainer.getGameType().equals("mp")) {
-				//val=0;
-				val = Network.networkShoot(x,y);
+				val=0;
+				//val = Network.networkShoot(x,y);
 				if(val == 0){
 					DataContainer.setAllowed(false);
 				}
