@@ -200,21 +200,20 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String[] inputLine = new String[1]; //1 zeichen return wert von shoot des gegners
+        String inputLine = ""; //1 zeichen return wert von shoot des gegners
 
         try {
-            inputLine[0] = reader.readLine();
+            inputLine = reader.readLine();
         } catch (SocketException e) {
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Integer.parseInt(inputLine[0]);
+        return Integer.parseInt(inputLine);
     }
 
     public static void NetworkHit(){
         String inputLine = "";
-
         try {
             inputLine = reader.readLine();
         } catch (SocketException e) {
@@ -225,6 +224,9 @@ public class Network {
         String[] input =inputLine.split(" ");
         int y = Integer.parseInt(input[1]);
         int x = Integer.parseInt(input[2]);
+        System.out.print(y);
+        System.out.println();
+        System.out.println(x);
         //int value = Game.getHit(x,y);
         //String outputLine = Integer.toString(Game.getHit(x,y));
         StringBuffer outputLine= new StringBuffer();

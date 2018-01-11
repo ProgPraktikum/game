@@ -126,8 +126,10 @@ import java.util.Enumeration;
                 (e) -> {
                     if(isHost.isSelected()){
                         DataContainer.setIsHost(true);
+                        DataContainer.setAllowed(false);
                     }else{
                         DataContainer.setIsClient(true);
+                        DataContainer.setAllowed(true);
                     }
 
                     if(isClient.isSelected()){
