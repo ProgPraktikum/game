@@ -18,7 +18,7 @@ public class OwnTableRenderer extends javax.swing.table.DefaultTableCellRenderer
 			/*
 			 * ist der Wert ein Int dann wird mittels des Wertes geprueft welche Farbe genutz wird
 			 * 0 = Wasser, 1 = Schiff, 2 = versenkt, 3 = Schiff, 4 = endpunkt beim setzen,
-			 * 9 = grau für unbeschossene Felder
+			 * 9 = grau für unbeschossene Felder, 00 = beschossenes Wasserfeld
 			 */
             if (value instanceof Integer) {
                 if (value.equals(0)){
@@ -39,6 +39,9 @@ public class OwnTableRenderer extends javax.swing.table.DefaultTableCellRenderer
                 }else if (value.equals(9)){
                     comp.setBackground(Color.LIGHT_GRAY);
                     comp.setForeground(Color.LIGHT_GRAY);
+                }else if (value.equals(00)){
+                    comp.setBackground(Color.CYAN);
+                    comp.setForeground(Color.CYAN);
                 }
 
             }
