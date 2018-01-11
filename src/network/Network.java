@@ -200,7 +200,7 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String inputLine = ""; //1 zeichen return wert von shoot des gegners
+        /*String inputLine = ""; //1 zeichen return wert von shoot des gegners
 
         try {
             inputLine = reader.readLine();
@@ -209,7 +209,8 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Integer.parseInt(inputLine);
+        return Integer.parseInt(inputLine); */
+        return 0;
     }
 
     public static void networkHit(){
