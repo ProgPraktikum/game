@@ -212,7 +212,7 @@ public class Network {
         return Integer.parseInt(inputLine);
     }
 
-    public static void NetworkHit(){
+    public static void networkHit(){
         String inputLine = "";
         try {
             inputLine = reader.readLine();
