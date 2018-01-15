@@ -7,12 +7,14 @@ import network.Network;
 
 import java.util.Stack;
 
-/**
- * enthält Hauptlogik des spiels
+/**@author Felix
+ * @desc Statische Klasse welche die Huaptlogik des Spiels enthält und Netzwerk, AI und GUI verknüpft
+ *
  */
 public class Game{
-
-
+	/**
+	 * board Objekt für den Spieler
+	 */
 	private static Board map= new Board();
 
 
@@ -26,12 +28,24 @@ public class Game{
     ansonsten wird die position zurückgesetzt
     bei erfolg wird true ausgegeben und bei misserfolg false
      */
+
+	/**
+	 * bewegt das selectedShip aus dem Datacontainer an Stelle x,y
+	 * @param x X-Zielkoordinate
+	 * @param y Y-Zielkoordinate
+	 * @return gibt true bei erfolgreicher Platzierung zurück und false bei falscher Platzierung.
+	 */
     public static boolean moveShip(int x, int y){
         Ship s = DataContainer.getSelectedShip();
         return map.moveShip(x,y,s);
 
     }
 	//aendert orientierung des schiffs
+
+	/**
+	 * ändert Platzierung des selectedShip aus dem Datacontainer auf den Wert i mod 4.
+	 * @param i neue Orrientierung zwischen 0 und 3
+	 */
 	public static void rotateShip(int i){
 		Ship s = DataContainer.getSelectedShip();
 		map.rotateShip(i, s);
@@ -39,10 +53,19 @@ public class Game{
 	/*
 	plaziert schiff auf spielbrett
 		 */
+
+	/**
+	 * Platziert übergebenes Schiff s auf dem Board.
+	 * @param s zu platzierendes Schiff
+	 * @return gibt true bei erfolgreicher Platzierung und false bei fehler zurück.
+	 */
 	public static boolean placeShip(Ship s){
 		return map.place(s);
 	}
 
+	/**
+	 * algoritzmus zur generierung von Flottenvorschlägen
+	 */
 	public static void generatefleet(){
 		int occ=DataContainer.getOccupancy();
 		Stack<Integer> lengths= new Stack<>();
@@ -66,6 +89,13 @@ public class Game{
 
 
 	//spielmethoden
+
+	/**
+	 * @desc Methode des Spielers um auf seinen Gegner zu schießen, abhängig vom Spielmodus entweder Ai oder Netzwerkgegner.
+	 * @param x X-Zielkoordinate
+	 * @param y Y-Zielkoordinate
+	 * @return gibt entweder 0 für wasser, 1 für treffer oder 2 für versenkt zurück.
+	 */
 	public static int shoot(int x, int y) {
 		if(DataContainer.getAllowed()) {
 			int val;
@@ -98,6 +128,12 @@ public class Game{
 		}
 	}
 
+	/**
+	 * @desc Methode um auf den Spieler zu schießen. wird bei netzwerkspiel bzw von AI aufgerufen.
+	 * @param x X-Zielkoordinate
+	 * @param y Y-Zielkoordinate
+	 * @return gibt 0 für Wasser, 1 für Treffer und 2 für Versenkt zurück.
+	 */
 	public static int getHit(int x, int y){
 		int i = map.checkboard(x,y);
 		DataContainer.getTable().setValueAt(i,y,x);
@@ -115,19 +151,30 @@ public class Game{
 		}
 	}
 
+	/**
+	 * @desc gibt Tile Objekt an Stelle x,y des playerBoards aus dem Board zurück
+	 * @param x X-Wert des zurückzugebenden Objekts
+	 * @param y Y-Wert des zurückzugebenden Objekts
+	 * @return gibt ein Tile Objekt zurück, welches an der entsprechenden x,y stelle im array steht
+	 */
 	public static Tile getPlayerboard(int x, int y){
 		return map.getPlayerboardAt(x,y);
 	}
+
+	/**
+	 * ruft removeShip im Board mit dem übergebenen Schiff s auf.
+	 * @param s zu löschendes Schiff, dass an removeShip übergeben wird.
+	 */
 	public static void removeShip(Ship s) {
 		map.removeShip(s);
 	}
 
 	/**
-	 *
-	 * @param x
-	 * @param y
-	 * @param direction
-	 * @param table
+	 *@desc rekursive Funktion um Schiffe auf der Oberfläche als versenkt anzuzeigen.
+	 * @param x X-Wert von dem aus die umliegenden Felder geprüft werden
+	 * @param y Y-Wert von dem aus die umliegenden Felder geprüft werden
+	 * @param direction Richtung, die bei mehrmaligen aufrufen übergeben wird um die suche effizienter durchzuführen
+	 * @param table Tableview auf der die Operation durchgeführt werden soll
 	 */
 	private static void displayHits(int x, int y,int direction, TableView table) {
 		//todo optimize corner checks
@@ -182,6 +229,10 @@ public class Game{
 		}
 	}
 
+	/**
+	 * gibt board objekt des Games zurück
+	 * @return Board Objekt des Games
+	 */
 	public static Board getMap(){
 	return map;
 	}
