@@ -6,27 +6,27 @@ import java.util.Arrays;
 
 public class Board implements BoardInterface {
     /**
-     * klasse die die Datenstruktur für das Spielfeld enthält und
-     * entsprechende Operationen zum Spielen wie Schüsse, Treffer und das Plazieren von Schiffen
+     * klasse die die Datenstruktur fuer das Spielfeld enthaelt und
+     * entsprechende Operationen zum Spielen wie Schuesse, Treffer und das Plazieren von Schiffen
      * @author Felix
     */
 
     // MEMBER VARIABLES
     /**
-     * zweidimensionales Array bestehend aus Tile-Objekten. Größe entspricht der des Spielfeldes.
+     * zweidimensionales Array bestehend aus Tile-Objekten. Groesse entspricht der des Spielfeldes.
      */
     private Tile playerboard[][];
     /**
-     * int Array um die Ergebnisse der eigenen Schüsse zu speichern.
-     *  Größe entspricht der des Spielfeldes
+     * int Array um die Ergebnisse der eigenen Schuesse zu speichern.
+     *  Groesse entspricht der des Spielfeldes
      */
     private int playershots[][];
 
 
 	// CONSTRUCTOR
 
-    /**@desc Konstruktor für die Board Klasse
-     * Werte für Array Dimensionen werden aus Datacontainer gelesen
+    /**@desc Konstruktor fuer die Board Klasse
+     * Werte fuer Array Dimensionen werden aus Datacontainer gelesen
      * und Arrays mit entsprechenden Werten initialisiert
      */
     public Board(){
@@ -44,9 +44,9 @@ public class Board implements BoardInterface {
     //methoden
 
     /**
-     *@desc setzt Playershots-Array an der angegebenen Stelle auf den übergebenden Wert
-     * @param x X-Wert der zu ändernden Koordinate im Playershots-Array
-     * @param y Y-Wert der zu ändernden Koordinate im Playershots-Array
+     *@desc setzt Playershots-Array an der angegebenen Stelle auf den uebergebenden Wert
+     * @param x X-Wert der zu aendernden Koordinate im Playershots-Array
+     * @param y Y-Wert der zu aendernden Koordinate im Playershots-Array
      * @param value Wert auf den die Koordinate gesetzt werden soll
      */
     public void setPlayershots(int x, int y, int value) {
@@ -54,21 +54,21 @@ public class Board implements BoardInterface {
     }
 
     /**
-     * @desc gibt Wert an Stelle x, y im playershots-array zurück
-     * @param x X-Wert der rückzugebenden Koordinate im Playershots-Array
-     * @param y Y-Wert der rückzugebenden Koordinate im Playershots-Array
-     * @return gibt den int Wert an der x, y Stelle im Array zurück
+     * @desc gibt Wert an Stelle x, y im playershots-array zurueck
+     * @param x X-Wert der rueckzugebenden Koordinate im Playershots-Array
+     * @param y Y-Wert der rueckzugebenden Koordinate im Playershots-Array
+     * @return gibt den int Wert an der x, y Stelle im Array zurueck
      */
     public int getPlayershots(int x, int y) {
         return playershots[y][x];
     }
 
     /**
-     * @desc überprüft spielbrett an der stelle x, y auf Wasser bzw Schiffe.
+     * @desc ueberprueft spielbrett an der stelle x, y auf Wasser bzw Schiffe.
      * Wenn ein Schiff getroffen wird wird evaluiert ob es nur getroffen oder versenkt wird
-     * @param x X-Wert der zu prüfenden Koordinate im playerBoard-Array
-     * @param y Y-Wert der zu prüfenden Koordinate im playerBoard-Array
-     * @return gibt einen int Wert zurück: 0 für Wasser, 1 für Treffer und 2 für versenkt. Im Fehlerfall wird -1 ausgegeben
+     * @param x X-Wert der zu pruefenden Koordinate im playerBoard-Array
+     * @param y Y-Wert der zu pruefenden Koordinate im playerBoard-Array
+     * @return gibt einen int Wert zurueck: 0 fuer Wasser, 1 fuer Treffer und 2 fuer versenkt. Im Fehlerfall wird -1 ausgegeben
      */
     public int checkboard(int x, int y){
         int i;
@@ -118,17 +118,17 @@ public class Board implements BoardInterface {
                         return 1; //normaler treffer
                     }
                 default:
-                    return -1; //benötigt um kompilierfehler zu verhindern
+                    return -1; //benoetigt um kompilierfehler zu verhindern
             }
         }
     }
 
     /**
-     * @desc verändert den Ausgangspunkt eines Schiffsobjekts auf die übergebene Koordinate.
-     * @param x X-Wert der übergebenen Koordinate
-     * @param y Y-Wert der übergebenen Koordinate
-     * @param s zu veränderndes Schiffsobjekt
-     * @return gibt bei erfolgreicher Verschiebung true zurück, bei unmöglicer Operation z.B ArrayIndexOutOfBounds wird false zurückgegeben
+     * @desc veraendert den Ausgangspunkt eines Schiffsobjekts auf die uebergebene Koordinate.
+     * @param x X-Wert der uebergebenen Koordinate
+     * @param y Y-Wert der uebergebenen Koordinate
+     * @param s zu veraenderndes Schiffsobjekt
+     * @return gibt bei erfolgreicher Verschiebung true zurueck, bei unmoeglicer Operation z.B ArrayIndexOutOfBounds wird false zurueckgegeben
      */
     public boolean moveShip(int x, int y, Ship s){
         int xold= s.getXpos();
@@ -145,18 +145,18 @@ public class Board implements BoardInterface {
     }
 
     /**
-     * @desc rotiert Schiff auf übergebenen Orientierung zwischen 0 und 3.
-     *  Werte größer 3 werden mit Mod 4 auf den Wertebereich eingegrenzt.
-     * @param i int Wert der Mod 4 gerechnet die neue Orientierung des übergebenen Schiffs ergibt
-     * @param s übergebenes Schiffsobjekt dessen Orrientierung geändert wird.
+     * @desc rotiert Schiff auf uebergebenen Orientierung zwischen 0 und 3.
+     *  Werte groesser 3 werden mit Mod 4 auf den Wertebereich eingegrenzt.
+     * @param i int Wert der Mod 4 gerechnet die neue Orientierung des uebergebenen Schiffs ergibt
+     * @param s uebergebenes Schiffsobjekt dessen Orrientierung geaendert wird.
      */
     public void rotateShip(int i, Ship s){
         s.setOrientation(i%4);
     }
 
     /**
-     * @desc löscht referenzen auf übergebenes Schiff aus playerBoard Array
-     * @param s zu löschendes Schiff
+     * @desc loescht referenzen auf uebergebenes Schiff aus playerBoard Array
+     * @param s zu loeschendes Schiff
      */
     public void removeShip(Ship s) {
         switch (s.getOrientation()) {
@@ -188,10 +188,10 @@ public class Board implements BoardInterface {
     }
 
     /**
-     * @desc wenn der Aufruf von Checkplace true liefert wird das übergebene Schiff an der im Schiffsobjekt
-     * gespeicherten Startkoordinate entlang der Orrientierung des Schiffs und mit der entsprechenden Länge platziert und true zurückgegeben. Bei false wird ebenfalls false zurückgegeben
+     * @desc wenn der Aufruf von Checkplace true liefert wird das uebergebene Schiff an der im Schiffsobjekt
+     * gespeicherten Startkoordinate entlang der Orrientierung des Schiffs und mit der entsprechenden Laenge platziert und true zurueckgegeben. Bei false wird ebenfalls false zurueckgegeben
      * @param s zu platzierendes Schiff
-     * @return gibt true bei erfolgreicher Platzierung zurück und False falls platzierung unmöglich
+     * @return gibt true bei erfolgreicher Platzierung zurueck und False falls platzierung unmoeglich
      */
     public boolean place(Ship s) {
         if (checkPlace(s)){
@@ -224,9 +224,9 @@ public class Board implements BoardInterface {
     }
 
     /**
-     * @desc überprüft ob übergebenes Schiff mit den im Objekt gespeicherten Parametern platziert werden darf ohne Spielregeln oder Arraygrenzen zu verletzen
-     * @param s zu überprüfendes Schiff
-     * @return gibt true zurück wenn platzierung gültig ist und false wenn sie ungültig wäre
+     * @desc ueberprueft ob uebergebenes Schiff mit den im Objekt gespeicherten Parametern platziert werden darf ohne Spielregeln oder Arraygrenzen zu verletzen
+     * @param s zu ueberpruefendes Schiff
+     * @return gibt true zurueck wenn platzierung gueltig ist und false wenn sie ungueltig waere
      */
     public boolean checkPlace(Ship s){
         if(s.getXpos() < 0 || s.getYpos() < 0){ //checkt ob schiff ausserhalb des arrays plaziert werden will
@@ -256,9 +256,9 @@ public class Board implements BoardInterface {
     }
 
     /**
-     * @desc hilfsmethode für checkplace überprüft ob Schiff beimm Platzieren eine Kollision verursachen würde
-     * @param s zu überprüfendes Schiff
-     * @return gibt bei Kollision false und ohne Kollision true zurück
+     * @desc hilfsmethode fuer checkplace ueberprueft ob Schiff beimm Platzieren eine Kollision verursachen wuerde
+     * @param s zu ueberpruefendes Schiff
+     * @return gibt bei Kollision false und ohne Kollision true zurueck
      */
     private boolean  collisionCheck(Ship s){
         int xminf = 0;
@@ -357,29 +357,29 @@ public class Board implements BoardInterface {
     }
 
     /**
-     * gibt playerboard an stelle x, y zurück
-     * @param x X-Wert der rückzugebenden Koordinate im playerBoard-Array
-     * @param y Y-Wert der rückzugebenden Koordinate im playerBoard-Array
-     * @return gibt das Tile Objekt, welches an der entsprechenden Stelle im Array liegt zurück.
+     * gibt playerboard an stelle x, y zurueck
+     * @param x X-Wert der rueckzugebenden Koordinate im playerBoard-Array
+     * @param y Y-Wert der rueckzugebenden Koordinate im playerBoard-Array
+     * @return gibt das Tile Objekt, welches an der entsprechenden Stelle im Array liegt zurueck.
      */
     public Tile getPlayerboardAt(int x, int y){
        return playerboard[y][x];
     }
 
     /**
-     * @desc ändert den Wert des Tile Objekts an der Stelle x,y im PlayerBoard-Array auf den übergebenen Wert.
-     * @param x X-Wert des zu ändernden Objekts im playerBoard-Array
-     * @param y Y-Wert des zu ändernden Objekts im playerBoard-Array
-     * @param value int Wert auf den das der Status des Objekts geändert werden soll.
+     * @desc aendert den Wert des Tile Objekts an der Stelle x,y im PlayerBoard-Array auf den uebergebenen Wert.
+     * @param x X-Wert des zu aendernden Objekts im playerBoard-Array
+     * @param y Y-Wert des zu aendernden Objekts im playerBoard-Array
+     * @param value int Wert auf den das der Status des Objekts geaendert werden soll.
      */
     public void setPlayerboardAt(int x, int y, int value) {
                 playerboard[y][x].setStatus(value);
     }
 
     /**
-     * @desc ändert den master des Tile Objekts an der Stelle x,y im PlayerBoard-Array auf das übergebene Objekt.
-     * @param x X-Wert des zu ändernden Objekts im playerBoard-Array
-     * @param y Y-Wert des zu ändernden Objekts im playerBoard-Array
+     * @desc aendert den master des Tile Objekts an der Stelle x,y im PlayerBoard-Array auf das uebergebene Objekt.
+     * @param x X-Wert des zu aendernden Objekts im playerBoard-Array
+     * @param y Y-Wert des zu aendernden Objekts im playerBoard-Array
      * @param master Schiffsobjekt auf das das master Attribut des Tiles gesetzt werden soll
      */
     public void setPlayerboardAt(int x, int y, Ship master){
@@ -387,10 +387,10 @@ public class Board implements BoardInterface {
     }
 
     /**
-     * @desc gibt master des Tiles an der Stelle x,y im playerBoard zurück
+     * @desc gibt master des Tiles an der Stelle x,y im playerBoard zurueck
      * @param x X-Wert des zu Tile Objekts im playerBoard-Array
      * @param y Y-Wert des zu Tile Objekts im playerBoard-Array
-     * @return wert des Masterattributs vom Tile an der übergebenen Stelle im playerBoard Array.
+     * @return wert des Masterattributs vom Tile an der uebergebenen Stelle im playerBoard Array.
      */
     public Ship getMasterAt(int x,int y){
         return playerboard[y][x].getMaster();

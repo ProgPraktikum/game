@@ -6,6 +6,10 @@
 package gameboard;
 import data.*;
 
+/**
+ * @author Felix
+ * @desc zugehoeriges Interface zum Board
+ */
 public interface BoardInterface {
 
     int getPlayershots(int x, int y);
