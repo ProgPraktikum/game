@@ -149,6 +149,8 @@ public class Network {
 
     /**
      * Diese Methode liest beim Client die StartUpDaten aus
+     * ( Feldgroesse und Anzahl der Schiffe mit den entsprechenden
+     * Laengen
      */
     public static void recieveStartData() {
         String line = "";
@@ -185,7 +187,9 @@ public class Network {
             DataContainer.getShipLengthsAI().push(Integer.parseInt(ship[1]));
             DataContainer.getShipLengthsInverted().push(Integer.parseInt(ship[1]));
         }
-
+        /*
+        Schiffsobjekte werden erzeugt.
+         */
         while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
             DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
         }

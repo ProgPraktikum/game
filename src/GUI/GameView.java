@@ -13,9 +13,9 @@ import java.io.File;
 
 /**
  * Diese Klasse bildet das eigentliche Spielfenster.
- * Es enthält eine MenuBar um Spiele zu speichern/laden.
- * Es enthält zwei Spielfelder, wobei das linke das des Spielers ist
- * und das rechte ist das um Schüsse abzufeuern.
+ * Es enthaelt eine MenuBar um Spiele zu speichern/laden.
+ * Es enthaelt zwei Spielfelder, wobei das linke das des Spielers ist
+ * und das rechte ist das um Schuesse abzufeuern.
  */
  class GameView {
 
@@ -31,7 +31,7 @@ import java.io.File;
         playView.setContentPane(Box.createVerticalBox());
 
         /**
-         * erstellung der TableView abhängig des gewählten GameTyp
+         * Erstellung der TableView abhaengig des gewaehlten GameTyp
          */
          switch (DataContainer.getGameType()) {
              case "ss":    //SS steht für schnelles Spiel
@@ -99,8 +99,7 @@ import java.io.File;
                                     Backup.save.saveBDF(filename);
                                 }
                             }
-                            //DEBUG
-                            DataContainer.debugOpponent= Game.getMap();
+
                         }
                 );
                 menu.add(item);
@@ -123,7 +122,8 @@ import java.io.File;
             bar.add(menu);
         }
         /**
-         * ScrollPane und TextArea unterhalb des Spielfeldes für sämtliche Informationen
+         * ScrollPane und TextArea unterhalb des Spielfeldes für
+         * saemtliche Informationen
          */
         JScrollPane scrollPane = new JScrollPane();
         JTextArea textArea = new JTextArea(5, 10);

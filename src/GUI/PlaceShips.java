@@ -19,8 +19,11 @@ import java.util.Random;
     /**
      * Variablen
      */
+
+
     private JDialog setships;
     private TableView table;
+
     private Point startingPoint;
     private JTextArea ta;
      //success gibt an ob die letzte plazierung erfolgreich war um zu verhindern,
@@ -43,7 +46,7 @@ import java.util.Random;
 
 
         /**
-         * JMenuBar mit dem Menüeintrag "Beenden".
+         * JMenuBar mit dem Menueeintrag "Beenden".
          */
         JMenuBar bar = new JMenuBar();
         {
@@ -66,7 +69,7 @@ import java.util.Random;
         }
 
         /**
-         * erzeugt eine neue Table, welche im späteren Verlauf das Spielfeld
+         * erzeugt eine neue Table, welche im spaeteren Verlauf das Spielfeld
          * des Spielers darstellt.
          */
         table = new TableView();
@@ -125,7 +128,7 @@ import java.util.Random;
         );
 
         /**
-         * Button, welcher alle gesetzten Schiffe löscht
+         * Button, welcher alle gesetzten Schiffe loescht
          */
         JButton reset = new JButton("zurücksetzen");
         reset.setAlignmentX(Component.CENTER_ALIGNMENT);

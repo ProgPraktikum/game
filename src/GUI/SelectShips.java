@@ -10,7 +10,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Die Klasse SelectShips ist notwendig um eine Auswahl zu treffen
+ * mit welchen Schiffen ( sprich Anzahl und Laenge) man spielen moechte.
+ * Dafuer werden abhaengig von der gewaehlten Spielfeldgroesse fuer
+ * die jeweilge Laenge ein JSpinner erstellt, ueber diesen man dann die
+ * Anzahl auswaehlen kann.
+ */
  class SelectShips {
 
     private JDialog selectships;
@@ -87,9 +93,10 @@ import java.util.List;
         }
 
 
-
-
-        // Bestätigung Button
+         /**
+          *   Bestätigung Button.
+          *   schliesst SelectShips und oeffnet das PlaceShip Fenster
+          */
         JButton ok = new JButton("OK");
         ok.setBackground(Color.BLACK);
         ok.setForeground(Color.WHITE);
@@ -125,12 +132,14 @@ import java.util.List;
 
                 }
         );
-        // abbrechen Button (schließt den JDialog)
-        JButton abbrechen = new JButton("abbrechen");
-        abbrechen.setBackground(Color.BLACK);
-        abbrechen.setForeground(Color.WHITE);
-        abbrechen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        abbrechen.addActionListener(
+         /**
+          * abbrechen Button (schließt den JDialog)
+          */
+        JButton abort = new JButton("abbrechen");
+        abort.setBackground(Color.BLACK);
+        abort.setForeground(Color.WHITE);
+        abort.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        abort.addActionListener(
                 (e) -> {
 
                     selectships.dispose(); }
@@ -147,8 +156,7 @@ import java.util.List;
 
 
         btn_box.add(ok);
-       // btn_box.add(Box.createHorizontalStrut(2));
-        btn_box.add(abbrechen);
+        btn_box.add(abort);
 
         vbox.add(Box.createVerticalStrut(10));
         vbox.add(label1);

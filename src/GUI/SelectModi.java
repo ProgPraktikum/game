@@ -7,7 +7,8 @@ import java.awt.*;
 import java.net.SocketException;
 
 
-/** Hier wird ein neuer JDialog erstellt um ein Auswahlfenster für diverse SpielModi
+/**
+ * Hier wird ein neuer JDialog erstellt um ein Auswahlfenster für diverse SpielModi
  * (Einzelspieler, Netzwerk, Com vs Com).
  * Für jeden Modi wird ein JButton erzeugt.
  *
@@ -124,8 +125,11 @@ class SelectModi {
         );
         vbox.add(vsHuman);
 
-        // Computer gegen Computer Button
+
         vbox.add(Box.createVerticalStrut(7));   //Abstand zwischen Buttons
+         /**
+          *   Computer gegen Computer Button
+          */
         JButton comvsCom = new JButton("Zuschauer");
         comvsCom.setToolTipText("Lasse den Computer gegen einen anderen Computer antreten (benötigt Netzwerk)");
         comvsCom.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -149,7 +153,9 @@ class SelectModi {
 
         vbox.add(comvsCom);
 
-        //Zurueck Button
+         /**
+          * zurueck Button
+          */
         vbox.add(Box.createVerticalStrut(7));   //Abstand zwischen Buttons
         JButton back = new JButton("zurück");
         back.setAlignmentX(Component.CENTER_ALIGNMENT);

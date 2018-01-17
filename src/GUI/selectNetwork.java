@@ -13,6 +13,14 @@ import java.net.SocketException;
 import java.util.Collections;
 import java.util.Enumeration;
 
+
+/**
+ * Diese Klasse dient dazu eine Wahl zu treffen ob man
+ * als Host oder als Client spielen moechte.
+ * Des Weiteren wird hier einem die eigene IP Adresse
+ * angezeigt, welche fuer den Client notwendig ist um
+ * eine Verbindung zu dem Host herzustellen.
+ */
  class selectNetwork {
 
     private JDialog nw;

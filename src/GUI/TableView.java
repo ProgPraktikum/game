@@ -9,6 +9,8 @@ import javax.swing.table.TableColumnModel;
 
 /**
  * Diese Klasse erzeugt ein Objekt das ein Spielfeld enthält
+ * Verwendet wird hierfuehr eine JTable
+ *
  */
 public class TableView extends JTable {
 
@@ -31,7 +33,9 @@ public class TableView extends JTable {
             }
         }
 
-        // Hier wird die Editierbarkeit im TableModel überschrieben
+        /**
+         * Hier wird die Editierbarkeit im TableModel überschrieben
+         */
         this.setModel(new DefaultTableModel(data, name){
             public boolean isCellEditable(int row, int column){
                 return false;
@@ -40,11 +44,16 @@ public class TableView extends JTable {
 
         TableCellRenderer renderer = new OwnTableRenderer();
 
-        // zeigt Gitternetzlinien an
+        /**
+         * zeigt Gitternetzlinien an
+         */
         setShowGrid(true);
         setDefaultRenderer(Object.class, renderer);
 
-        // Felder der Tabelle werden mit einer bestimmten Groesse erstellt
+        /**
+         *  Felder der Tabelle werden mit einer festen Groesse erstellt.
+         *
+         */
         setRowHeight(25);
         TableColumnModel columnModel = getColumnModel();
         for (int i = 0; i < getColumnCount(); i++) {

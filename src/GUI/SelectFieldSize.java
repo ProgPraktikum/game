@@ -6,7 +6,10 @@ import gameboard.*;
 import javax.swing.*;
 import java.awt.*;
 
-
+/**
+ * Diese Klasse dient lediglich dazu die Spielfeldgroesse zu erfragen
+ * und die entsprechenden Werte in den DataContainer zu schreiben.
+ */
 public class SelectFieldSize {
 
     static JDialog eingaben;
@@ -81,7 +84,7 @@ public class SelectFieldSize {
         lblHoehe.setVisible(true);
 
         /**
-         Bestaetigen Button ( ließt die eingegebenen Werte ein und und speichert diese
+         Bestaetigen Button ( liest die eingegebenen Werte ein und und speichert diese
         */
         JButton ok = new JButton("OK");
         ok.setBackground(Color.BLACK);
@@ -108,11 +111,11 @@ public class SelectFieldSize {
         // abbrechen Button (schließt den JDialog)
         hbox2.add(Box.createHorizontalStrut(10));
 
-        JButton abbrechen = new JButton("abbrechen");
-        abbrechen.setBackground(Color.BLACK);
-        abbrechen.setForeground(Color.WHITE);
-        abbrechen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        abbrechen.addActionListener(
+        JButton abort = new JButton("abbrechen");
+        abort.setBackground(Color.BLACK);
+        abort.setForeground(Color.WHITE);
+        abort.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        abort.addActionListener(
                 (e) -> {
                     eingaben.dispose(); }
         );
@@ -124,7 +127,7 @@ public class SelectFieldSize {
 
 
         hbox2.add(ok);
-        hbox2.add(abbrechen);
+        hbox2.add(abort);
 
         vbox.add(groesseFeld);
         vbox.add(hbox);
@@ -138,6 +141,11 @@ public class SelectFieldSize {
         eingaben.setVisible(true);
 
     }
+
+    /**
+     * message dialog zur information das auf die Netzwerkverbindung
+     * gewartet wird.
+     */
     public static void buildWaitingFrame() {
 
         JOptionPane.showMessageDialog(eingaben,

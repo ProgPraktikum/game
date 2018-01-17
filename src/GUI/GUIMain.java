@@ -6,9 +6,9 @@ import java.awt.*;
 import java.io.IOException;
 
 
-/** Diese Klasse bildet das Startfenster, also quasi das Hauptmenü.
+/** Diese Klasse bildet das Startfenster, also quasi das Hauptmenue.
  * Es wird ein JFrame erstellt, welches ein Hintergrundbild beherbergt
- * mehrere JButton umd ein Neues Spiel zu starten, ein vorhandes zu laden
+ * mehrere JButton um ein Neues Spiel zu starten, ein vorhandes zu laden
  * oder das ganze Spiel wieder zu beenden.
  *
  *  @author Christopher Kisch, Jan Riedel, Felix Graeber
@@ -45,7 +45,7 @@ public class GUIMain {
 
 
         /**
-         ButtonBox nimmt sämtliche vorhanden JButtons auf
+         ButtonBox nimmt saemtliche vorhanden JButtons auf
          */
         Box btn_box = Box.createVerticalBox();
 

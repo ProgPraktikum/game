@@ -5,7 +5,7 @@ import java.awt.*;
 
 
 /**
- * Diese Klasse wird für die Visuelle Gestaltung des Spielfedes benötigt
+ * Diese Klasse wird für die Visuelle Gestaltung des Spielfedes benoetigt
  */
 public class OwnTableRenderer extends javax.swing.table.DefaultTableCellRenderer {
 
