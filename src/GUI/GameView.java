@@ -74,7 +74,8 @@ import java.io.File;
                 JMenuItem item = new JMenuItem("Spiel speichern");
                 item.addActionListener(
                         (e) -> {
-                            if(DataContainer.getGameType().equals("bdf")) {
+                            if(DataContainer.getGameType().equals("bdf")
+                                    || DataContainer.getGameType().equals("ss")) {
                                 JFileChooser filechooserSave = new JFileChooser();
 
                                 FileFilter filter = new FileFilter() {
@@ -108,8 +109,10 @@ import java.io.File;
                 JMenuItem item = new JMenuItem("Beenden");
                 item.addActionListener(
                         (e) -> {
-                            Network.closeClientConnection();
-                            Network.closeHostConnection();
+                            if(DataContainer.getGameType().equals("mp") || DataContainer.getGameType().equals("mps")) {
+                                Network.closeClientConnection();
+                                Network.closeHostConnection();
+                            }
                             playView.dispose();
                             if(DataContainer.getGameType().equals("mp") || DataContainer.getGameType()
                                     .equals("mps")) {
