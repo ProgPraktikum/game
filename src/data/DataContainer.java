@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * Diese Klasse beinhaltet saemtliche Werte, wie z.B. Spielfedgroesse. Ebenso enthaelt diese
+ * Diese Klasse beinhaltet saemtliche Werte wie z.B.<!-- --> Spielfedgroesse. Ebenso enthaelt diese
  * Klasse Getter und Setter Methoden fuer saemtliche Werte.
  *
  *
@@ -54,7 +54,7 @@ public class DataContainer {
     */
     private static Stack<Integer> shipLenghts;
     /**
-    *Stack speichert laengen in umgekehrter reihenfolge zu fleet, um dafuer zu sorgen dass in fleet das groesste schiff
+    *Stack speichert laengen in umgekehrter Reihenfolge zu fleet, um dafuer zu sorgen dass in fleet das groesste schiff
     *  als letztes zum stack hinzugefuegt wird
     */
     private static Stack<Integer> shipLengthsInverted;
@@ -64,19 +64,24 @@ public class DataContainer {
     */
     private static Stack<Ship> fleet;
 
-    /*
+    /**
      * Dieser Stack ist fuer die gewaehlten schiffe fuer die AI
      * speichert die Anzahl der Schiffe mit der Laenge xxx
      */
     private static Stack<Integer> shipLengthsAI;
 
     /**
-     *aktuelles schiff fuer plazierung
+     *aktuelles Schiff fuer die plazierung.
      */
     private static Ship selectedShip;
 
-    // Spieler Table
+    /**
+     * Spieler Tabelle fuer die Oberflaeche.<!-- --> Stellt eigene Schiffe dar.
+     */
     private static TableView table = null;
+    /**
+     * Spieler Tabelle fuer die Oberflaeche.<!-- --> Stellt eigene Schuesse dar.
+     */
     private static TableView playerShootTable=null;
 
     //Debug board
@@ -88,9 +93,9 @@ public class DataContainer {
     JTextArea textArea = null;
 
     /**
-      *  allowed variable dient zu pruefen ob man schiessen darf oder nicht
+      *  allowed Variable dient zu pruefen ob man schiessen darf oder nicht
+     *  true wenn Spieler an der Reihe ist und false wenn nicht.
       */
-
     private static boolean allowed;
 
 
@@ -107,9 +112,18 @@ public class DataContainer {
      */
     private static String networkIP = null;
 
+    /**
+     * Methode gibt playerShootTable vom Typ TableView zurueck
+     * @return playerShootTable vom Typ Tableview.
+     */
     public static TableView getPlayerShootTable(){
         return playerShootTable;
     }
+
+    /**
+     * Speichert die Tableview t als playeShootTable im Datacontainer ab.
+     * @param t Tableview die als playerShoottable gespeichert werden soll.
+     */
     public static void setPlayerShootTable(TableView t){
         playerShootTable = t;
     }
@@ -192,7 +206,8 @@ public class DataContainer {
 
 
     /**
-    @return Spielfeld Spieler
+     *gibt das Spielfeld des Spielers zurueck 
+     *@return Spielfeld Spieler
      */
     public static TableView getTable(){
         return table;
@@ -226,16 +241,22 @@ public class DataContainer {
 
     /**
     setter fuer die Variable allowed
+     * @param x Boolean
      */
     public static void setAllowed(boolean x){
         allowed = x;
     }
 
+    /**
+     * Setzt occupancy Variable auf uebergebenen Wert.
+     * @param occupancy Integer
+     */
     public static void setOccupancy(int occupancy) {
         DataContainer.occupancy = occupancy;
     }
     /**
     gibt den max Belegungsfaktor zurueck
+     * @return Integer mit maximalem belegungsfaktor.
      */
     public static int getOccupancy(){
         return occupancy;
@@ -244,7 +265,7 @@ public class DataContainer {
 
 
     /**
-   erstellt die stacks fuer die schiffe des Spielers und der AI
+   erstellt die stacks vom Typ Integer fuer die schiffe des Spielers und der AI
     */
     public static void setShipStack(){
         shipLenghts = new Stack<>();
@@ -252,7 +273,8 @@ public class DataContainer {
     }
 
     /**
-    *erstellt schiffsstack
+    *erstellt Stack vom Typ Ship
+     * und Stack vom Typ Integer fuer die umgekehrten Laengenwerte
     */
     public static void  setFleet(){
         shipLengthsInverted= new Stack<>();
@@ -282,24 +304,44 @@ public class DataContainer {
             maxShipLength = DataContainer.getGameboardHeight() / 2;
         }
     }
+
+    /**
+     * Speichert übegebenen Stack vom typ Integer im Datacontainer als shipLengths Stack ab.
+     * Der stack enthält Werte die zwischen 2 und maxShipLength liegen in sortierter Reihenfolge.
+     * @param shipLenght Stack vom Typ Integer.
+     */
     public static void setShipLenghts(Stack<Integer>shipLenght){
         shipLenghts = shipLenght;
     }
+
+    /**
+     * Speichert übegebenen Stack vom typ Integer im Datacontainer als shipLengthsAI Stack ab.
+     * Der stack enthält Werte die zwischen 2 und maxShipLength liegen in sortierter Reihenfolge.
+     * @param shipLengthsKI Stack vom Typ Integer
+     */
     public static void setShipLengthsAI(Stack<Integer>shipLengthsKI){
         shipLengthsAI = shipLengthsKI;
     }
 
     /**
-     * getter fuer maxShipLength
+     * gibt Maximale Schiffslaenge zurueck
+     * @return Integer
      */
-
     public static int getMaxShipLength(){
         return maxShipLength;
     }
 
+    /**
+     * gibt Stack vom Typ Integer mit den Werten fuer die Schiffslaengen zurueck.
+     * @return Stack von Typ Integer
+     */
     public static Stack<Integer> getShipLenghts(){
         return shipLenghts;
     }
+    /**
+     * gibt Stack vom Typ Integer mit den Werten fuer die Schiffslaengen der AI zurueck.
+     * @return Stack von Typ Integer
+     */
     public static Stack<Integer> getShipLengthsAI(){
         return shipLengthsAI;
     }
@@ -345,7 +387,7 @@ public class DataContainer {
      * Des Weiteren wird geprueft ob die maximal zu waehlenden anzahl an Schiffen ueberschritten wird.
      * @param spinners
      * @param count
-     * @return
+     * @return Gibt true zurueck wenn erfolgreich, ansonsten wird false zurueckgegeben.
      */
     public static boolean setShipLengthPush(List<JSpinner> spinners, int count) {
 
