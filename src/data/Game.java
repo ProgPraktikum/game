@@ -145,10 +145,11 @@ public class Game{
 		}
 		return i;
 	}
-	public static void hitloop(){
+	public static boolean hitloop() {
 		while(!DataContainer.getAllowed()){
 			Network.networkHit();
 		}
+		return true;
 	}
 
 	/**

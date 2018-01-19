@@ -10,6 +10,7 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Diese Klasse bildet das eigentliche Spielfenster.
@@ -25,7 +26,7 @@ import java.io.File;
      GameView(){
 
         JDialog playView = new JDialog();
-        playView.setModal(true);
+        //playView.setModal(true);
         playView.setSize((DataContainer.getGameboardWidth()*2 + 100), (DataContainer.getGameboardHeight() + 100));
         playView.setUndecorated(true);
         playView.setContentPane(Box.createVerticalBox());
@@ -164,9 +165,9 @@ import java.io.File;
         playView.add(scrollPane);
         playView.pack();
         playView.setLocationRelativeTo(null);
-        Game.hitloop();
+        CompletableFuture.supplyAsync(Game::hitloop);
         playView.setVisible(true); // MUST stand at the end this this call in combination with .setModal(true) blocks until return after hide or dispose.
-    }
+     }
 
     private void TouchedMouse(MouseEvent e) {
         /*
