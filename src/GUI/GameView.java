@@ -178,10 +178,12 @@ import java.util.concurrent.CompletableFuture;
         int row = PlayerShootTable.rowAtPoint(x);
 
         if (e.getButton() == MouseEvent.BUTTON1) {  //Linke Maustaste
-            if(DataContainer.getPlayerShootTable().getValueAt(row,column).equals(9)) {
-                int i= Game.shoot(column, row);
-                if(i==0){
-                    Game.hitloop();
+            if(DataContainer.getAllowed()) { // Dismiss following calls if shooting isn't permitted
+                if (DataContainer.getPlayerShootTable().getValueAt(row, column).equals(9)) {
+                    int i = Game.shoot(column, row);
+                    if (i == 0) {
+                        CompletableFuture.supplyAsync(Game::hitloop);
+                    }
                 }
             }
             //TODO aufruf schießen Methode
