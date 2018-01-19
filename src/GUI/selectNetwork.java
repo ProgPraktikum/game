@@ -7,6 +7,8 @@ import network.Network;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -29,6 +31,22 @@ import java.util.Enumeration;
     private JCheckBox isHost;
     private JCheckBox isClient;
 
+     private static boolean isVmMac(byte[] mac) {
+         byte invalidMacs[][] = {
+                 {0x00, 0x05, 0x69},             //VMWare
+                 {0x00, 0x1C, 0x14},             //VMWare
+                 {0x00, 0x0C, 0x29},             //VMWare
+                 {0x00, 0x50, 0x56},             //VMWare
+                 {0x0A, 0x00, 0x27}              //VirtualBox
+         };
+
+         for (byte[] b: invalidMacs) {
+             if (b[0] == mac[0] && b[1] == mac[1] && b[2] == mac[2]) {
+                 return true;
+             }
+         }
+         return false;
+     }
 
      selectNetwork() throws SocketException {
 
@@ -94,18 +112,38 @@ import java.util.Enumeration;
         /**
          * eigene IP ermitteln
          */
-        Enumeration<NetworkInterface> netInter = NetworkInterface.getNetworkInterfaces();
-        String myIp = null;
-        while ( netInter.hasMoreElements() )
-        {
-            NetworkInterface ni = netInter.nextElement();
 
-            for ( InetAddress iaddress : Collections.list(ni.getInetAddresses()) )
+        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+        String myIp = null;
+        while ( interfaces.hasMoreElements() )
+        {
+            NetworkInterface iface = interfaces.nextElement();
+
+            if (!(iface.isUp()) ||(iface.isVirtual()) || (iface.isLoopback())) {
+                continue;
+            }
+
+            Enumeration<InetAddress> addresses = iface.getInetAddresses();
+            while ( addresses.hasMoreElements() )
             {
-                if(!iaddress.isLinkLocalAddress() && !(iaddress.isLoopbackAddress())
-                        && !iaddress.isSiteLocalAddress()){
-                    System.out.println( "IP: " + iaddress.getHostAddress() );
-                    myIp = iaddress.getHostAddress();
+                byte[] mac = iface.getHardwareAddress();
+                InetAddress addr = addresses.nextElement();
+
+                if(isVmMac(mac)) {
+                    continue;
+                }
+
+                try {
+                    if (!addr.isReachable(1000)) {
+                        continue;
+                    }
+                } catch(IOException e) {
+                    continue;
+                }
+
+                if(!(addr.isLinkLocalAddress()) && !(addr.isLoopbackAddress()) && !(addr instanceof Inet6Address)){
+                    System.out.println( "IP: " + addr.getHostAddress() );
+                    myIp = addr.getHostAddress();
                 }
 
             }
