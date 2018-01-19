@@ -142,7 +142,6 @@ import java.util.Enumeration;
                 }
 
                 if(!(addr.isLinkLocalAddress()) && !(addr.isLoopbackAddress()) && !(addr instanceof Inet6Address)){
-                    System.out.println( "IP: " + addr.getHostAddress() );
                     myIp = addr.getHostAddress();
                 }
 
