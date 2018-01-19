@@ -159,14 +159,13 @@ import java.io.File;
         hbox.add(Box.createHorizontalStrut(10));
         hbox.add(DataContainer.getPlayerShootTable());
 
-
         playView.setJMenuBar(bar);
         playView.add(hbox);
         playView.add(scrollPane);
         playView.pack();
         playView.setLocationRelativeTo(null);
-        playView.setVisible(true);
         Game.hitloop();
+        playView.setVisible(true); // MUST stand at the end this this call in combination with .setModal(true) blocks until return after hide or dispose.
     }
 
     private void TouchedMouse(MouseEvent e) {
