@@ -10,7 +10,6 @@ import data.Game;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 
 import java.util.Stack;
 import java.util.Iterator;
@@ -133,10 +132,10 @@ public class Network {
          * Size beinhaltet die Feldbreite und Höhe
          * Ships beinhaltet die Anzahl Schiffe und die Schiffslänge
          */
-        line.append("size " + width + " " + height + ", ");
-        line.append("ships " + lengths.size());
+        line.append("size ").append(width).append(" ").append(height).append(", ");
+        line.append("ships ").append(lengths.size());
         while (iterator.hasNext()) {
-            line.append(", ship " + iterator.next());
+            line.append(", ship ").append(iterator.next());
         }
 
         try {
@@ -157,35 +156,29 @@ public class Network {
 
         try {
             line = reader.readLine();
-        } catch (SocketException e) {
-
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         /*
-         * Der String wird an den Leerzeilen getrennt und die Werte werden im
+         * Der String wird an den Leerzeilen getrennt und die Werte im
          * DataContainer gespeichert.
          */
         String[] startData = line.split(", ");
         String[] size = startData[0].split(" ");
+
         /*
-        Breite und Höhe wird in den DataContainer geschrieben.
+        Breite und Höhe werden in den DataContainer geschrieben.
          */
         DataContainer.setGameboardWidth(Integer.parseInt(size[1]));
         DataContainer.setGameboardHeight(Integer.parseInt(size[2]));
 
-
-        
-        Stack<Integer> shipStack = new Stack<Integer>();
         for (int i = 2; i < startData.length; i++) {
-            String[] ship = startData[i].split(" ");
-            shipStack.push(Integer.parseInt(ship[1]));
+            String ship = startData[i].split(" ")[1];
 
-
-            DataContainer.getShipLenghts().push(Integer.parseInt(ship[1]));
-            DataContainer.getShipLengthsAI().push(Integer.parseInt(ship[1]));
-            DataContainer.getShipLengthsInverted().push(Integer.parseInt(ship[1]));
+            DataContainer.getShipLenghts().push(Integer.parseInt(ship));
+            DataContainer.getShipLengthsAI().push(Integer.parseInt(ship));
+            DataContainer.getShipLengthsInverted().push(Integer.parseInt(ship));
         }
         /*
         Schiffsobjekte werden erzeugt.
@@ -197,7 +190,8 @@ public class Network {
     }
     public static int networkShoot(int x,int y) {
         StringBuffer line = new StringBuffer();
-        line.append("shot " + y + " " + x);
+        line.append("shot ").append(y).append(" ").append(x);
+        System.out.println("Line:" + line);
         try {
             writer.write(String.format("%s%n", line));
             writer.flush();
@@ -207,11 +201,9 @@ public class Network {
         return shootanswer();
     }
     public static int shootanswer(){
-    String inputLine = ""; //1 zeichen return wert von shoot des gegners
+        String inputLine = ""; //1 zeichen return wert von shoot des gegners
         try {
             inputLine = reader.readLine();
-        } catch (SocketException e) {
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -225,15 +217,12 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String[] input =inputLine.split(" ");
+
+        String[] input = inputLine.split(" ");
         int y = Integer.parseInt(input[1]);
         int x = Integer.parseInt(input[2]);
-        System.out.print(y);
-        System.out.println();
-        System.out.println(x);
-        //int value = Game.getHit(x,y);
-        //String outputLine = Integer.toString(Game.getHit(x,y));
-        StringBuffer outputLine= new StringBuffer();
+
+        StringBuffer outputLine = new StringBuffer();
         outputLine.append(Integer.toString(Game.getHit(x,y)));
         try {
             writer.write(String.format("%s%n", outputLine));
