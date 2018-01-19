@@ -117,8 +117,10 @@ import java.util.Enumeration;
         String myIp = null;
         while ( interfaces.hasMoreElements() )
         {
+            /**
+             * Check whether interface is up, isn't virtual and doesn't loop back
+             */
             NetworkInterface iface = interfaces.nextElement();
-
             if (!(iface.isUp()) ||(iface.isVirtual()) || (iface.isLoopback())) {
                 continue;
             }
@@ -126,13 +128,22 @@ import java.util.Enumeration;
             Enumeration<InetAddress> addresses = iface.getInetAddresses();
             while ( addresses.hasMoreElements() )
             {
+                /**
+                 * Check physical interface address and filter out VM hosts
+                 */
                 byte[] mac = iface.getHardwareAddress();
-                InetAddress addr = addresses.nextElement();
-
-                if(isVmMac(mac)) {
+                if (mac == null) {
                     continue;
                 }
 
+                if (isVmMac(mac)) {
+                    continue;
+                }
+
+                /**
+                 * Check ip adress and accept IPv4 only at this moment to prevent issues
+                 */
+                InetAddress addr = addresses.nextElement();
                 try {
                     if (!addr.isReachable(1000)) {
                         continue;
