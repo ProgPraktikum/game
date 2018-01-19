@@ -132,6 +132,8 @@ import java.util.Enumeration;
                  * Check physical interface address and filter out VM hosts
                  */
                 byte[] mac = iface.getHardwareAddress();
+                InetAddress addr = addresses.nextElement();
+
                 if (mac == null) {
                     continue;
                 }
@@ -143,7 +145,6 @@ import java.util.Enumeration;
                 /**
                  * Check ip adress and accept IPv4 only at this moment to prevent issues
                  */
-                InetAddress addr = addresses.nextElement();
                 try {
                     if (!addr.isReachable(1000)) {
                         continue;
