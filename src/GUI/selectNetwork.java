@@ -7,12 +7,13 @@ import network.Network;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.Collections;
 import java.util.Enumeration;
 
 
@@ -49,116 +50,122 @@ import java.util.Enumeration;
      }
 
      selectNetwork() throws SocketException {
+         /**
+          * eigene IP ermitteln
+          */
+         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+         final StringBuffer myIp = new StringBuffer();
+         while ( interfaces.hasMoreElements() )
+         {
+             /**
+              * Check whether interface is up, isn't virtual and doesn't loop back
+              */
+             NetworkInterface iface = interfaces.nextElement();
+             if (!(iface.isUp()) ||(iface.isVirtual()) || (iface.isLoopback())) {
+                 continue;
+             }
 
-        /**
-         * Neuer JDialog wird erstellt und auf Modal gesetzt. Des Weiteren wird undecorated gesetzt.
-         */
-        nw = new JDialog();
-        nw.setModal(true);
-        nw.setUndecorated(true);
-        nw.setBackground(Color.BLACK);
-        nw.setPreferredSize(new Dimension(400, 400));
-        nw.setContentPane(Box.createVerticalBox());
+             Enumeration<InetAddress> addresses = iface.getInetAddresses();
+             while ( addresses.hasMoreElements() )
+             {
+                 /**
+                  * Check physical interface address and filter out VM hosts
+                  */
+                 byte[] mac = iface.getHardwareAddress();
+                 InetAddress addr = addresses.nextElement();
 
-        /**
-         * Boxn um die JCheckBox'n und JButtons und JTextField aufzunehmen.
-         */
-        Box horizontalBox = Box.createHorizontalBox();
-        Box horizontalBox1 = Box.createHorizontalBox();
-        Box tf = Box.createHorizontalBox();
+                 if (mac == null) {
+                     continue;
+                 }
 
-        /**
-         * JCheckBox für isHost
-         */
-        isHost = new JCheckBox("Host");
-        isHost.setAlignmentX(Component.LEFT_ALIGNMENT);
-        isHost.setBackground(Color.BLACK);
-        isHost.setForeground(Color.WHITE);
-        isHost.addActionListener(
-                (e) -> {
+                 if (isVmMac(mac)) {
+                     continue;
+                 }
 
-                    if (isHost.isSelected()) {
-                        isClient.setSelected(false);
-                    }
-                }
-        );
+                 /**
+                  * Check ip adress and accept IPv4 only at this moment to prevent issues
+                  */
+                 try {
+                     if (!addr.isReachable(1000)) {
+                         continue;
+                     }
+                 } catch(IOException e) {
+                     continue;
+                 }
+
+                 if(!(addr.isLinkLocalAddress()) && !(addr.isLoopbackAddress()) && !(addr instanceof Inet6Address)){
+                     myIp.append(addr.getHostAddress());
+                 }
+             }
+         }
+
+         /**
+          * Neuer JDialog wird erstellt und auf Modal gesetzt. Des Weiteren wird undecorated gesetzt.
+          */
+         nw = new JDialog();
+         nw.setModal(true);
+         nw.setUndecorated(true);
+         nw.setBackground(Color.BLACK);
+         nw.setPreferredSize(new Dimension(400, 400));
+         nw.setContentPane(Box.createVerticalBox());
+
+         /**
+          * Boxn um die JCheckBox'n und JButtons und JTextField aufzunehmen.
+          */
+         Box horizontalBox = Box.createHorizontalBox();
+         Box horizontalBox1 = Box.createHorizontalBox();
+         Box tf = Box.createHorizontalBox();
 
 
-        /**
-         * JCheckBox für isClient
-         */
-        isClient = new JCheckBox("Client");
-        isClient.setAlignmentX(Component.LEFT_ALIGNMENT);
-        isClient.setBackground(Color.BLACK);
-        isClient.setForeground(Color.WHITE);
-        isClient.addActionListener(
-                (e) -> {
-
-                    if (isClient.isSelected()) {
-                        isHost.setSelected(false);
-                    }
-                }
-        );
+         /**
+          * JTextField für die Eingabe einer IP
+          */
+         field = new JTextField("IP des Hosts..");
+         field.setMaximumSize(new Dimension(200, 30));
+         field.setMinimumSize(new Dimension(200, 30));
+         field.setPreferredSize(new Dimension(200, 30));
+         field.addMouseListener(new MouseAdapter() {
+             @Override
+             public  void mouseClicked(MouseEvent e) {
+                 field.setText("");
+             }
+         });
 
 
-        /**
-         * JTextField für die Eingabe einer IP
-         */
-        field = new JTextField("IP des Host eingeben");
-        field.setMaximumSize(new Dimension(200, 30));
-        field.setMinimumSize(new Dimension(200, 30));
-        field.setPreferredSize(new Dimension(200, 30));
+         /**
+          * JCheckBox für isHost
+          */
+         isHost = new JCheckBox("Host");
+         isHost.setAlignmentX(Component.LEFT_ALIGNMENT);
+         isHost.setBackground(Color.BLACK);
+         isHost.setForeground(Color.WHITE);
+         isHost.addActionListener(
+                 (e) -> {
 
-        /**
-         * eigene IP ermitteln
-         */
+                     if (isHost.isSelected()) {
+                         field.setText(myIp.toString());
+                         isClient.setSelected(false);
+                     }
+                 }
+         );
 
-        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-        String myIp = null;
-        while ( interfaces.hasMoreElements() )
-        {
-            /**
-             * Check whether interface is up, isn't virtual and doesn't loop back
-             */
-            NetworkInterface iface = interfaces.nextElement();
-            if (!(iface.isUp()) ||(iface.isVirtual()) || (iface.isLoopback())) {
-                continue;
-            }
 
-            Enumeration<InetAddress> addresses = iface.getInetAddresses();
-            while ( addresses.hasMoreElements() )
-            {
-                /**
-                 * Check physical interface address and filter out VM hosts
-                 */
-                byte[] mac = iface.getHardwareAddress();
-                InetAddress addr = addresses.nextElement();
+         /**
+          * JCheckBox für isClient
+          */
+         isClient = new JCheckBox("Client");
+         isClient.setAlignmentX(Component.LEFT_ALIGNMENT);
+         isClient.setBackground(Color.BLACK);
+         isClient.setForeground(Color.WHITE);
+         isClient.addActionListener(
+                 (e) -> {
 
-                if (mac == null) {
-                    continue;
-                }
-
-                if (isVmMac(mac)) {
-                    continue;
-                }
-
-                /**
-                 * Check ip adress and accept IPv4 only at this moment to prevent issues
-                 */
-                try {
-                    if (!addr.isReachable(1000)) {
-                        continue;
-                    }
-                } catch(IOException e) {
-                    continue;
-                }
-
-                if(!(addr.isLinkLocalAddress()) && !(addr.isLoopbackAddress()) && !(addr instanceof Inet6Address)){
-                    myIp = addr.getHostAddress();
-                }
-
-            }
-        }
+                     if (isClient.isSelected()) {
+                         field.setText("IP des Hosts..");
+                         isHost.setSelected(false);
+                     }
+                 }
+         );
 
 
         /**
