@@ -137,14 +137,16 @@ public class Game{
 	public static int getHit(int x, int y){
 		int i = map.checkboard(x,y);
 		DataContainer.getTable().setValueAt(i,y,x);
-		if(i==0){
+		if (i == 0){
+            DataContainer.getTable().setValueAt(7, y, x);
 			DataContainer.setAllowed(true);
 		}
-		if(i==2){
+		if (i == 2){
 			displayHits(x,y,0,DataContainer.getTable());
 		}
 		return i;
 	}
+
 	public static boolean hitloop() {
 		while(!DataContainer.getAllowed()){
 			Network.networkHit();

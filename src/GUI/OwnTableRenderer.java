@@ -1,6 +1,7 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 
@@ -39,7 +40,7 @@ public class OwnTableRenderer extends javax.swing.table.DefaultTableCellRenderer
                 }else if (value.equals(9)){
                     comp.setBackground(Color.LIGHT_GRAY);
                     comp.setForeground(Color.LIGHT_GRAY);
-                }else if (value.equals(00)){
+                }else if (value.equals(7)){
                     comp.setBackground(Color.CYAN);
                     comp.setForeground(Color.CYAN);
                 }
