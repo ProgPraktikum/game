@@ -22,6 +22,7 @@ import java.util.concurrent.CompletableFuture;
 
     private TableView tablePlayer;
     private TableView PlayerShootTable;
+    private JTextArea textArea;
 
      GameView(){
 
@@ -130,7 +131,7 @@ import java.util.concurrent.CompletableFuture;
          * saemtliche Informationen
          */
         JScrollPane scrollPane = new JScrollPane();
-        JTextArea textArea = new JTextArea(5, 10);
+        textArea = new JTextArea(5, 10);
         textArea.setFont(new Font("Verdana", Font.PLAIN, 10));
 
         scrollPane.getViewport().add(textArea);
@@ -183,6 +184,10 @@ import java.util.concurrent.CompletableFuture;
                     int i = Game.shoot(column, row);
                     if (i == 0) {
                         CompletableFuture.supplyAsync(Game::hitloop);
+                    } if (i == -1) {
+                        textArea.append("Shot failed due to technical issues. Please try again!");
+                    } if (i == -2) {
+                        textArea.append("Shot failed since it wasn't your turn!");
                     }
                 }
             }

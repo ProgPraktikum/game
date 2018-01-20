@@ -107,6 +107,9 @@ public class Game{
 			else if (DataContainer.getGameType().equals("mp")) {
 				//val=0;
 				val = Network.networkShoot(x,y);
+				if (val == -1) {
+				    return -1; // shoot failed due to network issues
+                }
 				if(val == 0){
 					DataContainer.setAllowed(false);
 				}
@@ -123,8 +126,8 @@ public class Game{
 			}
 			return val;
 		}
-		else{
-			return -1;
+		else {
+			return -2;
 		}
 	}
 

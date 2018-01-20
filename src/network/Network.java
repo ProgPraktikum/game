@@ -28,6 +28,7 @@ public class Network {
      * variable zum speichern des Ports. (besteht aus 50000 + GruppenNr)
      */
     private static int port = 50010;
+    private static String addr;
 
     /**
      * Serversocket des Hosts
@@ -78,7 +79,7 @@ public class Network {
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5; i++) { // Not sure if this type of recovering is actually useful here, but..
                 try {
                     TimeUnit.MILLISECONDS.sleep(recoverIntervals[i]);
                     recoverHostSocket();
@@ -113,6 +114,7 @@ public class Network {
      * @param ip
      */
     public static void createClientConnection(String ip) {
+        addr = ip;
         try {
             /*
              * Es wird ein neuer Socket mit uebergeber Ip und Port erstellt
@@ -122,7 +124,7 @@ public class Network {
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5; i++) { // Not sure if this type of recovering is actually useful here, but..
                 try {
                     TimeUnit.MILLISECONDS.sleep(recoverIntervals[i]);
                     recoverClientSocket(ip);
@@ -229,7 +231,12 @@ public class Network {
             writer.write(String.format("%s%n", line));
             writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Connection lost - trying to recover!");
+            try {
+                recover();
+            } catch(IOException ex) {
+                ex.printStackTrace();
+            }
         }
         return shootanswer();
     }
@@ -238,9 +245,28 @@ public class Network {
         try {
             inputLine = reader.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Connection lost - trying to recover!");
+            try {
+                recover();
+            } catch(IOException ex) {
+                ex.printStackTrace();
+            }
         }
-        return Integer.parseInt(inputLine);
+
+        int ret = -1;
+        try {
+            ret = Integer.parseInt(inputLine);
+        } catch (Exception e) {
+            try {
+                System.err.println("Connection seems lost - trying to recover!");
+                recover();
+            } catch(IOException ex) {
+                ex.printStackTrace();
+            } catch(Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        return ret;
     }
 
     public static void networkHit(){
@@ -265,23 +291,29 @@ public class Network {
         }
     }
 
+    private static void recover() throws IOException {
+        boolean isHost = DataContainer.getIsHost();
+        try {
+            if (isHost) {
+                recoverHostSocket();
+            } else {
+                recoverClientSocket(addr);
+            }
+        } catch(IOException e) {
+            throw e;
+        }
+
+    }
+
+
     private static void recoverHostSocket() throws IOException {
         try {
-            s.shutdownOutput();
-            ss.close();
-        } catch (IOException e) {
-            ;
-        }
-        try {
-            ss = new ServerSocket(port);
-
-            SelectFieldSize.buildWaitingFrame();
             s = ss.accept();
+            System.out.println("Recovered connection");
 
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
             throw e;
         }
     }
@@ -295,11 +327,11 @@ public class Network {
 
         try {
             s = new Socket(ip, port);
+            System.out.println("Recovered connection");
 
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
             throw e;
         }
     }
