@@ -87,6 +87,10 @@ public class Network {
                 } catch (Exception ex) {
                     ;
                 }
+
+                if (s.isBound()) {
+                    break;
+                }
             }
             e.printStackTrace();
         }
@@ -126,6 +130,10 @@ public class Network {
                     Thread.currentThread().interrupt();
                 } catch (Exception ex) {
                     ;
+                }
+
+                if (s.isBound()) {
+                    break;
                 }
             }
             e.printStackTrace();
@@ -257,7 +265,7 @@ public class Network {
         }
     }
 
-    private static void recoverHostSocket() {
+    private static void recoverHostSocket() throws IOException {
         try {
             s.shutdownOutput();
             ss.close();
@@ -274,10 +282,11 @@ public class Network {
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
         }
     }
 
-    private static void recoverClientSocket(String ip) {
+    private static void recoverClientSocket(String ip) throws IOException {
         try {
             s.shutdownOutput();
         } catch (IOException e) {
@@ -291,6 +300,7 @@ public class Network {
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
         }
     }
 
