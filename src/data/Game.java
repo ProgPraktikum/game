@@ -1,14 +1,14 @@
 package data;
 
-
-import GUI.TableView;
+import ai.Ai;
+import gui.TableView;
 import gameboard.Board;
 import network.Network;
 
 import java.util.Stack;
 
 /**@author Felix
- * @desc Statische Klasse welche die Huaptlogik des Spiels enthaelt und Netzwerk, AI und GUI verknuepft
+ * @desc Statische Klasse welche die Huaptlogik des Spiels enthaelt und Netzwerk, AI und gui verknuepft
  *
  */
 public class Game{
@@ -96,13 +96,14 @@ public class Game{
 	 * @param y Y-Zielkoordinate
 	 * @return gibt entweder 0 fuer wasser, 1 fuer treffer oder 2 fuer versenkt zurueck.
 	 */
-	public static int shoot(int x, int y) {
+	public static int shoot(int x, int y, Ai ai) {
 		if(DataContainer.getAllowed()) {
 			int val;
 			if(DataContainer.getGameType().equals("ss") ||DataContainer.getGameType().equals("bdf")) {
 				val=0;
 				//DEBUG
-				val = map.checkboard(x,y);
+				//val = map.checkboard(x,y);
+				val = ai.hit(x, y);
 			}
 			else if (DataContainer.getGameType().equals("mp")) {
 				//val=0;

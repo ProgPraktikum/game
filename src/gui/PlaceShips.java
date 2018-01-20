@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import data.Game;
 import data.Ship;
@@ -165,7 +165,7 @@ import java.util.Random;
                     if(DataContainer.getGameType().equals("bdf") ||
                             DataContainer.getGameType().equals("ss")) {
 
-                        //Todo: Aufruf der AI damit sie die Schiffe platziert
+                        //Todo: Aufruf der Ai damit sie die Schiffe platziert
                     }
                     setships.dispose();
                     new GameView();

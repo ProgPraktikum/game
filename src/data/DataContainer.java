@@ -1,7 +1,6 @@
 package data;
 
-import GUI.TableView;
-import gameboard.Board;
+import gui.TableView;
 
 import javax.swing.*;
 import java.util.Iterator;
@@ -67,6 +66,14 @@ public class DataContainer {
     /**
      * Dieser Stack ist fuer die gewaehlten schiffe fuer die AI
      * speichert die Anzahl der Schiffe mit der Laenge xxx
+    /*flotte der ai identisch zur spielerflotte
+    *
+     */
+    private static Stack<Ship> aiFleet;
+
+    /*
+     * Dieser Stack ist für die gewaehlten schiffe für die Ai
+     * speichert die Anzahl der Schiffe mit der Länge xxx
      */
     private static Stack<Integer> shipLengthsAI;
 
@@ -206,7 +213,7 @@ public class DataContainer {
 
 
     /**
-     *gibt das Spielfeld des Spielers zurueck 
+     *gibt das Spielfeld des Spielers zurueck
      *@return Spielfeld Spieler
      */
     public static TableView getTable(){
@@ -279,6 +286,8 @@ public class DataContainer {
     public static void  setFleet(){
         shipLengthsInverted= new Stack<>();
         fleet = new Stack<>();
+        aiFleet = new Stack<>();
+
     }
 
     /**
@@ -346,6 +355,10 @@ public class DataContainer {
         return shipLengthsAI;
     }
 
+    public Stack<Ship> getAiFleet(){
+        return aiFleet;
+    }
+
 
 
     /**
@@ -356,13 +369,17 @@ public class DataContainer {
         return fleet;
     }
 
+
+
     /**
      * fuegt schiff zu stack fleet hinzu
      * @param l laende des neu hinzuefuegten Schiffes
      */
     public static void addShip(int l){
         Ship s = new Ship(l);
+        Ship aiS = new Ship(l);
         fleet.push(s);
+        aiFleet.push(aiS);
     }
 
     /**

@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import data.DataContainer;
 import network.Network;

@@ -1,4 +1,4 @@
-package Backup;
+package backup;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

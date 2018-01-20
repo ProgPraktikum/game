@@ -1,4 +1,6 @@
-package GUI;
+package gui;
+
+import ai.Ai;
 
 import data.DataContainer;
 import network.Network;
@@ -99,7 +101,7 @@ import java.util.concurrent.CompletableFuture;
                                     String filename = file.getAbsolutePath() + "-" + timestamp
                                             + ".txt";
                                     if (DataContainer.getGameType().equals("bdf"))
-                                    Backup.save.saveBDF(filename);
+                                    backup.save.saveBDF(filename);
                                 }
                             }
 
@@ -179,26 +181,33 @@ import java.util.concurrent.CompletableFuture;
         int row = PlayerShootTable.rowAtPoint(x);
 
         if (e.getButton() == MouseEvent.BUTTON1) {  //Linke Maustaste
-            if(DataContainer.getAllowed()) { // Dismiss following calls if shooting isn't permitted
+            Ai ai = new Ai();
+            if (DataContainer.getAllowed()) { // Dismiss following calls if shooting isn't permitted
                 if (DataContainer.getPlayerShootTable().getValueAt(row, column).equals(9)) {
-                    int i = Game.shoot(column, row);
+                    int i = Game.shoot(column, row, ai);
                     if (i == 0) {
                         CompletableFuture.supplyAsync(Game::hitloop);
-                    } if (i == -1) {
+                    }
+                    if (i == -1) {
                         textArea.append("Shot failed due to technical issues. Please try again!");
-                    } if (i == -2) {
+                    }
+                    if (i == -2) {
                         textArea.append("Shot failed since it wasn't your turn!");
                     }
                 }
+                //DEBUG
+            /* DataContainer.setAllowed(true);
+            if (DataContainer.getPlayerShootTable().getValueAt(row, column).equals(9)) {
+                Game.shoot(column, row, ai);
             }
-            //TODO aufruf schießen Methode
+            ai.draw(); */
+                //TODO aufruf schießen Methode
+            }
+            // rechte Maustaste
+            else {
+
+            }
         }
-        // rechte Maustaste
-        else{
-
-        }
-
-
-
     }
+    
 }

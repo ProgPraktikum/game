@@ -1,9 +1,9 @@
 package network;
 
 
-import GUI.SelectFieldSize;
+import gui.SelectFieldSize;
 import data.DataContainer;
-import GUI.PlaceShips;
+import gui.PlaceShips;
 import data.Game;
 
 
