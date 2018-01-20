@@ -13,6 +13,7 @@ import java.net.Socket;
 
 import java.util.Stack;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -48,6 +49,10 @@ public class Network {
      */
     private static Writer writer;
 
+    /**
+     * Intervalle für Socket-Recovering nach Verbindungsabbruch
+     */
+    private static int[] recoverIntervals = {1000, 3000, 6000, 10000, 150000}; // varying from the RFC the intervals won't be randomly generated here since we've got just one client and thus no DOS like issues
 
     /*
     methoden
@@ -73,6 +78,16 @@ public class Network {
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
+            for (int i = 0; i < 5; i++) {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(recoverIntervals[i]);
+                    recoverHostSocket();
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                } catch (Exception ex) {
+                    ;
+                }
+            }
             e.printStackTrace();
         }
     }
@@ -103,6 +118,16 @@ public class Network {
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
+            for (int i = 0; i < 5; i++) {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(recoverIntervals[i]);
+                    recoverClientSocket(ip);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                } catch (Exception ex) {
+                    ;
+                }
+            }
             e.printStackTrace();
         }
 
@@ -227,6 +252,43 @@ public class Network {
         try {
             writer.write(String.format("%s%n", outputLine));
             writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void recoverHostSocket() {
+        try {
+            s.shutdownOutput();
+            ss.close();
+        } catch (IOException e) {
+            ;
+        }
+        try {
+            ss = new ServerSocket(port);
+
+            SelectFieldSize.buildWaitingFrame();
+            s = ss.accept();
+
+            reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            writer = new OutputStreamWriter(s.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void recoverClientSocket(String ip) {
+        try {
+            s.shutdownOutput();
+        } catch (IOException e) {
+            ;
+        }
+
+        try {
+            s = new Socket(ip, port);
+
+            reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
