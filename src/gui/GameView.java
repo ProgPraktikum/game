@@ -182,26 +182,28 @@ import java.util.concurrent.CompletableFuture;
 
         if (e.getButton() == MouseEvent.BUTTON1) {  //Linke Maustaste
             Ai ai = new Ai();
+            if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) {
+                DataContainer.setAllowed(true);
+            }
             if (DataContainer.getAllowed()) { // Dismiss following calls if shooting isn't permitted
                 if (DataContainer.getPlayerShootTable().getValueAt(row, column).equals(9)) {
                     int i = Game.shoot(column, row, ai);
-                    if (i == 0) {
-                        CompletableFuture.supplyAsync(Game::hitloop);
+                    if (DataContainer.getGameType().equals("mp")) {
+                        System.out.println("mp!");
+                        if (i == 0) {
+                            CompletableFuture.supplyAsync(Game::hitloop);
+                        }
+                        if (i == -1) {
+                            textArea.append("Shot failed due to technical issues. Please try again!");
+                        }
+                        if (i == -2) {
+                            textArea.append("Shot failed since it wasn't your turn!");
+                        }
+                    } else if(DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) {
+                        ai.draw();
                     }
-                    if (i == -1) {
-                        textArea.append("Shot failed due to technical issues. Please try again!");
-                    }
-                    if (i == -2) {
-                        textArea.append("Shot failed since it wasn't your turn!");
-                    }
+
                 }
-                //DEBUG
-            /* DataContainer.setAllowed(true);
-            if (DataContainer.getPlayerShootTable().getValueAt(row, column).equals(9)) {
-                Game.shoot(column, row, ai);
-            }
-            ai.draw(); */
-                //TODO aufruf schießen Methode
             }
             // rechte Maustaste
             else {
