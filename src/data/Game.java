@@ -5,17 +5,18 @@ import gui.TableView;
 import gameboard.Board;
 import network.Network;
 
+import javax.xml.crypto.Data;
 import java.util.Stack;
 
 /**@author Felix
  * @desc Statische Klasse welche die Huaptlogik des Spiels enthaelt und Netzwerk, AI und gui verknuepft
  *
  */
-public class Game{
+public class Game {
 	/**
 	 * board Objekt fuer den Spieler
 	 */
-	private static Board map= new Board();
+	private static Board map = new Board();
 
 
 	//methoden
@@ -35,18 +36,18 @@ public class Game{
 	 * @param y Y-Zielkoordinate
 	 * @return gibt true bei erfolgreicher Platzierung zurueck und false bei falscher Platzierung.
 	 */
-    public static boolean moveShip(int x, int y){
-        Ship s = DataContainer.getSelectedShip();
-        return map.moveShip(x,y,s);
+	public static boolean moveShip(int x, int y) {
+		Ship s = DataContainer.getSelectedShip();
+		return map.moveShip(x, y, s);
 
-    }
+	}
 	//aendert orientierung des schiffs
 
 	/**
 	 * aendert Platzierung des selectedShip aus dem Datacontainer auf den Wert i mod 4.
 	 * @param i neue Orrientierung zwischen 0 und 3
 	 */
-	public static void rotateShip(int i){
+	public static void rotateShip(int i) {
 		Ship s = DataContainer.getSelectedShip();
 		map.rotateShip(i, s);
 	}
@@ -59,27 +60,26 @@ public class Game{
 	 * @param s zu platzierendes Schiff
 	 * @return gibt true bei erfolgreicher Platzierung und false bei fehler zurueck.
 	 */
-	public static boolean placeShip(Ship s){
+	public static boolean placeShip(Ship s) {
 		return map.place(s);
 	}
 
 	/**
 	 * algoritzmus zur generierung von Flottenvorschlaegen
 	 */
-	public static void generatefleet(){
-		int occ=DataContainer.getOccupancy();
-		Stack<Integer> lengths= new Stack<>();
-		int highlen= 2;
-		occ -=DataContainer.getMaxShipLength();
-		while(occ>0){
-			for(int i = 2; i<=highlen;i++){
-				if(occ - i >= 0){
+	public static void generatefleet() {
+		int occ = DataContainer.getOccupancy();
+		Stack<Integer> lengths = new Stack<>();
+		int highlen = 2;
+		occ -= DataContainer.getMaxShipLength();
+		while (occ > 0) {
+			for (int i = 2; i <= highlen; i++) {
+				if (occ - i >= 0) {
 					lengths.push(i);
 					occ -= i;
-				}
-				else if(occ - i == -1){
+				} else if (occ - i == -1) {
 					lengths.push(i - 1);
-					occ -= (i-1);
+					occ -= (i - 1);
 				}
 			}
 			highlen++;
@@ -91,16 +91,16 @@ public class Game{
 	//spielmethoden
 
 	/**
-	 * @desc Methode des Spielers um auf seinen Gegner zu schiessen, abhaengig vom Spielmodus entweder Ai oder Netzwerkgegner.
 	 * @param x X-Zielkoordinate
 	 * @param y Y-Zielkoordinate
 	 * @return gibt entweder 0 fuer wasser, 1 fuer treffer oder 2 fuer versenkt zurueck.
+	 * @desc Methode des Spielers um auf seinen Gegner zu schiessen, abhaengig vom Spielmodus entweder Ai oder Netzwerkgegner.
 	 */
 	public static int shoot(int x, int y, Ai ai) {
 		if(DataContainer.getAllowed()) {
 			int val;
-			if(DataContainer.getGameType().equals("ss") ||DataContainer.getGameType().equals("bdf")) {
-				val=0;
+			if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) {
+				val = 0;
 				//DEBUG
 				//val = map.checkboard(x,y);
 				val = ai.hit(x, y);
@@ -122,8 +122,8 @@ public class Game{
 			map.setPlayershots(x, y, val);
 			DataContainer.getPlayerShootTable().setValueAt(val,y,x);
 
-			if(val==2) {
-				displayHits(x,y,0,DataContainer.getPlayerShootTable());
+			if (val == 2) {
+				displayHits(x, y, 0, DataContainer.getPlayerShootTable());
 			}
 			return val;
 		}
@@ -133,10 +133,10 @@ public class Game{
 	}
 
 	/**
-	 * @desc Methode um auf den Spieler zu schiessen. wird bei netzwerkspiel bzw von AI aufgerufen.
 	 * @param x X-Zielkoordinate
 	 * @param y Y-Zielkoordinate
 	 * @return gibt 0 fuer Wasser, 1 fuer Treffer und 2 fuer Versenkt zurueck.
+	 * @desc Methode um auf den Spieler zu schiessen. wird bei netzwerkspiel bzw von AI aufgerufen.
 	 */
 	public static int getHit(int x, int y){
 		int i = map.checkboard(x,y);
@@ -159,10 +159,10 @@ public class Game{
 	}
 
 	/**
-	 * @desc gibt Tile Objekt an Stelle x,y des playerBoards aus dem Board zurueck
 	 * @param x X-Wert des zurueckzugebenden Objekts
 	 * @param y Y-Wert des zurueckzugebenden Objekts
 	 * @return gibt ein Tile Objekt zurueck, welches an der entsprechenden x,y stelle im array steht
+	 * @desc gibt Tile Objekt an Stelle x,y des playerBoards aus dem Board zurueck
 	 */
 	public static Tile getPlayerboard(int x, int y){
 		return map.getPlayerboardAt(x,y);
@@ -177,13 +177,13 @@ public class Game{
 	}
 
 	/**
-	 *@desc rekursive Funktion um Schiffe auf der Oberflaeche als versenkt anzuzeigen.
-	 * @param x X-Wert von dem aus die umliegenden Felder geprueft werden
-	 * @param y Y-Wert von dem aus die umliegenden Felder geprueft werden
+	 * @param x         X-Wert von dem aus die umliegenden Felder geprueft werden
+	 * @param y         Y-Wert von dem aus die umliegenden Felder geprueft werden
 	 * @param direction Richtung, die bei mehrmaligen aufrufen uebergeben wird um die suche effizienter durchzufuehren
-	 * @param table Tableview auf der die Operation durchgefuehrt werden soll
+	 * @param table     Tableview auf der die Operation durchgefuehrt werden soll
+	 * @desc rekursive Funktion um Schiffe auf der Oberflaeche als versenkt anzuzeigen.
 	 */
-	private static void displayHits(int x, int y,int direction, TableView table) {
+	private static void displayHits(int x, int y, int direction, TableView table) {
 		//todo optimize corner checks
 		table.setValueAt(2, y, x);
 		if (x - 1 >= 0) {
@@ -236,6 +236,42 @@ public class Game{
 		}
 	}
 
+	/**
+	 * Berechnet Anzahl der Schiffsgroessen fuer eine empfohlene Flotte. Die Laenge der jeweiligen Schiffe entspricht dem Arrayindex+2.
+	 * Die Anzahl der jeweiligen Schiffe entspricht der Zahl am entsprechenden Arrayindex
+	 * @return Integer-Array mit Anzahlen der Schiffe beginnend bei Laenge 2 (Index 0).
+	 */
+	public static int[] recomendation(){
+		int sizes[] = new int[10];
+		int breite=DataContainer.getGameboardWidth();
+		int hoehe=DataContainer.getGameboardHeight();
+		int occupancy=DataContainer.getOccupancy();
+		int currentsize=2;
+		int prev=0;
+		while(occupancy>0){
+			for(int i=2; i<= currentsize; i++){
+				if(occupancy-i>=0){
+					occupancy-=i;
+					sizes[i-2]++;
+					prev=i;
+				}
+				else if(occupancy-i < 0){
+					if(occupancy >=2){
+						sizes[occupancy-2]++;
+						occupancy-=occupancy;
+					}
+					else if(occupancy-i == -1){
+						sizes[prev-2]--;
+						occupancy += prev;
+						sizes[prev-1]++;
+						occupancy -= prev+1;
+					}
+				}
+			}
+			currentsize++;
+		}
+		return sizes;
+	}
 	/**
 	 * gibt board objekt des Games zurueck
 	 * @return Board Objekt des Games

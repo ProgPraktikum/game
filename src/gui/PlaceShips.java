@@ -88,7 +88,7 @@ import java.util.Random;
          * Es werden alle ausgewaehlten Schiffstypen zur textArea hinzugefuegt.
          */
         while (ships.hasNext()) {
-            ta.append("Setze Schiff der Länge: " + ships.next().toString() + "\n");
+            ta.insert("Setze Schiff der Länge: " + ships.next().toString() + "\n",0);
         }
 
         /**
@@ -288,7 +288,8 @@ import java.util.Random;
                                 }
                                 break;
                         }
-                    DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
+                    //DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
+                        DataContainer.getShipLenghts().pop();
                         textAreaRemoveLine();
                     }
                 }
@@ -330,7 +331,8 @@ import java.util.Random;
      */
     private void endpoints(int row, int column){
         boolean check;       //zur pruefung ob setzbar ist
-        int length = DataContainer.getShipLenghts().firstElement();// länge des zu setzenden schiffs
+        //int length = DataContainer.getShipLenghts().firstElement();// länge des zu setzenden schiffs
+        int length = DataContainer.getShipLenghts().peek();
 
         for (Directions directions : Directions.values()) {
             switch(directions){
@@ -406,7 +408,8 @@ import java.util.Random;
 		/*
 		 * In dieser Variable wird die Laenge des letzten Schiffes gespeichert
 		 */
-        int size = DataContainer.getShipLenghts().firstElement();
+        //int size = DataContainer.getShipLenghts().firstElement();
+        int size = DataContainer.getShipLenghts().peek();
 
 		/*
 		 * Die Schleife laueft die Directions ab
@@ -517,7 +520,8 @@ import java.util.Random;
                     break;
             }
             s=null;
-            DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
+            //DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
+            DataContainer.getShipLenghts().pop();
             textAreaRemoveLine();
 
             if (!(DataContainer.getfleet().isEmpty())) {
@@ -537,7 +541,7 @@ import java.util.Random;
         if(table.getValueAt(row,column)!=null && table.getValueAt(row, column).equals(3)){
             Ship s=Game.getPlayerboard(column, row).getMaster();
             //DataContainer.getfleet();
-            String add= s.getLength()+"\n";
+            String add= "Setze Schiff der Länge: "+s.getLength()+"\n";
             ta.insert(add,0);
             switch (s.getOrientation()) {
                 case 0:
@@ -565,7 +569,8 @@ import java.util.Random;
             s.setOrientation(0);
             s.setxpos(0);
             s.setypos(0);
-            DataContainer.getShipLenghts().add(0,s.getLength());
+            //DataContainer.getShipLenghts().add(0,s.getLength());
+            DataContainer.getShipLenghts().push(s.getLength());
             DataContainer.getfleet().push(s);
         }
     }

@@ -1,6 +1,7 @@
 package gui;
 
 import data.DataContainer;
+import data.Ship;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,20 +55,18 @@ class SelectModi {
 
                     DataContainer.setShipStack();
                     DataContainer.setFleet();
-                    int anz = 1;
-                    for(int i = 5; i>=2; i--){
-
+                    int anz = 4;
+                    //for(int i = 5; i>=2; i--){
+                    for(int i= 2; i<=5;i++){
 
                         for(int j = 1; j <= anz; j++){
                             DataContainer.getShipLenghts().push(i);
                             DataContainer.getShipLengthsAI().push(i);
-                            DataContainer.getShipLengthsInverted().push(i);
+                            //DataContainer.getShipLengthsInverted().push(i);
+                            Ship s = new Ship(i);
+                            DataContainer.getfleet().push(s);
                         }
-                        anz ++;
-                    }
-
-                    while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
-                        DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
+                        anz --;
                     }
                    new PlaceShips();
                     //new GameView();
