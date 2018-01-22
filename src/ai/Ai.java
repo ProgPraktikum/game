@@ -1,12 +1,9 @@
 package ai;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-import data.DataContainer;
 import gameboard.Board;
 import data.Game;
-import util.Tuple;
 
 public class Ai {
     // MEMBER VARIABLES
@@ -31,11 +28,13 @@ public class Ai {
     // PUBLIC METHODS
     public void draw() {
         // do all actions here
+        System.out.println("AI draw!");
         data.DataContainer.setAllowed(false);
         if (!placed) {
             place();
             placed = true;
         }
+        System.out.println("AI eval!");
         eval();
     }
 
@@ -63,7 +62,7 @@ public class Ai {
             do {
                 x = randomGenerator.nextInt(boardWidth);
                 y = randomGenerator.nextInt(boardHeight);
-            } while (aiStrikes.getPlayershots(x, y) != -1);
+            } while (aiStrikes.getPlayershots(x, y) != 9);
 
         } else {
             int traceLen = trace.getSize();
@@ -75,38 +74,40 @@ public class Ai {
 
                 if (y1 == y2) {
                     // orientation horizontal
-                    int step = 0;
+                    int step;
                     int diff = x1 - x2;
                     if (diff > 0) {
                         // direction left
                         if (diff == 1) {
                             step = 2;
-                        } else if (diff >= 2) {
+                        } else {
                             step = 1;
                         }
 
-                        while (aiStrikes.getPlayershots((x1 - step), y1)
-                                != -1 && (x1 - step) >= 0) {
-                            step += 1;
+                        if ((x1 - step) >= 0 && aiStrikes.getPlayershots((x1 - step), y1) == 9) {
                             x = x1 - step;
-                            if (aiStrikes.getPlayershots((x1 - step),
-                                    y1) == 0) {
+                        } else {
+                            while ((x1 - step) >= 0 && aiStrikes.getPlayershots((x1 - step), y1) != 9) {
+                                if (aiStrikes.getPlayershots((x1 - step), y1) == 0) {
+                                    step = 1;
+                                    while (aiStrikes.getPlayershots((x1 + step), y1) != 9) {
+                                        step += 1;
+                                    }
+                                    x = x1 + step;
+                                    break;
+                                } else {
+                                    step += 1;
+                                    x = x1 - step;
+                                }
+                            }
+
+                            if ((x1 - step) < 0) {
                                 step = 1;
-                                while (aiStrikes.getPlayershots((x1 +
-                                        step), y1) != -1) {
+                                while (aiStrikes.getPlayershots((x1 + step), y1) != 9) {
                                     step += 1;
                                 }
                                 x = x1 + step;
                             }
-                        }
-
-                        if ((x1 - step) < 0) {
-                            step = 1;
-                            while (aiStrikes.getPlayershots((x1 + step),
-                                    y1) != -1) {
-                                step += 1;
-                            }
-                            x = x1 + step;
                         }
 
                         y = y1;
@@ -114,70 +115,74 @@ public class Ai {
                         // direction right
                         if (diff == -1) {
                             step = 2;
-                        } else if (diff <= 2) {
+                        } else {
                             step = 1;
                         }
 
-                        while (aiStrikes.getPlayershots((x1 + step), y1)
-                                != -1 && (x1 + step) < boardWidth) {
-                            step += 1;
-                            x = x1 + step; // set here for testing purpose
-                            if (aiStrikes.getPlayershots((x1 + step),
-                                    y1) == 0) {
+                        if ((x1 + step) < boardWidth && aiStrikes.getPlayershots((x1 + step), y1) == 9) {
+                            x = x1 + step;
+                        } else {
+                            while ((x1 + step) < boardWidth && aiStrikes.getPlayershots((x1 + step), y1) != 9) {
+                                if (aiStrikes.getPlayershots((x1 + step), y1) == 0) {
+                                    step = 1;
+                                    while (aiStrikes.getPlayershots((x1 - step), y1) != 9) {
+                                        step += 1;
+                                    }
+                                    x = x1 - step;
+                                    break;
+                                } else {
+                                    step += 1;
+                                    x = x1 + step;
+                                }
+                            }
+
+                            if ((x1 + step) >= boardWidth) {
                                 step = 1;
-                                while (aiStrikes.getPlayershots((x1 -
-                                        step), y1) != -1) {
+                                while (aiStrikes.getPlayershots((x1 - step), y1) != 9) {
                                     step += 1;
                                 }
                                 x = x1 - step;
                             }
                         }
 
-                        if ((x1 + step) >= boardWidth) {
-                            step = 1;
-                            while (aiStrikes.getPlayershots((x1 - step),
-                                    y1) != -1) {
-                                step += 1;
-                            }
-                            x = x1 - step;
-                        }
-
                         y = y1;
                     }
                 } else if (x1 == x2) {
                     //orientation vertical
-                    int step = 0;
+                    int step;
                     int diff = y1 - y2;
                     if (diff > 0) {
                         // direction left
                         if (diff == 1) {
                             step = 2;
-                        } else if (diff >= 2) {
+                        } else {
                             step = 1;
                         }
 
-                        while (aiStrikes.getPlayershots(x1, (y1 - step))
-                                != -1 && (y1 - step) >= 0) {
-                            step += 1;
+                        if ((y1 - step) >= 0 && aiStrikes.getPlayershots(x1, (y1 - step)) == 9) {
                             y = y1 - step;
-                            if (aiStrikes.getPlayershots(x1, (y1 - step))
-                                    == 0) {
+                        } else {
+                            while ((y1 - step) >= 0 && aiStrikes.getPlayershots(x1, (y1 - step)) != 9) {
+                                if (aiStrikes.getPlayershots(x1, (y1 - step)) == 0) {
+                                    step = 1;
+                                    while (aiStrikes.getPlayershots(x1, (y1 + step)) != 9) {
+                                        step += 1;
+                                    }
+                                    y = y1 + step;
+                                    break;
+                                } else {
+                                    step += 1;
+                                    y = y1 - step;
+                                }
+                            }
+
+                            if ((y1 - step) < 0) {
                                 step = 1;
-                                while (aiStrikes.getPlayershots(x1, (y1
-                                        + step)) != -1) {
+                                while (aiStrikes.getPlayershots(x1, (y1 + step)) != 9) {
                                     step += 1;
                                 }
                                 y = y1 + step;
                             }
-                        }
-
-                        if ((y1 - step) < 0) {
-                            step = 1;
-                            while (aiStrikes.getPlayershots(x1, (y1 +
-                                    step)) != -1) {
-                                step += 1;
-                            }
-                            y = y1 + step;
                         }
 
                         x = x1;
@@ -185,32 +190,34 @@ public class Ai {
                         // direction right
                         if (diff == -1) {
                             step = 2;
-                        } else if (diff <= 2) {
+                        } else {
                             step = 1;
                         }
 
-                        while (aiStrikes.getPlayershots(x1, (y1 + step))
-                                != -1 && (y1 + step) < boardHeight) {
-                            step += 1;
-                            y = y1 - step;
-                            if (aiStrikes.getPlayershots(x1, (y1 +
-                                    step)) == 0) {
+                        if ((y1 + step) < boardHeight && aiStrikes.getPlayershots(x1, (y1 + step)) == 9) {
+                            y = y1 + step;
+                        } else {
+                            while ((y1 + step) < boardHeight && aiStrikes.getPlayershots(x1, (y1 + step)) != 9) {
+                                if (aiStrikes.getPlayershots(x1, (y1 + step)) == 0) {
+                                    step = 1;
+                                    while (aiStrikes.getPlayershots(x1, (y1 - step)) != 9) {
+                                        step += 1;
+                                    }
+                                    y = y1 - step;
+                                    break;
+                                } else {
+                                    step += 1;
+                                    y = y1 + step;
+                                }
+                            }
+
+                            if ((y1 + step) >= boardHeight) {
                                 step = 1;
-                                while (aiStrikes.getPlayershots(x1, (y1
-                                        - step)) != -1) {
+                                while (aiStrikes.getPlayershots(x1, (y1 - step)) != 9) {
                                     step += 1;
                                 }
                                 y = y1 - step;
                             }
-                        }
-
-                        if ((y1 + step) >= boardHeight) {
-                            step = 1;
-                            while (aiStrikes.getPlayershots(x1, (y1 -
-                                    step)) != -1) {
-                                step += 1;
-                            }
-                            y = y1 - step;
                         }
 
                         x = x1;
@@ -220,35 +227,30 @@ public class Ai {
                 // try any direction
                 int x1 = trace.getTile(0)[0];
                 int y1 = trace.getTile(0)[1];
-                //int direction = randomGenerator.nextInt(3);
                 switch (0) {
                     case 0: // top
-                        if ((y1 - 1) >= 0 &&
-                                aiStrikes.getPlayershots(x1, (y1 - 1)) == -1) {
+                        if ((y1 - 1) >= 0 && aiStrikes.getPlayershots(x1, (y1 - 1)) == 9) {
                             x = x1;
                             y = y1 - 1;
                             break;
                         }
                         // fall-through intended
                     case 1: // right
-                        if ((x1 + 1) <= boardWidth &&
-                                aiStrikes.getPlayershots((x1 + 1), y1) == -1) {
+                        if ((x1 + 1) < boardWidth && aiStrikes.getPlayershots((x1 + 1), y1) == 9) {
                             x = x1 + 1;
                             y = y1;
                             break;
                         }
                         // fall-through intended
                     case 2: // bottom
-                        if ((y1 + 1) <= boardHeight &&
-                                aiStrikes.getPlayershots(x1, (y1 + 1)) == -1) {
+                        if ((y1 + 1) < boardHeight && aiStrikes.getPlayershots(x1, (y1 + 1)) == 9) {
                             x = x1;
                             y = y1 + 1;
                             break;
                         }
                         // fall-through intended
                     case 3: // left
-                        if ((x1 - 1) >= 0 &&
-                                aiStrikes.getPlayershots((x1 - 1), y1) == -1) {
+                        if ((x1 - 1) >= 0 && aiStrikes.getPlayershots((x1 - 1), y1) == 9) {
                             x = x1 - 1;
                             y = y1;
                             break;
@@ -258,10 +260,7 @@ public class Ai {
             }
         }
 
-        /* Random randomGenerator = new Random();
-        x = randomGenerator.nextInt(boardWidth);
-        y = randomGenerator.nextInt(boardHeight); */
-
+        System.out.println("AI shoot!");
         int ret = fire(x, y);    // 0: Wasser, 1: Treffer, 2: versenkt
         aiStrikes.setPlayershots(x, y, ret);
         switch (ret) {
@@ -276,6 +275,8 @@ public class Ai {
                 trace.clear();
                 System.out.println("Destroyed ship!");
                 break;
+            default:
+                System.out.println("Unexpected return value: " + ret);
         }
     }
 
