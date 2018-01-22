@@ -19,7 +19,7 @@ public class OwnTableRenderer extends javax.swing.table.DefaultTableCellRenderer
 			/*
 			 * ist der Wert ein Int dann wird mittels des Wertes geprueft welche Farbe genutz wird
 			 * 0 = Wasser, 1 = Schiff, 2 = versenkt, 3 = Schiff, 4 = endpunkt beim setzen,
-			 * 9 = grau für unbeschossene Felder, 00 = beschossenes Wasserfeld
+			 * 9 = grau für unbeschossene Felder, 7 = beschossenes Wasserfeld
 			 */
             if (value instanceof Integer) {
                 if (value.equals(0)){
