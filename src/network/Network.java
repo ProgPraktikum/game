@@ -33,7 +33,7 @@ public class Network {
     /**
      * Serversocket des Hosts
      */
-    private static  ServerSocket ss;
+    private static ServerSocket ss;
 
     /**
      * Socket Client
