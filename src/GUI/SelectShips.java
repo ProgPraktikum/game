@@ -2,7 +2,7 @@ package GUI;
 
 import data.DataContainer;
 import network.Network;
-
+import data.Game;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -21,7 +21,7 @@ import java.util.List;
 
     private JDialog selectships;
     private List<JSpinner> spinners;
-
+    int values[]= Game.recomendation();
 
      SelectShips() {
 
@@ -69,12 +69,12 @@ import java.util.List;
             labelSize.setBackground(Color.BLACK);
             labelSize.setFont(new Font("Tahoma", Font.PLAIN,20));
 
-
             final SpinnerNumberModel model = new SpinnerNumberModel(0, 0, 10, 1);
             final JSpinner Size = new JSpinner(model);
             Size.setMinimumSize(new Dimension(50,25));
             Size.setMaximumSize(new Dimension(50,25));
             Size.setPreferredSize(new Dimension(50,25));
+            Size.setValue(values[i-2]);
             Size.addChangeListener(new ChangeListener() {
                 @Override
                 public void stateChanged(ChangeEvent e) {
@@ -107,8 +107,8 @@ import java.util.List;
                 (e) -> {
                     DataContainer.setShipStack();
                     DataContainer.setFleet();
-                    if (DataContainer.setShipLengthPush(spinners,
-                            ((DataContainer.getGameboardWidth()*DataContainer.getGameboardHeight())*30/100))){
+                    if(DataContainer.setShipLengthPush(spinners,DataContainer.getOccupancy())){
+                            //((DataContainer.getGameboardWidth()*DataContainer.getGameboardHeight())*30/100))){
 
                         selectships.dispose();
                         /**
@@ -132,9 +132,18 @@ import java.util.List;
 
                 }
         );
-         /**
-          * abbrechen Button (schließt den JDialog)
-          */
+        JButton recommended = new JButton("empfohlen");
+        recommended.setBackground(Color.BLACK);
+        recommended.setForeground(Color.WHITE);
+         recommended.setFont(new Font("Tahoma", Font.PLAIN, 20));
+         recommended.addActionListener(
+                 (e) -> {
+                     resetSpinners();
+                 });
+
+                     /**
+                      * abbrechen Button (schließt den JDialog)
+                      */
         JButton abort = new JButton("abbrechen");
         abort.setBackground(Color.BLACK);
         abort.setForeground(Color.WHITE);
@@ -157,6 +166,7 @@ import java.util.List;
 
         btn_box.add(ok);
         btn_box.add(abort);
+        btn_box.add(recommended);
 
         vbox.add(Box.createVerticalStrut(10));
         vbox.add(label1);
@@ -177,6 +187,11 @@ import java.util.List;
         selectships.setLocationRelativeTo(null);
         selectships.setVisible(true);
 
+    }
+    public void resetSpinners(){
+         for(int i=0; i<spinners.size();i++){
+             spinners.get(i).setValue(values[spinners.size()-1-i]);
+         }
     }
 
 }

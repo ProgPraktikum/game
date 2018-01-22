@@ -99,6 +99,7 @@ public class SelectFieldSize {
                     eingaben.setVisible(false);
 
                     //setzt die Maximale Schiffslaenge
+                    DataContainer.setOccupancy();
                     DataContainer.setMaxShipLength();
 
                     new SelectShips();

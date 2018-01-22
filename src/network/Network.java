@@ -5,6 +5,7 @@ import GUI.SelectFieldSize;
 import data.DataContainer;
 import GUI.PlaceShips;
 import data.Game;
+import data.Ship;
 
 
 import java.io.*;
@@ -185,13 +186,8 @@ public class Network {
 
             DataContainer.getShipLenghts().push(Integer.parseInt(ship[1]));
             DataContainer.getShipLengthsAI().push(Integer.parseInt(ship[1]));
-            DataContainer.getShipLengthsInverted().push(Integer.parseInt(ship[1]));
-        }
-        /*
-        Schiffsobjekte werden erzeugt.
-         */
-        while( !(DataContainer.getShipLengthsInverted().isEmpty()) ){
-            DataContainer.addShip(DataContainer.getShipLengthsInverted().pop());
+            Ship s = new Ship(Integer.parseInt(ship[1]));
+            DataContainer.getfleet().push(s);
         }
         new PlaceShips();
     }

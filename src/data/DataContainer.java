@@ -53,11 +53,6 @@ public class DataContainer {
     * Er speichert die Anzahl der Schiffe mit Laenge xxx
     */
     private static Stack<Integer> shipLenghts;
-    /**
-    *Stack speichert laengen in umgekehrter Reihenfolge zu fleet, um dafuer zu sorgen dass in fleet das groesste schiff
-    *  als letztes zum stack hinzugefuegt wird
-    */
-    private static Stack<Integer> shipLengthsInverted;
 
     /**
     *Stack mit den Schiffsobjekten zur Platzierung auf dem Spielfeld
@@ -94,7 +89,7 @@ public class DataContainer {
 
     /**
       *  allowed Variable dient zu pruefen ob man schiessen darf oder nicht
-     *  true wenn Spieler an der Reihe ist und false wenn nicht.
+      * true wenn Spieler an der Reihe ist und false wenn nicht.
       */
     private static boolean allowed;
 
@@ -248,11 +243,10 @@ public class DataContainer {
     }
 
     /**
-     * Setzt occupancy Variable auf uebergebenen Wert.
-     * @param occupancy Integer
+     * Setzt occupancy Variable auf 30% der Spielfeldgroesse(width * height * 0,3).
      */
-    public static void setOccupancy(int occupancy) {
-        DataContainer.occupancy = occupancy;
+    public static void setOccupancy() {
+        DataContainer.occupancy = (width*height)*30/100;
     }
     /**
     gibt den max Belegungsfaktor zurueck
@@ -273,36 +267,15 @@ public class DataContainer {
     }
 
     /**
-    *erstellt Stack vom Typ Ship
-     * und Stack vom Typ Integer fuer die umgekehrten Laengenwerte
-    */
-    public static void  setFleet(){
-        shipLengthsInverted= new Stack<>();
-        fleet = new Stack<>();
-    }
-
-    /**
-     * gibt shiplengthsInverted Stack zurueck
-     * @return shiplengthsInverted
-     */
-    public static Stack<Integer> getShipLengthsInverted(){
-        return shipLengthsInverted;
-    }
-
-    public static void setShipLengtsInverted(Stack<Integer>inverted){
-        shipLengthsInverted = inverted;
-    }
-
-    /**
      * berechnet maximale Schiffslaenge aus Hoehe und Breite des Spielfeldes
      */
     public static void setMaxShipLength(){
-
-        if(DataContainer.getGameboardHeight() < DataContainer.getGameboardWidth()){
-            maxShipLength = DataContainer.getGameboardWidth() / 2;
-        }else{
-            maxShipLength = DataContainer.getGameboardHeight() / 2;
+        int lengths[] = Game.recomendation();
+        int i=lengths.length-1;
+        while(lengths[i] == 0){
+            i--;
         }
+        maxShipLength= i+2;
     }
 
     /**
@@ -321,6 +294,10 @@ public class DataContainer {
      */
     public static void setShipLengthsAI(Stack<Integer>shipLengthsKI){
         shipLengthsAI = shipLengthsKI;
+    }
+
+    public static void setFleet() {
+        fleet = new Stack<>();
     }
 
     /**
@@ -357,15 +334,6 @@ public class DataContainer {
     }
 
     /**
-     * fuegt schiff zu stack fleet hinzu
-     * @param l laende des neu hinzuefuegten Schiffes
-     */
-    public static void addShip(int l){
-        Ship s = new Ship(l);
-        fleet.push(s);
-    }
-
-    /**
      * set fuer selectedShip
      */
     public static void setSelectedShip(){
@@ -395,37 +363,21 @@ public class DataContainer {
 
         int shipLength;
         int shipCounter =maxShipLength ;
-
-        while (spin.hasNext()) {
-            shipLength = (int)(spin.next().getValue());
-
-            for (int i = 0; i < shipLength; i++) {
-                count -=shipLength;
-                if (count < -2)
+        for(int i=0; i<spinners.size();i++){
+            int number = (int) spinners.get(spinners.size()-1-i).getValue();
+            int value = i+2;
+            for(int j=0; j<number;j++){
+                count -=value;
+                if(count <0){
                     return false;
-                shipLenghts.push(shipCounter);
-                shipLengthsAI.push(shipCounter);
-                //fuegt parallel zu schiffslaengen
-                // entsprechende schiffe in stack zur spaeteren plazierung ein
-                shipLengthsInverted.push(shipCounter);
-                //addShip(shipCounter);
+                }
+                shipLenghts.push(value);
+                shipLengthsAI.push(value);
+                Ship s = new Ship(value);
+                fleet.push(s);
             }
-
-            shipCounter--;
-        }
-        while( !(shipLengthsInverted.isEmpty()) ){
-            addShip(shipLengthsInverted.pop());
         }
         return true;
-    }
-
-    /**
-     * erzeugt aus den Laengen von Shiplengths Schiffe und speichert diese in den fleet Stack
-     */
-    public static void createShips(){
-        while( !(shipLengthsInverted.isEmpty()) ){
-            addShip(shipLengthsInverted.pop());
-        }
     }
 
     //testfunktionen
