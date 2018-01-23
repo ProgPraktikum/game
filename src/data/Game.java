@@ -279,7 +279,12 @@ public class Game {
 		}
 		return sizes;
 	}
-public static Board aiRandomPlace(){
+
+	/**
+	 * methode die für die Ai randomPlacement auf einem Boardobjekt durchführt und dieses dann zurück gibt
+	 * @return Board Objekt mit platzierten Schiffen aus der Ai-Flotte
+	 */
+	public static Board aiRandomPlace(){
 		Board dummy = new Board();
 		boolean end=false;
 		while(!end){
@@ -287,11 +292,16 @@ public static Board aiRandomPlace(){
 			if(!end){
 				reset(dummy);
 			}
-		}
+		}1
 		return dummy;
 	}
 
-	public static boolean random(Board dummy){
+	/**
+	 * platziert das naechste Schiff auf dem Stack in das dummy Board und ruft sich selbst bei erfolg rekursiv auf bis der Stack leer ist.
+	 * @param dummy erhaelt das dummy Board auf das Platziert werden soll als parameter
+	 * @return gibt ture bei erfolgreicher olatzierung und false bei nicht erfolgreicher platzierung zurueck
+	 */
+	private static boolean random(Board dummy){
 		if (!(DataContainer.getAiFleet().isEmpty()) && success) {
 			s = DataContainer.getAiFleet().pop();
 		}
@@ -327,6 +337,11 @@ public static Board aiRandomPlace(){
 			return false;
 		}
 	}
+
+	/**
+	 * setzt dummy board zurueck und schhreibt Schiffsobjekte die darauf platziert waren zurueck in den Stack
+	 * @param dummy dummy Board aus dem die Schiffe entfernt werden
+	 */
 	public static void reset(Board dummy){
 		int currentlength = 2;
 		boolean fieldempty = false;
