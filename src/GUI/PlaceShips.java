@@ -611,9 +611,6 @@ import java.util.Random;
             // (alle schiffe der vorherigen länge wurden bereits entfernt
             currentlength++;
         }
-        if(DataContainer.getfleet().size()!=10){
-            throw new StackOverflowError();
-        }
         success= true;
     }
     public void randomLoop(){
