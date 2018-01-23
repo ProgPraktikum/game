@@ -55,7 +55,7 @@ class SelectModi {
                     DataContainer.setGameType("ss");
                     Game.setMap();
                     DataContainer.setShipStack();
-                    DataContainer.setFleet();
+                    DataContainer.setFleets();
                     int anz = 4;
                     //for(int i = 5; i>=2; i--){
                     for(int i= 2; i<=5;i++){
@@ -66,6 +66,8 @@ class SelectModi {
                             //DataContainer.getShipLengthsInverted().push(i);
                             Ship s = new Ship(i);
                             DataContainer.getfleet().push(s);
+                            Ship a = new Ship(i);
+                            DataContainer.getAiFleet().push(a);
                         }
                         anz --;
                     }

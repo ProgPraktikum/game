@@ -42,7 +42,6 @@ import java.util.Random;
         setships.setContentPane(Box.createVerticalBox());
 
 
-
         startingPoint = null;
 
 
@@ -83,6 +82,7 @@ import java.util.Random;
          */
         JScrollPane scrollPane = new JScrollPane();
         ta = new JTextArea(5, 2);
+        DataContainer.setTextArea(ta);
         scrollPane.getViewport().add(ta);
 
         /**
@@ -490,8 +490,8 @@ import java.util.Random;
                     s.setOrientation(startorr);
                     int i =0;
                     while(i <4 && !success){
-                        Game.moveShip(randomX,randomY);
                         s.setOrientation((startorr + i)%4);
+                        Game.moveShip(randomX,randomY);
                         success= Game.placeShip(s);
                         i++;
                     }

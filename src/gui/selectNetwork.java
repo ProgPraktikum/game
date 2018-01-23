@@ -214,7 +214,7 @@ import java.util.Enumeration;
 
                         Board b = new Board();
                         DataContainer.setShipStack();
-                        DataContainer.setFleet();
+                        DataContainer.setFleets();
 
 
                         /**

@@ -5,7 +5,9 @@ import gui.TableView;
 import gameboard.Board;
 import network.Network;
 
+import javax.swing.text.BadLocationException;
 import javax.xml.crypto.Data;
+import java.util.Random;
 import java.util.Stack;
 
 /**@author Felix
@@ -18,6 +20,8 @@ public class Game {
 	 */
 	//private static Board map = new Board();
 	private static Board map;
+	private static boolean success=true;
+	private static Ship s;
 
 	//methoden
 
@@ -275,6 +279,97 @@ public class Game {
 		}
 		return sizes;
 	}
+public static Board aiRandomPlace(){
+		Board dummy = new Board();
+		boolean end=false;
+		while(!end){
+			end=random(dummy);
+			if(!end){
+				reset(dummy);
+			}
+		}
+		return dummy;
+	}
+
+	public static boolean random(Board dummy){
+		if (!(DataContainer.getAiFleet().isEmpty()) && success) {
+			s = DataContainer.getAiFleet().pop();
+		}
+		Random rand = new Random();
+		success = false;
+		int count = 0;
+		if(s != null) {
+			while (!success && count < DataContainer.getGameboardWidth() * DataContainer.getGameboardHeight()) {
+				int randomX = rand.nextInt(DataContainer.getGameboardWidth());
+				int randomY = rand.nextInt(DataContainer.getGameboardHeight());
+				int startorr = rand.nextInt(4);
+				s.setOrientation(startorr);
+				int i =0;
+				while(i <4 && !success){
+					s.setOrientation((startorr + i)%4);
+					dummy.moveShip(randomX,randomY,s);
+					success= dummy.place(s);
+					i++;
+				}
+				count++;
+			}
+		}
+		if (success) {
+			s=null;
+			//DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
+			//DataContainer.getShipLenghts().pop();
+			if (! DataContainer.getAiFleet().isEmpty() ) {
+				return random(dummy);
+			}
+			return true;
+		} else {
+			reset(dummy);
+			return false;
+		}
+	}
+	public static void reset(Board dummy){
+		int currentlength = 2;
+		boolean fieldempty = false;
+		int rowempty;
+		int columnempty;
+		while (!(fieldempty)) {
+			columnempty=0;
+			for (int i = 0; i < DataContainer.getGameboardHeight(); i++) {
+				rowempty=0;
+				for (int j = 0; j < DataContainer.getGameboardWidth(); j++) {
+					if (dummy.getPlayerboardAt(j,i).getStatus()==3) {
+						rowempty =1;
+						if (currentlength == dummy.getPlayerboardAt(j, i).getMaster().getLength()) {
+							Ship rem = dummy.getPlayerboardAt(j,i).getMaster();
+							dummy.removeShip(rem);
+							rem.setxpos(0);
+							rem.setypos(0);
+							rem.setOrientation(0);
+							DataContainer.getAiFleet().push(rem);
+						}
+					} else {
+						rowempty += 0;
+					}
+				}
+				//wenn treffer in reihe, dann wird er in spalte übertragen
+				if(rowempty==1){
+					columnempty = 1;
+				}
+				else{
+					columnempty +=0;
+				}
+			}
+			// wenn kein spaltentreffer, dann ist feld leer -> SCHLEIFENABBRUCH
+			if(columnempty==0){
+				fieldempty=true;
+			}
+			//schiffslänge wird nach komplettem durchlauf durch feld erhöht
+			// (alle schiffe der vorherigen länge wurden bereits entfernt
+			currentlength++;
+		}
+		success= true;
+	}
+
 	/**
 	 * gibt board objekt des Games zurueck
 	 * @return Board Objekt des Games
