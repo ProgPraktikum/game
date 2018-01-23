@@ -292,7 +292,7 @@ public class Game {
 			if(!end){
 				reset(dummy);
 			}
-		}1
+		}
 		return dummy;
 	}
 
