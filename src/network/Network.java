@@ -178,10 +178,10 @@ public class Network {
 
 
         
-        Stack<Integer> shipStack = new Stack<Integer>();
+        //Stack<Integer> shipStack = new Stack<Integer>();
         for (int i = 2; i < startData.length; i++) {
             String[] ship = startData[i].split(" ");
-            shipStack.push(Integer.parseInt(ship[1]));
+            //shipStack.push(Integer.parseInt(ship[1]));
 
 
             DataContainer.getShipLenghts().push(Integer.parseInt(ship[1]));
