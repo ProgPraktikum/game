@@ -16,8 +16,8 @@ public class Game {
 	/**
 	 * board Objekt fuer den Spieler
 	 */
-	private static Board map = new Board();
-
+	//private static Board map = new Board();
+	private static Board map;
 
 	//methoden
 
@@ -29,6 +29,9 @@ public class Game {
     ansonsten wird die position zurueckgesetzt
     bei erfolg wird true ausgegeben und bei misserfolg false
      */
+    public static void setMap(){
+    	map= new Board();
+	}
 
 	/**
 	 * bewegt das selectedShip aus dem Datacontainer an Stelle x,y

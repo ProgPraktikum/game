@@ -107,6 +107,7 @@ import java.util.List;
                 (e) -> {
                     DataContainer.setShipStack();
                     DataContainer.setFleet();
+                    Game.setMap();
                     if(DataContainer.setShipLengthPush(spinners,DataContainer.getOccupancy())){
                             //((DataContainer.getGameboardWidth()*DataContainer.getGameboardHeight())*30/100))){
 

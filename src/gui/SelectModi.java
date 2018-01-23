@@ -1,6 +1,7 @@
 package gui;
 
 import data.DataContainer;
+import data.Game;
 import data.Ship;
 
 import javax.swing.*;
@@ -52,7 +53,7 @@ class SelectModi {
         sSpiel.addActionListener(
                 (e) -> {
                     DataContainer.setGameType("ss");
-
+                    Game.setMap();
                     DataContainer.setShipStack();
                     DataContainer.setFleet();
                     int anz = 4;

@@ -5,6 +5,7 @@ import data.Ship;
 import data.DataContainer;
 import data.Directions;
 import network.Network;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
@@ -113,14 +114,15 @@ import java.util.Random;
         randomBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         randomBtn.addActionListener(
                 (e) -> {
-
-                    if(!(DataContainer.getfleet().isEmpty())){
-                        randomplace(); // randomplace wird ausgeführt bis erfolgreiche platzierung gefunden wurde
+                    if (!(DataContainer.getfleet().isEmpty())) {
+                        randomLoop();
                     }
+                    //randomplace(); // randomplace wird ausgeführt bis erfolgreiche platzierung gefunden wurde
                     else {
                         reset();
-                       randomplace();
+                        randomLoop();
                     }
+                        //randomplace();
                     if (DataContainer.getShipLenghts().size() == 0) {
                         weiter.setEnabled(true); //button wird ernabled
                     }
@@ -527,7 +529,7 @@ import java.util.Random;
             if (!(DataContainer.getfleet().isEmpty())) {
                 return randomplace();
             }
-            return false;
+            return true;
         } else {
             reset();
             return false;
@@ -610,5 +612,14 @@ import java.util.Random;
             currentlength++;
         }
         success= true;
+    }
+    public void randomLoop(){
+        boolean end= false;
+        while(!end){
+            end= randomplace();
+            if(!end){
+                reset();
+            }
+        }
     }
 }
