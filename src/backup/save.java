@@ -4,8 +4,13 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import data.DataContainer;
+import com.google.gson.Gson;
+import org.json.simple.JSONObject;
 
+import data.DataContainer;
+import ai.Ai;
+
+import javax.xml.crypto.Data;
 
 /**
  * Diese Klasse speichert ein laufendes Spiel in einer TXT Datei
@@ -21,36 +26,49 @@ public static void saveBDF(String file){
 
     try{
 
-        BufferedWriter save = new BufferedWriter(new FileWriter(file));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+        Gson gson = new Gson();
+        JSONObject out = new JSONObject();
+
+        /* gameType wird in das Savegame geschrieben */
+        out.put("gameType", DataContainer.getGameType());
+
+        /* Die Spielfeldbreite wird in das Savegame geschrieben */
+        out.put("gameboardWidth", DataContainer.getGameboardWidth());
+
+        /* Die Spielfeldhoehe wird in das Savegame geschrieben */
+        out.put("gameboardHeight", DataContainer.getGameboardHeight());
+
+        /* Der 'allowed' Wert wird in das Savegame geschrieben */
+        out.put("allowed", DataContainer.getAllowed());
+
+        /* Die Spieler-Spielfelder werden in das Savegame geschrieben */
+        String playerTable = gson.toJson(DataContainer.getTable());
+        String playerShootTable = gson.toJson(DataContainer.getPlayerShootTable());
+
+        out.put("playerTable", playerTable);
+        out.put("playerShootTable", playerShootTable);
+
+        /* Die ai-Spielfelder werden in das Savegame geschrieben */
+        Ai ai = DataContainer.getAi();
+        String aiBoard = gson.toJson(ai.getAiBoard());
+        String aiStrikes = gson.toJson(ai.getAiStrikes());
+
+        out.put("aiBoard", aiBoard);
+        out.put("aiStrikes", aiStrikes);
 
         /**
-         * gameType wird in file geschrieben
+         * Schreibe erstelltes JSON in das Savegame
          */
-        save.write("gameType ");
-        save.write(DataContainer.getGameType());
-        save.write("\r\n");
+        writer.write(out.toJSONString());
 
         /**
-         * Die Spielfeldbreite wird in file geschrieben
+         * Schließt den Writer
          */
-        save.write("Fieldwidth ");
-        save.write("" + DataContainer.getGameboardWidth());
-        save.write("\r\n");
+        writer.close();
 
-        /**
-         * Die Spielfeldhoehe wird in file geschrieben
-         */
-        save.write("Fieldheight ");
-        save.write("" + DataContainer.getGameboardHeight());
-        save.write("\r\n");
-
-
-        /**
-         * schließt den writer
-         */
-        save.close();
-
-    }catch(IOException e){
+    }catch(IOException e) {
         e.printStackTrace();
     }
 }

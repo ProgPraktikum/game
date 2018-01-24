@@ -25,6 +25,23 @@ public class Ai {
         boardHeight = data.DataContainer.getGameboardHeight();
     }
 
+    // PUBLIC GETTER AND SETTER FOR SAVEGAME
+    public Board getAiBoard() {
+        return aiBoard;
+    }
+
+    public Board getAiStrikes() {
+        return aiStrikes;
+    }
+
+    public void setAiBoard(Board board) {
+        aiBoard = board;
+    }
+
+    public void setAiStrikes(Board board) {
+        aiBoard = board;
+    }
+
     // PUBLIC METHODS
     public void draw() {
         // do all actions here
