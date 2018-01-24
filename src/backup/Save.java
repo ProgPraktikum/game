@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.google.gson.Gson;
+import data.Game;
+import gameboard.Board;
 import org.json.simple.JSONObject;
 
 import data.DataContainer;
@@ -23,7 +25,7 @@ public class Save {
 
         try{
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file), 65536);
 
             Gson gson = new Gson();
             JSONObject out = new JSONObject();
@@ -41,14 +43,17 @@ public class Save {
             out.put("allowed", DataContainer.getAllowed());
 
             /* Die Spieler-Spielfelder werden in das Savegame geschrieben */
-            String playerTable = gson.toJson(DataContainer.getTable());
-            String playerShootTable = gson.toJson(DataContainer.getPlayerShootTable());
+            //String playerTable = gson.toJson(DataContainer.getTable().);
+            //String playerShootTable = gson.toJson(DataContainer.getPlayerShootTable());
 
-            out.put("playerTable", playerTable);
-            out.put("playerShootTable", playerShootTable);
+            //out.put("playerTable", playerTable);
+            //out.put("playerShootTable", playerShootTable);
+
+            String playerBoard = gson.toJson(Game.getMap());
+            out.put("playerBoard", playerBoard);
 
             /* Die ai-Spielfelder werden in das Savegame geschrieben */
-            Ai ai = DataContainer.getAi();
+            Ai ai = new Ai();
             String aiBoard = gson.toJson(ai.getAiBoard());
             String aiStrikes = gson.toJson(ai.getAiStrikes());
 
