@@ -28,13 +28,11 @@ public class Ai {
     // PUBLIC METHODS
     public void draw() {
         // do all actions here
-        System.out.println("AI draw!");
         data.DataContainer.setAllowed(false);
         if (!placed) {
             place();
             placed = true;
         }
-        System.out.println("AI eval!");
         eval();
     }
 
@@ -260,7 +258,6 @@ public class Ai {
             }
         }
 
-        System.out.println("AI shoot!");
         int ret = fire(x, y);    // 0: Wasser, 1: Treffer, 2: versenkt
         aiStrikes.setPlayershots(x, y, ret);
         switch (ret) {
@@ -287,5 +284,6 @@ public class Ai {
 
     private void place() {
         /* place ships on Board */
+        aiBoard = Game.aiRandomPlace();
     }
 }
