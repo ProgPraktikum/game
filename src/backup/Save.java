@@ -23,9 +23,9 @@ public class Save {
      */
     public static void saveBDF(String file){
 
-        try{
+        try {
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file), 65536);
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
             Gson gson = new Gson();
             JSONObject out = new JSONObject();
