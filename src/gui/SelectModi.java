@@ -71,6 +71,7 @@ class SelectModi {
                         }
                         anz --;
                     }
+                    new_Game.setVisible(false);
                    new PlaceShips();
                     //new GameView();
                 }

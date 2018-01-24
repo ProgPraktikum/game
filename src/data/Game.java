@@ -107,9 +107,6 @@ public class Game {
 		if(DataContainer.getAllowed()) {
 			int val;
 			if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) {
-				val = 0;
-				//DEBUG
-				//val = map.checkboard(x,y);
 				val = ai.hit(x, y);
 			}
 			else if (DataContainer.getGameType().equals("mp")) {
@@ -126,12 +123,20 @@ public class Game {
 			else{
 				return -1;
 			}
-			map.setPlayershots(x, y, val);
-			DataContainer.getPlayerShootTable().setValueAt(val,y,x);
-
-			if (val == 2) {
-				displayHits(x, y, 0, DataContainer.getPlayerShootTable());
+			switch (val){
+				case 0:
+					DataContainer.getPlayerShootTable().setValueAt("X",y,x);
+					DataContainer.setAllowed(false);
+					break;
+				case 1:
+					DataContainer.getPlayerShootTable().setValueAt(val,y,x);
+					break;
+				case 2:
+					DataContainer.getPlayerShootTable().setValueAt(val,y,x);
+					displayHits(x,y,0,DataContainer.getPlayerShootTable());
+					break;
 			}
+			map.setPlayershots(x, y, val);
 			return val;
 		}
 		else {
@@ -149,7 +154,8 @@ public class Game {
 		int i = map.checkboard(x,y);
 		DataContainer.getTable().setValueAt(i,y,x);
 		if (i == 0){
-            DataContainer.getTable().setValueAt(7, y, x);
+            //DataContainer.getTable().setValueAt(7, y, x);
+			DataContainer.getTable().setValueAt("X",y,x);
 			DataContainer.setAllowed(true);
 		}
 		if (i == 2){

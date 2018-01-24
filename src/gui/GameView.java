@@ -40,18 +40,19 @@ import java.util.concurrent.CompletableFuture;
          switch (DataContainer.getGameType()) {
              case "ss":    //SS steht für schnelles Spiel
                  tablePlayer = DataContainer.getTable();
-
+                 DataContainer.setAllowed(true);
                  break;
              case "bdf":  // bdf steht für Benutzerdefiniert
 
                  tablePlayer = DataContainer.getTable();          // das Place ships window wird die Table anlegen
-
+                 DataContainer.setAllowed(true);
                  break;
              case "mp":
                  tablePlayer = DataContainer.getTable();
                  break;
          }
         PlayerShootTable = new TableView();
+         PlayerShootTable.setFont(new Font("Tahoma", Font.BOLD, 30));
         for(int i = 0; i <DataContainer.getGameboardHeight(); i++){
             for(int j = 0; j < DataContainer.getGameboardWidth(); j++){
                 PlayerShootTable.setValueAt(9,i,j);
@@ -199,7 +200,7 @@ import java.util.concurrent.CompletableFuture;
                         if (i == -2) {
                             textArea.append("Shot failed since it wasn't your turn!");
                         }
-                    } else if(DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) {
+                    } else if(!DataContainer.getAllowed() && (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf"))) {
                         ai.draw();
                     }
 
