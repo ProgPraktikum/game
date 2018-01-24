@@ -33,8 +33,11 @@ public class Game {
     ansonsten wird die position zurueckgesetzt
     bei erfolg wird true ausgegeben und bei misserfolg false
      */
-    public static void setMap(){
-    	map= new Board();
+	public static void setMap(){
+		map = new Board();
+	}
+	public static void setMap(Board newMap) {
+		map = newMap;
 	}
 
 	/**

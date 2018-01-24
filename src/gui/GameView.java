@@ -20,13 +20,13 @@ import java.util.concurrent.CompletableFuture;
  * Es enthaelt zwei Spielfelder, wobei das linke das des Spielers ist
  * und das rechte ist das um Schuesse abzufeuern.
  */
- class GameView {
+ public class GameView {
 
     private TableView tablePlayer;
     private TableView PlayerShootTable;
     private JTextArea textArea;
 
-     GameView(){
+    public GameView(){
 
         JDialog playView = new JDialog();
         //playView.setModal(true);
@@ -37,7 +37,8 @@ import java.util.concurrent.CompletableFuture;
         /**
          * Erstellung der TableView abhaengig des gewaehlten GameTyp
          */
-         switch (DataContainer.getGameType()) {
+
+        switch (DataContainer.getGameType()) {
              case "ss":    //SS steht für schnelles Spiel
                  tablePlayer = DataContainer.getTable();
 
@@ -69,8 +70,28 @@ import java.util.concurrent.CompletableFuture;
             {
                 JMenuItem item = new JMenuItem("Spiel laden");
                 item.addActionListener(
-                        (e) -> { //Todo Laden ausführen
-                             }
+                        (e) -> {
+                            JFileChooser filechooserSave = new JFileChooser();
+
+                            FileFilter filter = new FileFilter() {
+                                public boolean accept(File f) {
+                                    return f.isDirectory()
+                                            || f.getName().toLowerCase().endsWith(".txt");
+                                }
+
+                                public String getDescription() {
+                                    return "TXT";
+                                }
+                            };
+                            filechooserSave.setFileFilter(filter);
+                            int state = filechooserSave.showOpenDialog(null);
+
+                            if (state == JFileChooser.APPROVE_OPTION) {
+                                File file = filechooserSave.getSelectedFile();
+                                String filename = file.getAbsolutePath();
+                                backup.Load.loadSavegame(filename);
+                            }
+                        }
                 );
                 menu.add(item);
             }
@@ -97,14 +118,11 @@ import java.util.concurrent.CompletableFuture;
 
                                 if (state == JFileChooser.APPROVE_OPTION) {
                                     File file = filechooserSave.getSelectedFile();
-                                    long timestamp = System.currentTimeMillis();
-                                    String filename = file.getAbsolutePath() + "-" + timestamp
-                                            + ".txt";
+                                    String filename = file.getAbsolutePath() + ".txt";
                                     if (DataContainer.getGameType().equals("bdf"))
                                     backup.Save.saveBDF(filename);
                                 }
                             }
-
                         }
                 );
                 menu.add(item);
