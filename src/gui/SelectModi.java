@@ -40,7 +40,7 @@ class SelectModi {
          *  Schnelles Spiel
          */
         vbox.add(Box.createVerticalStrut(7));   //Abstand zwischen Buttons
-        JButton sSpiel = new JButton("Schnellestart");
+        JButton sSpiel = new JButton("Schnellstart");
         sSpiel.setToolTipText("Spiel gegen den Computer mit einer Standartfeldgroesse von 10x10 und der dazugehoerigen" +
                 "Standartflotte");
         sSpiel.setAlignmentX(Component.CENTER_ALIGNMENT);
