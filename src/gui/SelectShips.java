@@ -106,7 +106,7 @@ import java.util.List;
         ok.addActionListener(
                 (e) -> {
                     DataContainer.setShipStack();
-                    DataContainer.setFleet();
+                    DataContainer.setFleets();
                     Game.setMap();
                     if(DataContainer.setShipLengthPush(spinners,DataContainer.getOccupancy())){
                             //((DataContainer.getGameboardWidth()*DataContainer.getGameboardHeight())*30/100))){
@@ -127,7 +127,7 @@ import java.util.List;
                         werden die Stacks neu erstellt
                          */
                         DataContainer.setShipStack();
-                        DataContainer.setFleet();
+                        DataContainer.setFleets();
                     }
 
 

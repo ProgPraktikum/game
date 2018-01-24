@@ -1,5 +1,6 @@
 package data;
 
+import ai.Ai;
 import gui.TableView;
 
 import javax.swing.*;
@@ -57,14 +58,21 @@ public class DataContainer {
     *Stack mit den Schiffsobjekten zur Platzierung auf dem Spielfeld
     */
     private static Stack<Ship> fleet;
-
     /**
      * Dieser Stack ist fuer die gewaehlten schiffe fuer die AI
      * speichert die Anzahl der Schiffe mit der Laenge xxx
-    /*flotte der ai identisch zur spielerflotte
-    *
+     /*flotte der ai identisch zur spielerflotte
+     *
      */
     private static Stack<Ship> aiFleet;
+
+    /**
+     * Ai objekt
+     */
+    private static Ai ai;
+
+
+
 
     /*
      * Dieser Stack ist für die gewaehlten schiffe für die Ai
@@ -92,8 +100,7 @@ public class DataContainer {
     JScrollPane scrollPane = null;
 
     // TextArea
-    JTextArea textArea = null;
-
+    private static JTextArea textArea = null;
     /**
       *  allowed Variable dient zu pruefen ob man schiessen darf oder nicht
       * true wenn Spieler an der Reihe ist und false wenn nicht.
@@ -130,6 +137,28 @@ public class DataContainer {
         playerShootTable = t;
     }
 
+    /**
+     * gibt Ai objekt zurueck
+     * @return Ai
+     */
+    public static Ai getAi(){
+        return ai;
+    }
+    public static void setAi(Ai ki){
+        ai = ki;
+    }
+
+    /**
+     * gibt textarea für schiffsplatzierung zurueck
+     * @return textarea vom typ JTextArea
+     */
+    public static JTextArea getTextArea(){
+        return textArea;
+    }
+
+    public static void setTextArea(JTextArea text){
+        textArea = text;
+    }
     /**
      * gibt isHost Variable zurueck
      * @return isHost Variable
@@ -303,8 +332,10 @@ public class DataContainer {
         shipLengthsAI = shipLengthsKI;
     }
 
-    public static void setFleet() {
+    public static void setFleets() {
+
         fleet = new Stack<>();
+        aiFleet= new Stack<>();
     }
 
     /**
@@ -330,7 +361,7 @@ public class DataContainer {
         return shipLengthsAI;
     }
 
-    public Stack<Ship> getAiFleet(){
+    public static Stack<Ship> getAiFleet(){
         return aiFleet;
     }
 
@@ -386,6 +417,8 @@ public class DataContainer {
                 shipLengthsAI.push(value);
                 Ship s = new Ship(value);
                 fleet.push(s);
+                Ship a = new Ship(value);
+                aiFleet.push(a);
             }
         }
         return true;
