@@ -180,6 +180,9 @@ import java.util.concurrent.CompletableFuture;
         Point x = e.getPoint();
         int column = PlayerShootTable.columnAtPoint(x);
         int row = PlayerShootTable.rowAtPoint(x);
+        //TEST
+        //new VictoryScreen(false);
+        //TEST
 
         if (e.getButton() == MouseEvent.BUTTON1) {  //Linke Maustaste
             Ai ai = new Ai();
