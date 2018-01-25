@@ -68,9 +68,6 @@ import java.util.concurrent.TimeUnit;
                 }
             }
             DataContainer.setPlayerShootTable(PlayerShootTable);
-        } else {
-            PlayerShootTable = DataContainer.getPlayerShootTable();
-            DataContainer.setPlayerShootTable(PlayerShootTable);
         }
 
 
