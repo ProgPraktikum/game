@@ -37,6 +37,10 @@ public class Ai {
     }
 
     public int hit(int x, int y) {
+        if(!placed){
+            place();
+            placed= true;
+        }
         int field = aiBoard.checkboard(x, y);
         switch (field) {
             case 0:         // Wasser
