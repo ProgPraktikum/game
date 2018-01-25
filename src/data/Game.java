@@ -132,8 +132,8 @@ public class Game {
 				case -1:
 					return val;
 				case 0:
-					map.setPlayershots(x,y,"X");
-					DataContainer.getPlayerShootTable().setValueAt(7,y,x);
+					map.setPlayershots(x,y,7);
+					DataContainer.getPlayerShootTable().setValueAt("X",y,x);
 					break;
 
 				case 1:
