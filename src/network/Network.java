@@ -208,7 +208,10 @@ public class Network {
          */
         DataContainer.setGameboardWidth(Integer.parseInt(size[1]));
         DataContainer.setGameboardHeight(Integer.parseInt(size[2]));
-
+        /*
+        Initialisiere map
+         */
+        Game.setMap();
         for (int i = 2; i < startData.length; i++) {
             String[] ship = startData[i].split(" ");
 

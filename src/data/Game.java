@@ -132,7 +132,7 @@ public class Game {
 				case -1:
 					return val;
 				case 0:
-					map.setPlayershots(x,y,7);
+					map.setPlayershots(x,y,"X");
 					DataContainer.getPlayerShootTable().setValueAt(7,y,x);
 					break;
 
@@ -146,6 +146,7 @@ public class Game {
 					displayHits(x,y,0,DataContainer.getPlayerShootTable());
 					break;
 			}
+			map.setPlayershots(x, y, val);
 			return val;
 		}
 		else {
@@ -162,7 +163,7 @@ public class Game {
 	public static int getHit(int x, int y){
 		int i = map.checkboard(x, y);
 		if (i == 0){
-            DataContainer.getTable().setValueAt(7, y, x);
+			DataContainer.getTable().setValueAt("X",y,x);
 			DataContainer.setAllowed(true);
 			map.getPlayerboardAt(x,y).setStatus(7);
 		} else if (i == 1) {

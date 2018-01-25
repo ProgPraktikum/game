@@ -21,6 +21,12 @@ public class OwnTableRenderer extends javax.swing.table.DefaultTableCellRenderer
 			 * 0 = Wasser, 1 = Schiff, 2 = versenkt, 3 = Schiff, 4 = endpunkt beim setzen,
 			 * 9 = grau für unbeschossene Felder, 7 = beschossenes Wasserfeld
 			 */
+			if(value instanceof String){
+			    if(value.equals("X") ){
+			        comp.setBackground(Color.BLUE);
+			        comp.setForeground(Color.GRAY);
+                }
+            }
             if (value instanceof Integer) {
                 if (value.equals(0)){
                     comp.setBackground(Color.BLUE);

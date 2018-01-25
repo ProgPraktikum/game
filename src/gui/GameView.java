@@ -231,6 +231,9 @@ import java.util.concurrent.TimeUnit;
         Point x = e.getPoint();
         int column = PlayerShootTable.columnAtPoint(x);
         int row = PlayerShootTable.rowAtPoint(x);
+        //TEST
+        //new VictoryScreen(false);
+        //TEST
 
         if (e.getButton() == MouseEvent.BUTTON1) {  // Linke Maustaste
             Ai ai = new Ai();
@@ -271,7 +274,7 @@ import java.util.concurrent.TimeUnit;
                         if (i == -2) {
                             textArea.append("Shot failed since it wasn't your turn!");
                         }
-                    } else if(DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) {
+                    } else if(!DataContainer.getAllowed() && (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf"))) {
                         ai.draw();
                     }
 
