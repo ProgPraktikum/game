@@ -1,4 +1,5 @@
 import gui.GUIMain;
+import gui.VictoryScreen;
 
 import javax.swing.*;
 
@@ -15,7 +16,6 @@ public class Start {
 
             @Override
             public void run() {
-
                 new GUIMain();
             }
         });

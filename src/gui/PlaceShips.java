@@ -36,6 +36,9 @@ import java.util.Random;
     public PlaceShips() {
 
 
+        //counter fuer Siegesbedingung setzen
+        DataContainer.setWinCounters();
+
         setships = new JDialog();
         setships.setModal(true);
         setships.setUndecorated(true);

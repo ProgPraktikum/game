@@ -41,6 +41,37 @@ public class DataContainer {
      * maximaler Belegungsfaktor
      */
     private static int occupancy =  ((width * height)*30/100);
+    /**
+     * zaehlt wie viele gegnericsche Schiffe, bis zum Sieg des Spielers, veresenkt werden muessen.
+     */
+    private static int playerWins;
+    /**
+     * zaehlt wie viele Schiffe, bis zum Sieg des Gegners, veresenkt werden muessen.
+     */
+    private static int opponentWins;
+
+    /**
+     *Setzt PlayerWins und OpponentWins Zaehler auf die groesse des fleet Stacks.
+     * Sollte vor beginn der Platzierung verwendet werden, da ansonsten ein falscher wert entsteht.
+     */
+    public static void setWinCounters(){
+        opponentWins = playerWins = fleet.size();
+    }
+
+    /**
+     * Dekrementiert bei Uebergabewert 1 die playerWins Variable und bei 2 die opponentWins Variable
+     * @param player 1 fuer Spieler und 2 fuer Gegner
+     */
+    public static int decreaseCounter(int player){
+        if(player==1){
+            return --playerWins;
+
+        }
+        else if(player==2){
+            return --opponentWins;
+        }
+        return -1;
+    }
 
     // Variabe fuer die maximale Schiffslaenge
     /**

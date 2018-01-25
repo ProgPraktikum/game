@@ -2,6 +2,7 @@ package data;
 
 import ai.Ai;
 import gui.TableView;
+import gui.VictoryScreen;
 import gameboard.Board;
 import network.Network;
 
@@ -134,6 +135,9 @@ public class Game {
 				case 2:
 					DataContainer.getPlayerShootTable().setValueAt(val,y,x);
 					displayHits(x,y,0,DataContainer.getPlayerShootTable());
+					if(DataContainer.decreaseCounter(1)==0){
+						new VictoryScreen(true);
+					}
 					break;
 			}
 			map.setPlayershots(x, y, val);
@@ -159,6 +163,9 @@ public class Game {
 			DataContainer.setAllowed(true);
 		}
 		if (i == 2){
+			if(DataContainer.decreaseCounter(2)==0){
+				new VictoryScreen(false);
+			}
 			displayHits(x,y,0,DataContainer.getTable());
 		}
 		return i;
