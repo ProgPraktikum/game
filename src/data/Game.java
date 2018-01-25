@@ -128,11 +128,23 @@ public class Game {
 			else {
 				return -1;
 			}
-			map.setPlayershots(x, y, val);
-			DataContainer.getPlayerShootTable().setValueAt(val,y,x);
+			switch(val){
+				case -1:
+					return val;
+				case 0:
+					map.setPlayershots(x,y,7);
+					DataContainer.getPlayerShootTable().setValueAt(7,y,x);
+					break;
 
-			if (val == 2) {
-				displayHits(x, y, 0, DataContainer.getPlayerShootTable());
+				case 1:
+					map.setPlayershots(x,y,1);
+					DataContainer.getPlayerShootTable().setValueAt(1,y,x);
+					break;
+				case 2:
+					map.setPlayershots(x,y,2);
+					DataContainer.getPlayerShootTable().setValueAt(2,y,x);
+					displayHits(x,y,0,DataContainer.getPlayerShootTable());
+					break;
 			}
 			return val;
 		}
@@ -152,6 +164,7 @@ public class Game {
 		if (i == 0){
             DataContainer.getTable().setValueAt(7, y, x);
 			DataContainer.setAllowed(true);
+			map.getPlayerboardAt(x,y).setStatus(7);
 		} else if (i == 1) {
             DataContainer.getTable().setValueAt(1, y, x);
         } else if (i == 2){
@@ -201,6 +214,7 @@ public class Game {
 				displayHits(x - 1, y, 1, table);
 			} else if (table.getValueAt(y, x - 1).equals(9)) {
 				table.setValueAt(0, y, x - 1);
+				map.setPlayershots(x-1,y,0);
 			}
 		}
 		if (x + 1 < DataContainer.getGameboardWidth()) {
@@ -208,6 +222,7 @@ public class Game {
 				displayHits(x + 1, y, 2, table);
 			} else if (table.getValueAt(y, x + 1).equals(9)) {
 				table.setValueAt(0, y, x + 1);
+				map.setPlayershots(x+1,y,0);
 			}
 		}
 		if (y - 1 >= 0) {
@@ -215,6 +230,7 @@ public class Game {
 				displayHits(x, y - 1, 3, table);
 			} else if (table.getValueAt(y - 1, x).equals(9)) {
 				table.setValueAt(0, y - 1, x);
+				map.setPlayershots(x,y-1,0);
 			}
 		}
 		if (y + 1 < DataContainer.getGameboardHeight()) {
@@ -222,26 +238,31 @@ public class Game {
 				displayHits(x, y + 1, 4, table);
 			} else if (table.getValueAt(y + 1, x).equals(9)) {
 				table.setValueAt(0, y + 1, x);
+				map.setPlayershots(x,y + 1,0);
 			}
 		}
 		if (x - 1 >= 0 && y - 1 >= 0) {
 			if (table.getValueAt(y - 1, x - 1).equals(9)) {
 				table.setValueAt(0, y - 1, x - 1);
+				map.setPlayershots(x-1,y-1,0);
 			}
 		}
 		if (x + 1 < DataContainer.getGameboardWidth() && y - 1 >= 0) {
 			if (table.getValueAt(y - 1, x + 1).equals(9)) {
 				table.setValueAt(0, y - 1, x + 1);
+				map.setPlayershots(x+1,y-1,0);
 			}
 		}
 		if (x + 1 < DataContainer.getGameboardWidth() && y + 1 < DataContainer.getGameboardHeight()) {
 			if (table.getValueAt(y + 1, x + 1).equals(9)) {
 				table.setValueAt(0, y + 1, x + 1);
+				map.setPlayershots(x+1,y+1,0);
 			}
 		}
 		if (x - 1 >= 0 && y + 1 < DataContainer.getGameboardHeight()) {
 			if (table.getValueAt(y + 1, x - 1).equals(9)) {
 				table.setValueAt(0, y + 1, x - 1);
+				map.setPlayershots(x-1,y+1,0);
 			}
 		}
 	}
