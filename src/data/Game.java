@@ -210,6 +210,7 @@ public class Game {
 	private static void displayHits(int x, int y, int direction, TableView table) {
 		//todo optimize corner checks
 		table.setValueAt(2, y, x);
+		map.setPlayershots(x,y,2);
 		if (x - 1 >= 0) {
 			if (table.getValueAt(y, x - 1).equals(1) && (direction == 0 || direction == 1)) {
 				displayHits(x - 1, y, 1, table);
