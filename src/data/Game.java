@@ -109,24 +109,23 @@ public class Game {
 	public static int shoot(int x, int y, Ai ai) {
 		if(DataContainer.getAllowed()) {
 			int val;
-			if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) {
-				val = 0;
-				//DEBUG
-				//val = map.checkboard(x,y);
+			if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf") || DataContainer.getGameType().equals("bdf-loaded")) {
 				val = ai.hit(x, y);
+                if (val == -1) {
+                    return -1; // shoot failed due to generic issues
+                } else if (val == 0) {
+                    DataContainer.setAllowed(false);
+                }
 			}
 			else if (DataContainer.getGameType().equals("mp")) {
-				//val=0;
 				val = Network.networkShoot(x,y);
 				if (val == -1) {
 				    return -1; // shoot failed due to network issues
-                }
-				if(val == 0){
+                } else if (val == 0){
 					DataContainer.setAllowed(false);
 				}
-				//multiplayer shoot
 			}
-			else{
+			else {
 				return -1;
 			}
 			map.setPlayershots(x, y, val);
@@ -149,13 +148,14 @@ public class Game {
 	 * @desc Methode um auf den Spieler zu schiessen. wird bei netzwerkspiel bzw von AI aufgerufen.
 	 */
 	public static int getHit(int x, int y){
-		int i = map.checkboard(x,y);
-		DataContainer.getTable().setValueAt(i,y,x);
+		int i = map.checkboard(x, y);
 		if (i == 0){
             DataContainer.getTable().setValueAt(7, y, x);
 			DataContainer.setAllowed(true);
-		}
-		if (i == 2){
+		} else if (i == 1) {
+            DataContainer.getTable().setValueAt(1, y, x);
+        } else if (i == 2){
+            DataContainer.getTable().setValueAt(2, y, x);
 			displayHits(x,y,0,DataContainer.getTable());
 		}
 		return i;

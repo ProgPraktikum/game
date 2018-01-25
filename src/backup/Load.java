@@ -1,13 +1,16 @@
 package backup;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import ai.Trace;
 import com.google.gson.Gson;
 import data.Game;
 import gameboard.Board;
 import gui.GameView;
+import gui.TableView;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -58,23 +61,54 @@ public class Load {
             String aiStrikesString = (String) jsonObject.get("aiStrikes");
             Board aiStrikes = gson.fromJson(aiStrikesString, Board.class);
 
-            DataContainer.setGameType(gameType);
+            String aiTraceString = (String) jsonObject.get("aiTrace");
+            Trace aiTrace = gson.fromJson(aiTraceString, Trace.class);
+
+            Boolean aiPlaced = (Boolean) jsonObject.get("aiPlaced");
+
+            // DataContainer.setGameType(gameType);
+            DataContainer.setGameType("bdf-loaded");
             DataContainer.setGameboardWidth(gameboardWidth);
             DataContainer.setGameboardHeight(gameboardHeight);
             DataContainer.setAllowed(allowed);
             Game.setMap(playerBoard);
+
+            DataContainer.setTable(new TableView());
+
+            TableView playerTable = new TableView();
+            TableView playerShootTable = new TableView();
+
+            for (int i = 0; i < gameboardWidth; i++) {
+                for (int j = 0; j < gameboardHeight; j++) {
+                    playerTable.setValueAt(playerBoard.getPlayerboardAt(i, j).getStatus(), j, i);
+                }
+            }
+
+            for (int i = 0; i < gameboardWidth; i++) {
+                for (int j = 0; j < gameboardHeight; j++) {
+                    playerShootTable.setValueAt(playerBoard.getPlayershots(i, j), j, i);
+                }
+            }
+
+            DataContainer.setTable(playerTable);
+            DataContainer.setPlayerShootTable(playerShootTable);
+
             Ai ai = new Ai();
             ai.setAiBoard(aiBoard);
             ai.setAiStrikes(aiStrikes);
+            ai.setTrace(aiTrace);
+            ai.setPlaced(aiPlaced);
 
             new GameView();
 
+        } catch(FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "The given filepath does not exist!", "Error!", JOptionPane.ERROR_MESSAGE);
         } catch(IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Something went horribly wrong!");
+            JOptionPane.showMessageDialog(null, "Something went horribly wrong!", "Error!", JOptionPane.ERROR_MESSAGE);
         } catch(Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Could not load the savegame! Probably it's corrupt!");
+            JOptionPane.showMessageDialog(null, "Could not load the savegame! Probably it's corrupt!", "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

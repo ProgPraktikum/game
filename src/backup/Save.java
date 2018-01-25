@@ -2,15 +2,15 @@ package backup;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.IOException;
 
 import com.google.gson.Gson;
 import data.Game;
-import gameboard.Board;
 import org.json.simple.JSONObject;
 
 import data.DataContainer;
 import ai.Ai;
+
+import javax.swing.*;
 
 /**
  * Diese Klasse speichert ein laufendes Spiel in einer TXT Datei
@@ -43,12 +43,6 @@ public class Save {
             out.put("allowed", DataContainer.getAllowed());
 
             /* Die Spieler-Spielfelder werden in das Savegame geschrieben */
-            //String playerTable = gson.toJson(DataContainer.getTable().);
-            //String playerShootTable = gson.toJson(DataContainer.getPlayerShootTable());
-
-            //out.put("playerTable", playerTable);
-            //out.put("playerShootTable", playerShootTable);
-
             String playerBoard = gson.toJson(Game.getMap());
             out.put("playerBoard", playerBoard);
 
@@ -56,9 +50,12 @@ public class Save {
             Ai ai = new Ai();
             String aiBoard = gson.toJson(ai.getAiBoard());
             String aiStrikes = gson.toJson(ai.getAiStrikes());
+            String aiTrace = gson.toJson(ai.getAiTrace());
 
             out.put("aiBoard", aiBoard);
             out.put("aiStrikes", aiStrikes);
+            out.put("aiTrace", aiTrace);
+            out.put("aiPlaced", ai.getAiPlaced());
 
             /**
              * Schreibe erstelltes JSON in das Savegame
@@ -70,8 +67,9 @@ public class Save {
              */
             writer.close();
 
-        } catch(IOException e) {
+        } catch(Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Something went horribly wrong!", "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
