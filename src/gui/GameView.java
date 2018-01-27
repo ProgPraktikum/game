@@ -62,12 +62,15 @@ import java.util.concurrent.TimeUnit;
 
         if (!DataContainer.getGameType().equals("bdf-loaded")) {
             PlayerShootTable = new TableView();
-            for(int i = 0; i <DataContainer.getGameboardHeight(); i++){
+            PlayerShootTable.setFont(new Font("Arial", Font.BOLD, 30));
+            for(int i = 0; i < DataContainer.getGameboardHeight(); i++){
                 for(int j = 0; j < DataContainer.getGameboardWidth(); j++){
                     PlayerShootTable.setValueAt(9,i,j);
                 }
             }
             DataContainer.setPlayerShootTable(PlayerShootTable);
+        } else {
+            PlayerShootTable = DataContainer.getPlayerShootTable();
         }
 
 

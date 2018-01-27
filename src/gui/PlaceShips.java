@@ -73,6 +73,7 @@ import java.util.Random;
          * des Spielers darstellt.
          */
         table = new TableView();
+        table.setFont(new Font("Arial", Font.BOLD, 30));
 
 
         Iterator<Integer> ships = DataContainer.getShipLenghts().iterator();
