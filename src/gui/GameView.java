@@ -38,11 +38,11 @@ import java.util.concurrent.CompletableFuture;
          * Erstellung der TableView abhaengig des gewaehlten GameTyp
          */
          switch (DataContainer.getGameType()) {
-             case "ss":    //SS steht für schnelles Spiel
+             case "ss":    //SS steht fuer schnelles Spiel
                  tablePlayer = DataContainer.getTable();
                  DataContainer.setAllowed(true);
                  break;
-             case "bdf":  // bdf steht für Benutzerdefiniert
+             case "bdf":  // bdf steht fuer Benutzerdefiniert
 
                  tablePlayer = DataContainer.getTable();          // das Place ships window wird die Table anlegen
                  DataContainer.setAllowed(true);
@@ -62,7 +62,7 @@ import java.util.concurrent.CompletableFuture;
 
 
         /**
-         * JMenuBar mit den Unterpunkten zum Spiel speichern/laden und schließen.
+         * JMenuBar mit den Unterpunkten zum Spiel speichern/laden und schliessen.
          */
         JMenuBar bar = new JMenuBar();
         {
@@ -70,7 +70,7 @@ import java.util.concurrent.CompletableFuture;
             {
                 JMenuItem item = new JMenuItem("Spiel laden");
                 item.addActionListener(
-                        (e) -> { //Todo Laden ausführen
+                        (e) -> { //Todo Laden ausfuehren
                              }
                 );
                 menu.add(item);
@@ -130,7 +130,7 @@ import java.util.concurrent.CompletableFuture;
             bar.add(menu);
         }
         /**
-         * ScrollPane und TextArea unterhalb des Spielfeldes für
+         * ScrollPane und TextArea unterhalb des Spielfeldes fuer
          * saemtliche Informationen
          */
         JScrollPane scrollPane = new JScrollPane();

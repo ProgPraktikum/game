@@ -118,7 +118,7 @@ import java.util.Enumeration;
 
 
          /**
-          * JTextField für die Eingabe einer IP
+          * JTextField fuer die Eingabe einer IP
           */
          field = new JTextField("IP des Hosts..");
          field.setMaximumSize(new Dimension(200, 30));
@@ -133,7 +133,7 @@ import java.util.Enumeration;
 
 
          /**
-          * JCheckBox für isHost
+          * JCheckBox fuer isHost
           */
          isHost = new JCheckBox("Host");
          isHost.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -151,7 +151,7 @@ import java.util.Enumeration;
 
 
          /**
-          * JCheckBox für isClient
+          * JCheckBox fuer isClient
           */
          isClient = new JCheckBox("Client");
          isClient.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -169,8 +169,8 @@ import java.util.Enumeration;
 
 
         /**
-         * DisplayIp zeigt die eigene Ip Adresse wenn man hosted. wird nur für die
-         * Clientverindung benötigt
+         * DisplayIp zeigt die eigene Ip Adresse wenn man hosted. wird nur fuer die
+         * Clientverindung benoetigt
          */
         displayIp = new JLabel("My IP: "+ myIp);
         displayIp.setForeground(Color.GREEN);
@@ -178,9 +178,9 @@ import java.util.Enumeration;
 
 
         /**
-         * OK Button, der bei Benutzung das Fenster schließt und falls man Host ist
-         * select FieldSize öffnet.
-         * Ist man Client wird das PlaceShips View geöffnet.
+         * OK Button, der bei Benutzung das Fenster schliesst und falls man Host ist
+         * select FieldSize oeffnet.
+         * Ist man Client wird das PlaceShips View geoeffnet.
          */
         JButton ok = new JButton("OK");
         ok.setBackground(Color.BLACK);
@@ -197,7 +197,7 @@ import java.util.Enumeration;
                     if(isClient.isSelected()){
                         if(field.getText() != null)
                         DataContainer.setNetworkIP(field.getText());
-                        // ausgaben nur für debug
+                        // ausgaben nur fuer debug
                         System.out.println("dc " +DataContainer.getNetworkIP());
                         System.out.println("tf " +field.getText());
 
@@ -224,7 +224,7 @@ import java.util.Enumeration;
 
 
                         /**
-                         * Empfangen der übermittelten StartDaten
+                         * Empfangen der uebermittelten StartDaten
                          */
                         Network.recieveStartData();
                       //  new PlaceShips();
@@ -233,7 +233,7 @@ import java.util.Enumeration;
         );
 
         /**
-         * abbrechen Button (schließt den JDialog)
+         * abbrechen Button (schliesst den JDialog)
          */
         JButton abbrechen = new JButton("abbrechen");
         abbrechen.setBackground(Color.BLACK);

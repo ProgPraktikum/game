@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * Diese Klasse ist für die Kommunikation im Netzwerk zustaendig. Sie dient
+ * Diese Klasse ist fuer die Kommunikation im Netzwerk zustaendig. Sie dient
  * dem aufbau einer Host- bzw. ClientConnection.
- * Des Weiteren beinhaltet diese Klasse sämtliche Methoden zum übermitteln und
- * empfangen der relevanten Daten wie z.B. Feldgröße und Anzahl Schiffe.
+ * Des Weiteren beinhaltet diese Klasse saemtliche Methoden zum uebermitteln und
+ * empfangen der relevanten Daten wie z.B. Feldgroesse und Anzahl Schiffe.
  */
 public class Network {
 
@@ -42,17 +42,17 @@ public class Network {
     private static Socket s;
 
     /**
-     * BufferedReader der die über das Netzwerk übermittelte Daten liest.
+     * BufferedReader der die ueber das Netzwerk uebermittelte Daten liest.
      */
     private static BufferedReader reader;
 
     /**
-     * Writer der der Daten über das Netzwerk übermittelt
+     * Writer der der Daten ueber das Netzwerk uebermittelt
      */
     private static Writer writer;
 
     /**
-     * Intervalle für Socket-Recovering nach Verbindungsabbruch
+     * Intervalle fuer Socket-Recovering nach Verbindungsabbruch
      */
     private static int[] recoverIntervals = {1000, 3000, 6000, 10000, 150000}; // varying from the RFC the intervals won't be randomly generated here since we've got just one client and thus no DOS like issues
 
@@ -157,16 +157,16 @@ public class Network {
     }
 
     /**
-     * Diese Methode dient der Übermittlung der Feldbreite, Feldhöhe,
-     * sowie den zu setzenden Schiffslängen.
+     * Diese Methode dient der uebermittlung der Feldbreite, Feldhoehe,
+     * sowie den zu setzenden Schiffslaengen.
      */
     public static void sendStartData(int width, int height, Stack<Integer> lengths) {
         StringBuffer line = new StringBuffer();
         Iterator<Integer> iterator = lengths.iterator();
 
         /*
-         * Size beinhaltet die Feldbreite und Höhe
-         * Ships beinhaltet die Anzahl Schiffe und die Schiffslänge
+         * Size beinhaltet die Feldbreite und Hoehe
+         * Ships beinhaltet die Anzahl Schiffe und die Schiffslaenge
          */
         line.append("size ").append(width).append(" ").append(height).append(", ");
         line.append("ships ").append(lengths.size());
@@ -204,7 +204,7 @@ public class Network {
         String[] size = startData[0].split(" ");
 
         /*
-        Breite und Höhe werden in den DataContainer geschrieben.
+        Breite und Hoehe werden in den DataContainer geschrieben.
          */
         DataContainer.setGameboardWidth(Integer.parseInt(size[1]));
         DataContainer.setGameboardHeight(Integer.parseInt(size[2]));

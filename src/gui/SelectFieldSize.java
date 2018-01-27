@@ -16,7 +16,7 @@ public class SelectFieldSize {
 
     public SelectFieldSize(){
 
-        // Fenster für die eingabe der Spielfeldgröße
+        // Fenster fuer die eingabe der Spielfeldgroesse
         eingaben = new JDialog();
         eingaben.setModal(true);
         eingaben.setContentPane(Box.createVerticalBox());
@@ -32,7 +32,7 @@ public class SelectFieldSize {
 
 
         vbox.add(Box.createVerticalStrut(20));
-        JLabel groesseFeld = new JLabel("Spielfedgröße (5-30)");
+        JLabel groesseFeld = new JLabel("Spielfeldgroesse (5-30)");
         groesseFeld.setAlignmentX(Component.CENTER_ALIGNMENT);
         groesseFeld.setFont(new Font("Tahoma", Font.PLAIN, 25));
         groesseFeld.setForeground(Color.WHITE);
@@ -109,7 +109,7 @@ public class SelectFieldSize {
         );
 
 
-        // abbrechen Button (schließt den JDialog)
+        // abbrechen Button (schliesst den JDialog)
         hbox2.add(Box.createHorizontalStrut(10));
 
         JButton abort = new JButton("abbrechen");

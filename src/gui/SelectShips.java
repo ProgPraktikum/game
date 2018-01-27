@@ -25,7 +25,7 @@ import java.util.List;
 
      SelectShips() {
 
-        // Fenster für die Auswahl der Schiffe
+        // Fenster fuer die Auswahl der Schiffe
         selectships = new JDialog();
         selectships.setModal(true);
         selectships.setUndecorated(true);
@@ -35,7 +35,7 @@ import java.util.List;
 
 
         /**
-        ArrayList nimmt die ganzen JSpinner auf welche für die Anzahl der Schiffe genutzt werden.
+        ArrayList nimmt die ganzen JSpinner auf welche fuer die Anzahl der Schiffe genutzt werden.
          */
         spinners = new ArrayList<JSpinner>();
 
@@ -59,7 +59,7 @@ import java.util.List;
 
 			/**
 			 * JLabel mit dem Text "Laenge ..." wird initialisiert
-			 * und zusätzlich jeweils ein spinner
+			 * und zusaetzlich jeweils ein spinner
 			 */
 
         for ( int i = DataContainer.getMaxShipLength(); i >= 2; i--) {
@@ -94,7 +94,7 @@ import java.util.List;
 
 
          /**
-          *   Bestätigung Button.
+          *   Bestaetigung Button.
           *   schliesst SelectShips und oeffnet das PlaceShip Fenster
           */
         JButton ok = new JButton("OK");
@@ -113,7 +113,7 @@ import java.util.List;
 
                         selectships.dispose();
                         /**
-                         * Daten übermitteln falls Netzwerkspiel
+                         * Daten uebermitteln falls Netzwerkspiel
                          */
                         if(DataContainer.getGameType().equals("mp")|| DataContainer.getGameType()
                                 .equals("mps")){
@@ -123,7 +123,7 @@ import java.util.List;
                             new PlaceShips();
                     }else{
                         /*
-                        Falls die zulaessige Anzahl der Schiffe überschritten wurde
+                        Falls die zulaessige Anzahl der Schiffe ueberschritten wurde
                         werden die Stacks neu erstellt
                          */
                         DataContainer.setShipStack();
@@ -143,7 +143,7 @@ import java.util.List;
                  });
 
                      /**
-                      * abbrechen Button (schließt den JDialog)
+                      * abbrechen Button (schliesst den JDialog)
                       */
         JButton abort = new JButton("abbrechen");
         abort.setBackground(Color.BLACK);

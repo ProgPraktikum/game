@@ -11,7 +11,10 @@ import java.util.Random;
 import java.util.Stack;
 
 /**@author Felix
- * @desc Statische Klasse welche die Huaptlogik des Spiels enthaelt und Netzwerk, AI und gui verknuepft
+ * Statische Klasse welche die Hauptlogik des Spiels enthaelt und Netzwerk, AI und gui verknuepft.
+ * Hier wird das Board Objekt des Spielers verwaltet, FlottenvorSchlaege erzeugt, sowie die Schiffsplatzierung fuer Spieler und AI vorgenommen.
+ * Ausserdem befinden sich hier die zentralen Methoden zum Schiessen und Getroffen werden, die durch verschiedene Spieleparameter,
+ * die aus dem DataContainer entnommen werden werschiedenen Aktionen im Netzwerk, bei der AI oder auf der NButzerOberflaeche ausloesen.
  *
  */
 public class Game {
@@ -71,29 +74,6 @@ public class Game {
 		return map.place(s);
 	}
 
-	/**
-	 * algoritzmus zur generierung von Flottenvorschlaegen
-	 */
-	public static void generatefleet() {
-		int occ = DataContainer.getOccupancy();
-		Stack<Integer> lengths = new Stack<>();
-		int highlen = 2;
-		occ -= DataContainer.getMaxShipLength();
-		while (occ > 0) {
-			for (int i = 2; i <= highlen; i++) {
-				if (occ - i >= 0) {
-					lengths.push(i);
-					occ -= i;
-				} else if (occ - i == -1) {
-					lengths.push(i - 1);
-					occ -= (i - 1);
-				}
-			}
-			highlen++;
-		}
-		lengths.push(DataContainer.getMaxShipLength()); //groesstes schiff soll oben auf stack liegen
-	}
-
 
 	//spielmethoden
 
@@ -101,7 +81,8 @@ public class Game {
 	 * @param x X-Zielkoordinate
 	 * @param y Y-Zielkoordinate
 	 * @return gibt entweder 0 fuer wasser, 1 fuer treffer oder 2 fuer versenkt zurueck.
-	 * @desc Methode des Spielers um auf seinen Gegner zu schiessen, abhaengig vom Spielmodus entweder Ai oder Netzwerkgegner.
+	 * Methode des Spielers um auf seinen Gegner zu schiessen.
+	 * Bei Einzelspieler wird die hit methode der Ai aufgerufen und bei Mehrspieler die networkShoot methode aufgerufen welche ueber shootanswer den entsprechenden Antwortwert zurueckliefert.
 	 */
 	public static int shoot(int x, int y, Ai ai) {
 		if(DataContainer.getAllowed()) {
@@ -148,7 +129,8 @@ public class Game {
 	 * @param x X-Zielkoordinate
 	 * @param y Y-Zielkoordinate
 	 * @return gibt 0 fuer Wasser, 1 fuer Treffer und 2 fuer Versenkt zurueck.
-	 * @desc Methode um auf den Spieler zu schiessen. wird bei netzwerkspiel bzw von AI aufgerufen.
+	 * Methode um auf den Spieler zu schiessen. wird bei Netzwerkspiel von Network Klasse mit empfangenen Koordinaten aufgerufen.
+	 * Bei "Schnellem Spiel" oder bei "benutzerdefiniertem Spiel" wird die Methode von der AI mit der von ihr berechnenten zielkoordinate aufgerufen.
 	 */
 	public static int getHit(int x, int y){
 		int i = map.checkboard(x,y);
@@ -175,7 +157,7 @@ public class Game {
 	 * @param x X-Wert des zurueckzugebenden Objekts
 	 * @param y Y-Wert des zurueckzugebenden Objekts
 	 * @return gibt ein Tile Objekt zurueck, welches an der entsprechenden x,y stelle im array steht
-	 * @desc gibt Tile Objekt an Stelle x,y des playerBoards aus dem Board zurueck
+	 * gibt Tile Objekt an Stelle x,y des playerBoards aus dem Board zurueck
 	 */
 	public static Tile getPlayerboard(int x, int y){
 		return map.getPlayerboardAt(x,y);
@@ -194,7 +176,7 @@ public class Game {
 	 * @param y         Y-Wert von dem aus die umliegenden Felder geprueft werden
 	 * @param direction Richtung, die bei mehrmaligen aufrufen uebergeben wird um die suche effizienter durchzufuehren
 	 * @param table     Tableview auf der die Operation durchgefuehrt werden soll
-	 * @desc rekursive Funktion um Schiffe auf der Oberflaeche als versenkt anzuzeigen.
+	 * rekursive Funktion um Schiffe auf der Oberflaeche als versenkt anzuzeigen.
 	 */
 	private static void displayHits(int x, int y, int direction, TableView table) {
 		//todo optimize corner checks
@@ -251,7 +233,7 @@ public class Game {
 
 	/**
 	 * Berechnet Anzahl der Schiffsgroessen fuer eine empfohlene Flotte. Die Laenge der jeweiligen Schiffe entspricht dem Arrayindex+2.
-	 * Die Anzahl der jeweiligen Schiffe entspricht der Zahl am entsprechenden Arrayindex
+	 * Also steht die ANzahl der Schiffe der Laenge 2 an Index 0 die der mit Laenge 3 an Index 1 und so weiter.
 	 * @return Integer-Array mit Anzahlen der Schiffe beginnend bei Laenge 2 (Index 0).
 	 */
 	public static int[] recomendation(){

@@ -75,8 +75,8 @@ public class DataContainer {
 
 
     /*
-     * Dieser Stack ist für die gewaehlten schiffe für die Ai
-     * speichert die Anzahl der Schiffe mit der Länge xxx
+     * Dieser Stack ist fuer die gewaehlten schiffe fuer die Ai
+     * speichert die Anzahl der Schiffe mit der Laenge xxx
      */
     private static Stack<Integer> shipLengthsAI;
 
@@ -149,7 +149,7 @@ public class DataContainer {
     }
 
     /**
-     * gibt textarea für schiffsplatzierung zurueck
+     * gibt textarea fuer schiffsplatzierung zurueck
      * @return textarea vom typ JTextArea
      */
     public static JTextArea getTextArea(){
@@ -315,8 +315,8 @@ public class DataContainer {
     }
 
     /**
-     * Speichert übegebenen Stack vom typ Integer im Datacontainer als shipLengths Stack ab.
-     * Der stack enthält Werte die zwischen 2 und maxShipLength liegen in sortierter Reihenfolge.
+     * Speichert uebegebenen Stack vom typ Integer im Datacontainer als shipLengths Stack ab.
+     * Der stack enthaelt Werte die zwischen 2 und maxShipLength liegen in sortierter Reihenfolge.
      * @param shipLenght Stack vom Typ Integer.
      */
     public static void setShipLenghts(Stack<Integer>shipLenght){
@@ -324,8 +324,8 @@ public class DataContainer {
     }
 
     /**
-     * Speichert übegebenen Stack vom typ Integer im Datacontainer als shipLengthsAI Stack ab.
-     * Der stack enthält Werte die zwischen 2 und maxShipLength liegen in sortierter Reihenfolge.
+     * Speichert uebegebenen Stack vom typ Integer im Datacontainer als shipLengthsAI Stack ab.
+     * Der stack enthaelt Werte die zwischen 2 und maxShipLength liegen in sortierter Reihenfolge.
      * @param shipLengthsKI Stack vom Typ Integer
      */
     public static void setShipLengthsAI(Stack<Integer>shipLengthsKI){
@@ -369,7 +369,7 @@ public class DataContainer {
 
     /**
      * get fuer fleet stack
-     * @return
+     * @return gibt Fleet stack zurueck
      */
     public static Stack<Ship> getfleet(){
         return fleet;
@@ -395,7 +395,7 @@ public class DataContainer {
      * Speichert die ausgewaehlten Schiffslaengen in die Stacks shipLengths und shipLengthsKi
      * parallel dazu werden Schiffe mit den entsprechenden Laengen gespeichert.
      * Des Weiteren wird geprueft ob die maximal zu waehlenden anzahl an Schiffen ueberschritten wird.
-     * @param spinners
+     * @param spinners Liste der Spinner die die einzelnen Schiffslaengen und Anzahlen enthaelt.
      * @param count
      * @return Gibt true zurueck wenn erfolgreich, ansonsten wird false zurueckgegeben.
      */

@@ -28,9 +28,9 @@ import java.util.Random;
     private Point startingPoint;
     private JTextArea ta;
      //success gibt an ob die letzte plazierung erfolgreich war um zu verhindern,
-    // dass das nächste schiff ausgewählt wird bevor das vorherige platziert ist
+    // dass das naechste schiff ausgewaehlt wird bevor das vorherige platziert ist
     private boolean success = true;
-    //s ist hilfsvariable um ausgewähltes schiff zu speichern
+    //s ist hilfsvariable um ausgewaehltes schiff zu speichern
     private Ship s=null;
 
     public PlaceShips() {
@@ -89,18 +89,18 @@ import java.util.Random;
          * Es werden alle ausgewaehlten Schiffstypen zur textArea hinzugefuegt.
          */
         while (ships.hasNext()) {
-            ta.insert("Setze Schiff der Länge: " + ships.next().toString() + "\n",0);
+            ta.insert("Setze Schiff der Laenge: " + ships.next().toString() + "\n",0);
         }
 
         /**
-         * JLabel für Anleitungen wie man ein Scheff zu setzen hat oder es entfernen kann.
+         * JLabel fuer Anleitungen wie man ein Scheff zu setzen hat oder es entfernen kann.
          */
         JLabel info = new JLabel();
-        info.setText("<html><body>Zum setzen eines Schiffes<br>beliebigen Startpunkt wählen<br>" +
-                "und anschließend einen der<br>grünen Punkte anklicken.<br>" +
-                " <br>zum Entfernen eines Schiffes,<br>das gewünschte Objekt mit der  <br>" +
-                "rechten Maustaste klicken<br> <br>Für eine automatische Platzierung  <br>" +
-                "den Button \"zufällig\" drücken </body></html>");
+        info.setText("<html><body>Zum setzen eines Schiffes<br>beliebigen Startpunkt waehlen<br>" +
+                "und anschliessend einen der<br>gruenen Punkte anklicken.<br>" +
+                " <br>zum Entfernen eines Schiffes,<br>das gewuenschte Objekt mit der  <br>" +
+                "rechten Maustaste klicken<br> <br>Fuer eine automatische Platzierung  <br>" +
+                "den Button \"zufaellig\" druecken </body></html>");
 
         JButton weiter = new JButton("weiter");
         weiter.setEnabled(false);
@@ -109,7 +109,7 @@ import java.util.Random;
         /**
          * Button, welcher die Funktion aufruft, dass Schiffe automatisch gesetzt werden.
          */
-        JButton randomBtn = new JButton("zufällig");
+        JButton randomBtn = new JButton("zufaellig");
         randomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         randomBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         randomBtn.addActionListener(
@@ -117,7 +117,7 @@ import java.util.Random;
                     if (!(DataContainer.getfleet().isEmpty())) {
                         randomLoop();
                     }
-                    //randomplace(); // randomplace wird ausgeführt bis erfolgreiche platzierung gefunden wurde
+                    //randomplace(); // randomplace wird ausgefuehrt bis erfolgreiche platzierung gefunden wurde
                     else {
                         reset();
                         randomLoop();
@@ -132,7 +132,7 @@ import java.util.Random;
         /**
          * Button, welcher alle gesetzten Schiffe loescht
          */
-        JButton reset = new JButton("zurücksetzen");
+        JButton reset = new JButton("zuruecksetzen");
         reset.setAlignmentX(Component.CENTER_ALIGNMENT);
         reset.setFont(new Font("Tahoma", Font.PLAIN, 20));
         reset.addActionListener(
@@ -142,7 +142,7 @@ import java.util.Random;
 
         /**
          *MouseAdapter wird hinzugefuegt. beim klicken wird TouchedMouse aufgerufen.
-         *anschließend wird geprueft ob die schiffe platziert sind
+         *anschliessend wird geprueft ob die schiffe platziert sind
          */
         table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent event) {
@@ -218,13 +218,13 @@ import java.util.Random;
                 return;
             }
             /*
-            wenn noch kein Startpunkt gewählt wurde
+            wenn noch kein Startpunkt gewaehlt wurde
              */
             if (startingPoint == null) {
                 startingPoint = x;
                 endpoints(row, column);
             }
-            // wenn schon ein punkt als Startpunkt gewählt ist
+            // wenn schon ein punkt als Startpunkt gewaehlt ist
             boolean clickedendpoint;
 
             if (table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(4)) {
@@ -241,7 +241,7 @@ import java.util.Random;
                 int end_y = table.rowAtPoint(x);
                 int end_x = table.columnAtPoint(x);
                 hideEndpoints(start_y, start_x);
-                /**ausgewähltes schiff wird aus stack geholt
+                /**ausgewaehltes schiff wird aus stack geholt
                  * und in selectedship zwischengespeichert
                  */
 
@@ -302,14 +302,14 @@ import java.util.Random;
 
                 /*
                 nach dem setzen soll das element entfernt werden und aus
-                dem Stack entfernt werden ( der Stack enthält alle längen der
+                dem Stack entfernt werden ( der Stack enthaelt alle laengen der
                 schiffe) ebenso soll es aus der TextArea entfernt werden.
                 */
 
                 startingPoint = null;
             } else {
                 /**
-                 * falls auf keinen endpunkt geklickt wude sollen die möglichen wieder
+                 * falls auf keinen endpunkt geklickt wude sollen die moeglichen wieder
                  * versteckt werden.
                  */
                 hideEndpoints(table.rowAtPoint(startingPoint), table.columnAtPoint(startingPoint));
@@ -326,14 +326,14 @@ import java.util.Random;
 
 
     /**
-     * die Methode Endpoints sucht und setzt mögliche Endpunkte der Schiffe, welche dann auf dem Spielfeld
-     * grün dargestellt werden.
+     * die Methode Endpoints sucht und setzt moegliche Endpunkte der Schiffe, welche dann auf dem Spielfeld
+     * gruen dargestellt werden.
      * @param row
      * @param column
      */
     private void endpoints(int row, int column){
         boolean check;       //zur pruefung ob setzbar ist
-        //int length = DataContainer.getShipLenghts().firstElement();// länge des zu setzenden schiffs
+        //int length = DataContainer.getShipLenghts().firstElement();// laenge des zu setzenden schiffs
         int length = DataContainer.getShipLenghts().peek();
 
         for (Directions directions : Directions.values()) {
@@ -403,7 +403,7 @@ import java.util.Random;
 
 
     /**
-    Die Methode hideEndpoints setzt zuvor gesetzte mögliche Endpunkte wieder auf den Wert Wasser
+    Die Methode hideEndpoints setzt zuvor gesetzte moegliche Endpunkte wieder auf den Wert Wasser
      */
     private void hideEndpoints(int y, int x) {
 
@@ -543,7 +543,7 @@ import java.util.Random;
         if(table.getValueAt(row,column)!=null && table.getValueAt(row, column).equals(3)){
             Ship s=Game.getPlayerboard(column, row).getMaster();
             //DataContainer.getfleet();
-            String add= "Setze Schiff der Länge: "+s.getLength()+"\n";
+            String add= "Setze Schiff der Laenge: "+s.getLength()+"\n";
             ta.insert(add,0);
             switch (s.getOrientation()) {
                 case 0:
@@ -595,7 +595,7 @@ import java.util.Random;
                         rowempty += 0;
                     }
                 }
-                //wenn treffer in reihe, dann wird er in spalte übertragen
+                //wenn treffer in reihe, dann wird er in spalte uebertragen
                 if(rowempty==1){
                     columnempty = 1;
                 }
@@ -607,8 +607,8 @@ import java.util.Random;
             if(columnempty==0){
                 fieldempty=true;
             }
-            //schiffslänge wird nach komplettem durchlauf durch feld erhöht
-            // (alle schiffe der vorherigen länge wurden bereits entfernt
+            //schiffslaenge wird nach komplettem durchlauf durch feld erhoeht
+            // (alle schiffe der vorherigen laenge wurden bereits entfernt
             currentlength++;
         }
         success= true;
