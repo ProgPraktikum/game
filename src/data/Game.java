@@ -10,6 +10,7 @@ import javax.swing.text.BadLocationException;
 import javax.xml.crypto.Data;
 import java.util.Random;
 import java.util.Stack;
+import java.util.concurrent.CompletableFuture;
 
 /**@author Felix
  * @desc Statische Klasse welche die Huaptlogik des Spiels enthaelt und Netzwerk, AI und gui verknuepft
@@ -146,9 +147,10 @@ public class Game {
 					map.setPlayershots(x,y,2);
 					DataContainer.getPlayerShootTable().setValueAt(2,y,x);
 					displayHits(x,y,0,DataContainer.getPlayerShootTable());
-          if (DataContainer.decreaseCounter(1) == 0) {
-              new VictoryScreen(true);
-          }
+                    System.out.println("Counter: " + DataContainer.getPlayerWins());
+                    if (DataContainer.decreaseCounter(1) == 0) {
+                        new VictoryScreen(true);
+                    }
 					break;
 			}
 			return val;
@@ -172,15 +174,20 @@ public class Game {
 			map.getPlayerboardAt(x,y).setStatus(7);
 		} else if (i == 1) {
             DataContainer.getTable().setValueAt(1, y, x);
-    } else if (i == 2){
-        DataContainer.getTable().setValueAt(2, y, x);
-			  displayHits(x, y, 0, DataContainer.getTable());
-        if (DataContainer.decreaseCounter(2) == 0) {
-            new VictoryScreen(false);
-        }
+		} else if (i == 2) {
+            DataContainer.getTable().setValueAt(2, y, x);
+            displayHits(x, y, 0, DataContainer.getTable());
+            if (DataContainer.decreaseCounter(2) == 0) {
+                CompletableFuture.supplyAsync(() -> newVictoryScreen(false));
+            }
 		}
 		return i;
 	}
+
+	private static boolean newVictoryScreen(boolean won) {
+	    new VictoryScreen(won);
+	    return true;
+    }
 
 	public static boolean hitloop() {
 		while(!DataContainer.getAllowed()){
