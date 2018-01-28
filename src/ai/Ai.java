@@ -63,14 +63,15 @@ public class Ai {
     public void draw() {
         // do all actions here
         data.DataContainer.setAllowed(false);
-        if (!placed) {
-            place();
-            placed = true;
-        }
         eval();
     }
 
     public int hit(int x, int y) {
+        if (!placed) {
+            place();
+            placed = true;
+        }
+        
         int field = aiBoard.checkboard(x, y);
         switch (field) {
             case 0:         // Wasser
@@ -293,7 +294,7 @@ public class Ai {
         }
 
         int ret = fire(x, y);    // 0: Wasser, 1: Treffer, 2: versenkt
-        System.out.println("Ret: " + ret);
+        System.out.println("Firing on coordinates x: " + x + ", y: " + y);
         switch (ret) {
             case 0:
                 System.out.println("Just water here :/");
