@@ -149,6 +149,7 @@ public class Game {
 					displayHits(x,y,0,DataContainer.getPlayerShootTable());
                     System.out.println("Counter: " + DataContainer.getPlayerWins());
                     if (DataContainer.decreaseCounter(1) == 0) {
+                        DataContainer.setAllowed(false);
                         new VictoryScreen(true);
                     }
 					break;
@@ -178,6 +179,7 @@ public class Game {
             DataContainer.getTable().setValueAt(2, y, x);
             displayHits(x, y, 0, DataContainer.getTable());
             if (DataContainer.decreaseCounter(2) == 0) {
+                DataContainer.setAllowed(false);
                 CompletableFuture.supplyAsync(() -> newVictoryScreen(false));
             }
 		}
