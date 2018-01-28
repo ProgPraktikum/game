@@ -1,5 +1,6 @@
 package backup;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -77,16 +78,29 @@ public class Load {
 
             TableView playerTable = new TableView();
             TableView playerShootTable = new TableView();
+            playerTable.setFont(new Font("Arial", Font.BOLD, 30));
+            playerShootTable.setFont(new Font("Arial", Font.BOLD, 30));
+
 
             for (int i = 0; i < gameboardWidth; i++) {
                 for (int j = 0; j < gameboardHeight; j++) {
-                    playerTable.setValueAt(playerBoard.getPlayerboardAt(i, j).getStatus(), j, i);
+                    int val = playerBoard.getPlayerboardAt(i, j).getStatus();
+                    if (val == 7) {
+                        playerTable.setValueAt("X", j, i);
+                    } else {
+                        playerTable.setValueAt(val, j, i);
+                    }
                 }
             }
 
             for (int i = 0; i < gameboardWidth; i++) {
                 for (int j = 0; j < gameboardHeight; j++) {
-                    playerShootTable.setValueAt(playerBoard.getPlayershots(i, j), j, i);
+                    int val = playerBoard.getPlayershots(i, j);
+                    if (val == 7) {
+                        playerShootTable.setValueAt("X", j, i);
+                    } else {
+                        playerShootTable.setValueAt(val, j, i);
+                    }
                 }
             }
 
