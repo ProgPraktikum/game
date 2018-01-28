@@ -8,7 +8,6 @@ import data.Game;
 public class Ai {
     // MEMBER VARIABLES
     private static Random randomGenerator = new Random();
-    ;
 
     private static Board aiBoard = new Board();
     private static Board aiStrikes = new Board();
@@ -71,7 +70,7 @@ public class Ai {
             place();
             placed = true;
         }
-        
+
         int field = aiBoard.checkboard(x, y);
         switch (field) {
             case 0:         // Wasser
@@ -323,5 +322,22 @@ public class Ai {
     private void place() {
         /* place ships on Board */
         aiBoard = Game.aiRandomPlace();
+    }
+
+    /**
+     * Reset static member variables to provide a clear environment for the next game.
+     */
+    public static void reset() {
+        randomGenerator = new Random();
+
+        aiBoard = new Board();
+        aiStrikes = new Board();
+
+        boardWidth = 0;
+        boardHeight = 0;
+
+        placed = false;
+
+        trace = new Trace();
     }
 }

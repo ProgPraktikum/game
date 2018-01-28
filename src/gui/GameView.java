@@ -149,10 +149,7 @@ import java.util.concurrent.TimeUnit;
                                 Network.closeHostConnection();
                             }
                             playView.dispose();
-                            if(DataContainer.getGameType().equals("mp") || DataContainer.getGameType()
-                                    .equals("mps")) {
-
-                            }
+                            Game.clearData(); // Cleanup static data after match ended
                         }
                 );
                 menu.add(item);

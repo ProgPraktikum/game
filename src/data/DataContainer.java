@@ -459,6 +459,44 @@ public class DataContainer {
     public static void setSelectedShip(Ship s){
         selectedShip = s;
     }
+
+    /**
+     * Reset static member variables to provide a clear environment for the next game.
+     */
+    public static void reset() {
+        gameType = null;
+
+        width = 10;
+        height = 10;
+
+        occupancy =  ((width * height)*30/100);
+
+        playerWins = 0;
+        opponentWins = 0;
+
+        maxShipLength = 0;
+        shipLenghts = new Stack<>();
+
+        fleet = new Stack<>();
+        aiFleet = new Stack<>();
+
+        ai = null;
+
+        shipLengthsAI = new Stack<>();
+        selectedShip = null;
+
+        table = null;
+        playerShootTable = null;
+
+        textArea = null;
+
+        allowed = false;
+        isHost = false;
+        isClient = false;
+
+        networkIP = null;
+
+    }
 }
 
 

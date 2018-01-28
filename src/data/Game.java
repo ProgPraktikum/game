@@ -11,6 +11,7 @@ import javax.xml.crypto.Data;
 import java.util.Random;
 import java.util.Stack;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 /**@author Felix
  * @desc Statische Klasse welche die Huaptlogik des Spiels enthaelt und Netzwerk, AI und gui verknuepft
@@ -435,7 +436,18 @@ public class Game {
 	}
 
 
-	private static int clearData() {
+    /**
+     * Reset static member variables to provide a clear environment for the next game.
+     */
+    private static void reset() {
+        map = null;
+        success = true;
+        s = null;
+    }
 
+	public static void clearData() {
+        DataContainer.reset();
+        Ai.reset();
+        reset();
     }
 }
