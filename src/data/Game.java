@@ -147,7 +147,6 @@ public class Game {
 					map.setPlayershots(x,y,2);
 					DataContainer.getPlayerShootTable().setValueAt(2,y,x);
 					displayHits(x,y,0,DataContainer.getPlayerShootTable());
-                    System.out.println("Counter: " + DataContainer.getPlayerWins());
                     if (DataContainer.decreaseCounter(1) == 0) {
                         DataContainer.setAllowed(false);
                         new VictoryScreen(true);
@@ -434,4 +433,9 @@ public class Game {
 	public static Board getMap(){
 	return map;
 	}
+
+
+	private static int clearData() {
+
+    }
 }
