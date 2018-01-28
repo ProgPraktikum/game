@@ -34,8 +34,11 @@ public class Game {
     ansonsten wird die position zurueckgesetzt
     bei erfolg wird true ausgegeben und bei misserfolg false
      */
-    public static void setMap(){
-    	map= new Board();
+	public static void setMap(){
+		map = new Board();
+	}
+	public static void setMap(Board newMap) {
+		map = newMap;
 	}
 
 	/**
@@ -107,40 +110,47 @@ public class Game {
 	public static int shoot(int x, int y, Ai ai) {
 		if(DataContainer.getAllowed()) {
 			int val;
-			if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) { // im einzelspieler hit der ai aufrufen
+
+			if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf") || DataContainer.getGameType().equals("bdf-loaded")) { // im einzelspieler hit der ai aufrufen
 				val = ai.hit(x, y);
+                if (val == -1) {
+                    return -1; // shoot failed due to generic issues
+                } else if (val == 0) {
+                    DataContainer.setAllowed(false);
+                }
 			}
 			else if (DataContainer.getGameType().equals("mp")) {
-				//val=0;
-				val = Network.networkShoot(x,y); // im mehrspieler über netzwerk schiessen
+				val = Network.networkShoot(x,y);
 				if (val == -1) {
 				    return -1; // shoot failed due to network issues
-                }
-				if(val == 0){
+                } else if (val == 0){
 					DataContainer.setAllowed(false);
 				}
-				//multiplayer shoot
 			}
-			else{
+			else {
 				return -1;
 			}
-			switch (val){
+			switch(val){
+				case -1:
+					return val;
 				case 0:
+					map.setPlayershots(x,y,7);
 					DataContainer.getPlayerShootTable().setValueAt("X",y,x);
-					DataContainer.setAllowed(false);
 					break;
+
 				case 1:
-					DataContainer.getPlayerShootTable().setValueAt(val,y,x);
+					map.setPlayershots(x,y,1);
+					DataContainer.getPlayerShootTable().setValueAt(1,y,x);
 					break;
 				case 2:
-					DataContainer.getPlayerShootTable().setValueAt(val,y,x);
+					map.setPlayershots(x,y,2);
+					DataContainer.getPlayerShootTable().setValueAt(2,y,x);
 					displayHits(x,y,0,DataContainer.getPlayerShootTable());
-					if(DataContainer.decreaseCounter(1)==0){
-						new VictoryScreen(true);
-					}
+          if (DataContainer.decreaseCounter(1) == 0) {
+              new VictoryScreen(true);
+          }
 					break;
 			}
-			map.setPlayershots(x, y, val);
 			return val;
 		}
 		else {
@@ -155,18 +165,19 @@ public class Game {
 	 * @desc Methode um auf den Spieler zu schiessen. wird bei netzwerkspiel bzw von AI aufgerufen.
 	 */
 	public static int getHit(int x, int y){
-		int i = map.checkboard(x,y);
-		DataContainer.getTable().setValueAt(i,y,x);
+		int i = map.checkboard(x, y);
 		if (i == 0){
-            //DataContainer.getTable().setValueAt(7, y, x);
-			DataContainer.getTable().setValueAt("X",y,x);
+            DataContainer.getTable().setValueAt("X", y, x);
 			DataContainer.setAllowed(true);
-		}
-		if (i == 2){
-			if(DataContainer.decreaseCounter(2)==0){
-				new VictoryScreen(false);
-			}
-			displayHits(x,y,0,DataContainer.getTable());
+			map.getPlayerboardAt(x,y).setStatus(7);
+		} else if (i == 1) {
+            DataContainer.getTable().setValueAt(1, y, x);
+    } else if (i == 2){
+        DataContainer.getTable().setValueAt(2, y, x);
+			  displayHits(x, y, 0, DataContainer.getTable());
+        if (DataContainer.decreaseCounter(2) == 0) {
+            new VictoryScreen(false);
+        }
 		}
 		return i;
 	}
@@ -206,11 +217,13 @@ public class Game {
 	private static void displayHits(int x, int y, int direction, TableView table) {
 		//todo optimize corner checks
 		table.setValueAt(2, y, x);
+		map.setPlayershots(x,y,2);
 		if (x - 1 >= 0) {
 			if (table.getValueAt(y, x - 1).equals(1) && (direction == 0 || direction == 1)) {
 				displayHits(x - 1, y, 1, table);
 			} else if (table.getValueAt(y, x - 1).equals(9)) {
 				table.setValueAt(0, y, x - 1);
+				map.setPlayershots(x-1,y,0);
 			}
 		}
 		if (x + 1 < DataContainer.getGameboardWidth()) {
@@ -218,6 +231,7 @@ public class Game {
 				displayHits(x + 1, y, 2, table);
 			} else if (table.getValueAt(y, x + 1).equals(9)) {
 				table.setValueAt(0, y, x + 1);
+				map.setPlayershots(x+1,y,0);
 			}
 		}
 		if (y - 1 >= 0) {
@@ -225,6 +239,7 @@ public class Game {
 				displayHits(x, y - 1, 3, table);
 			} else if (table.getValueAt(y - 1, x).equals(9)) {
 				table.setValueAt(0, y - 1, x);
+				map.setPlayershots(x,y-1,0);
 			}
 		}
 		if (y + 1 < DataContainer.getGameboardHeight()) {
@@ -232,26 +247,31 @@ public class Game {
 				displayHits(x, y + 1, 4, table);
 			} else if (table.getValueAt(y + 1, x).equals(9)) {
 				table.setValueAt(0, y + 1, x);
+				map.setPlayershots(x,y + 1,0);
 			}
 		}
 		if (x - 1 >= 0 && y - 1 >= 0) {
 			if (table.getValueAt(y - 1, x - 1).equals(9)) {
 				table.setValueAt(0, y - 1, x - 1);
+				map.setPlayershots(x-1,y-1,0);
 			}
 		}
 		if (x + 1 < DataContainer.getGameboardWidth() && y - 1 >= 0) {
 			if (table.getValueAt(y - 1, x + 1).equals(9)) {
 				table.setValueAt(0, y - 1, x + 1);
+				map.setPlayershots(x+1,y-1,0);
 			}
 		}
 		if (x + 1 < DataContainer.getGameboardWidth() && y + 1 < DataContainer.getGameboardHeight()) {
 			if (table.getValueAt(y + 1, x + 1).equals(9)) {
 				table.setValueAt(0, y + 1, x + 1);
+				map.setPlayershots(x+1,y+1,0);
 			}
 		}
 		if (x - 1 >= 0 && y + 1 < DataContainer.getGameboardHeight()) {
 			if (table.getValueAt(y + 1, x - 1).equals(9)) {
 				table.setValueAt(0, y + 1, x - 1);
+				map.setPlayershots(x-1,y+1,0);
 			}
 		}
 	}

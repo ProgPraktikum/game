@@ -1,8 +1,12 @@
 package gui;
 
+import data.DataContainer;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 
@@ -83,6 +87,26 @@ public class GUIMain {
         loadBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         loadBtn.addActionListener(
                 (e) -> {
+                    JFileChooser filechooserSave = new JFileChooser();
+
+                    FileFilter filter = new FileFilter() {
+                        public boolean accept(File f) {
+                            return f.isDirectory()
+                                    || f.getName().toLowerCase().endsWith(".txt");
+                        }
+
+                        public String getDescription() {
+                            return "TXT";
+                        }
+                    };
+                    filechooserSave.setFileFilter(filter);
+                    int state = filechooserSave.showOpenDialog(null);
+
+                    if (state == JFileChooser.APPROVE_OPTION) {
+                        File file = filechooserSave.getSelectedFile();
+                        String filename = file.getAbsolutePath();
+                        backup.Load.loadSavegame(filename);
+                    }
                 }
         );
         btn_box.add(loadBtn);

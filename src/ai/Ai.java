@@ -8,6 +8,7 @@ import data.Game;
 public class Ai {
     // MEMBER VARIABLES
     private static Random randomGenerator = new Random();
+    ;
 
     private static Board aiBoard = new Board();
     private static Board aiStrikes = new Board();
@@ -23,6 +24,39 @@ public class Ai {
     public Ai() {
         boardWidth = data.DataContainer.getGameboardWidth();
         boardHeight = data.DataContainer.getGameboardHeight();
+    }
+
+    // PUBLIC GETTER AND SETTER FOR SAVEGAME
+    public Board getAiBoard() {
+        return aiBoard;
+    }
+
+    public Board getAiStrikes() {
+        return aiStrikes;
+    }
+
+    public Boolean getAiPlaced() {
+        return placed;
+    }
+
+    public Trace getAiTrace() {
+        return trace;
+    }
+
+    public void setAiBoard(Board board) {
+        aiBoard = board;
+    }
+
+    public void setAiStrikes(Board board) {
+        aiBoard = board;
+    }
+
+    public void setPlaced(Boolean bool) {
+        placed = bool;
+    }
+
+    public void setTrace(Trace newTrace) {
+        trace = newTrace;
     }
 
     // PUBLIC METHODS
@@ -259,18 +293,21 @@ public class Ai {
         }
 
         int ret = fire(x, y);    // 0: Wasser, 1: Treffer, 2: versenkt
-        aiStrikes.setPlayershots(x, y, ret);
+        System.out.println("Ret: " + ret);
         switch (ret) {
             case 0:
                 System.out.println("Just water here :/");
+                aiStrikes.setPlayershots(x, y, 0);
                 break;
             case 1:
-                trace.addTile(x, y);
                 System.out.println("Hit ship! Size:" + trace.getSize());
+                aiStrikes.setPlayershots(x, y, 1);
+                trace.addTile(x, y);
                 break;
             case 2:
-                trace.clear();
                 System.out.println("Destroyed ship!");
+                aiStrikes.setPlayershots(x, y, 2);
+                trace.clear();
                 break;
             default:
                 System.out.println("Unexpected return value: " + ret);

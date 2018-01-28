@@ -35,6 +35,8 @@ import java.util.Random;
 
     public PlaceShips() {
 
+        //counter fuer Siegesbedingung setzen
+        DataContainer.setWinCounters();
 
         //counter fuer Siegesbedingung setzen
         DataContainer.setWinCounters();
@@ -76,7 +78,8 @@ import java.util.Random;
          * des Spielers darstellt.
          */
         table = new TableView();
-        table.setFont(new Font("Tahoma", Font.BOLD, 30));
+        table.setFont(new Font("Arial", Font.BOLD, 30));
+
 
         Iterator<Integer> ships = DataContainer.getShipLenghts().iterator();
 

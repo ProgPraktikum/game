@@ -5,17 +5,18 @@ import java.awt.*;
 
 public class VictoryScreen {
     private JDialog victory;
+  
     public VictoryScreen(boolean won) {
-            won=won;
-            victory = new JDialog();
-            victory.setModal(true);
-            victory.setUndecorated(true);
-            victory.setBackground(Color.BLACK);
-            victory.setContentPane(Box.createVerticalBox());
+        victory = new JDialog();
+        victory.setModal(true);
+        victory.setUndecorated(true);
+        victory.setBackground(Color.BLACK);
+        victory.setContentPane(Box.createVerticalBox());
 
-            Box vbox = Box.createVerticalBox();
-            Box hBoxBot = Box.createHorizontalBox();
-            Box hBoxTop = Box.createHorizontalBox();
+        Box vbox = Box.createVerticalBox();
+        Box hBoxBot = Box.createHorizontalBox();
+        Box hBoxTop = Box.createHorizontalBox();
+
         Dimension template = new Dimension(250,50);
         JLabel message;
 
@@ -37,39 +38,40 @@ public class VictoryScreen {
         vbox.add(hBoxTop);
         vbox.add(Box.createVerticalStrut(10));   //Abstand zwischen Buttons
         vbox.add(Box.createGlue());
-            /**
-             * zurueck Button
-             */
 
-            JButton back = new JButton("zurück");
-            back.setAlignmentX(Component.CENTER_ALIGNMENT);
-            back.setPreferredSize(template);
-            back.setMinimumSize(template);
-            back.setMaximumSize(template);
-            back.setBackground(Color.BLACK);
-            back.setForeground(Color.WHITE);
-            back.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        /**
+         * zurueck Button
+         */
 
-            back.addActionListener(
-                    (e) -> {
-                        victory.dispose();               // schließt den JDialog
-                    }
-            );
-            hBoxBot.add(Box.createGlue());
-            hBoxBot.add(back);
-            hBoxBot.add(Box.createGlue());
-            vbox.add(hBoxBot);
-            
+        JButton back = new JButton("zurück");
+        back.setAlignmentX(Component.CENTER_ALIGNMENT);
+        back.setPreferredSize(template);
+        back.setMinimumSize(template);
+        back.setMaximumSize(template);
+        back.setBackground(Color.BLACK);
+        back.setForeground(Color.WHITE);
+        back.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-            //
-            //hbox.add(vbox);
-            //hbox.add(Box.createGlue());
+        back.addActionListener(
+                (e) -> {
+                    victory.dispose();               // schließt den JDialog
+                }
+        );
+        hBoxBot.add(Box.createGlue());
+        hBoxBot.add(back);
+        hBoxBot.add(Box.createGlue());
+        vbox.add(hBoxBot);
 
-            victory.add(vbox);
-            victory.pack();
-            victory.setLocationRelativeTo(null);
 
-            victory.setVisible(true);
-        }
+        //
+        //hbox.add(vbox);
+        //hbox.add(Box.createGlue());
+
+        victory.add(vbox);
+        victory.pack();
+        victory.setLocationRelativeTo(null);
+
+        victory.setVisible(true);
     }
+}
 
