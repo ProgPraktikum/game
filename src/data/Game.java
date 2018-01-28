@@ -107,12 +107,12 @@ public class Game {
 	public static int shoot(int x, int y, Ai ai) {
 		if(DataContainer.getAllowed()) {
 			int val;
-			if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) {
+			if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) { // im einzelspieler hit der ai aufrufen
 				val = ai.hit(x, y);
 			}
 			else if (DataContainer.getGameType().equals("mp")) {
 				//val=0;
-				val = Network.networkShoot(x,y);
+				val = Network.networkShoot(x,y); // im mehrspieler über netzwerk schiessen
 				if (val == -1) {
 				    return -1; // shoot failed due to network issues
                 }
@@ -270,18 +270,18 @@ public class Game {
 		int prev=0;
 		while(occupancy>0){
 			for(int i=2; i<= currentsize; i++){
-				if(occupancy-i>=0){
+				if(occupancy-i>=0){		//restgröße größer 0 füge weiteres Schiff ein
 					occupancy-=i;
 					sizes[i-2]++;
 					prev=i;
 				}
-				else if(occupancy-i < 0){
-					if(occupancy >=2){
+				else if(occupancy-i < 0){	// restgröße kleiner 0
+					if(occupancy >=2){		//restgröße groß genug um schiff mit verbleibender größe einzufügen
 						sizes[occupancy-2]++;
 						occupancy-=occupancy;
 					}
-					else if(occupancy-i == -1){
-						sizes[prev-2]--;
+					else if(occupancy-i == -1){ // restgröße 1
+						sizes[prev-2]--; 		//lösche vorheriges element aus liste und füge ein neues mit alter länge +1 ein
 						occupancy += prev;
 						sizes[prev-1]++;
 						occupancy -= prev+1;
@@ -324,11 +324,11 @@ public class Game {
 		if(s != null) {
 			while (!success && count < DataContainer.getGameboardWidth() * DataContainer.getGameboardHeight()) {
 				int randomX = rand.nextInt(DataContainer.getGameboardWidth());
-				int randomY = rand.nextInt(DataContainer.getGameboardHeight());
+				int randomY = rand.nextInt(DataContainer.getGameboardHeight());	//zufallszahlen innerhalb der Spielfeldgrenzen werden generiert
 				int startorr = rand.nextInt(4);
 				s.setOrientation(startorr);
 				int i =0;
-				while(i <4 && !success){
+				while(i <4 && !success){ //schiff wird versucht nacheinander in verschiedenen Richtungen zu platzieren bis erfolgreich
 					s.setOrientation((startorr + i)%4);
 					dummy.moveShip(randomX,randomY,s);
 					success= dummy.place(s);

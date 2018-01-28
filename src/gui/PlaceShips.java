@@ -96,14 +96,14 @@ import java.util.Random;
         }
 
         /**
-         * JLabel für Anleitungen wie man ein Scheff zu setzen hat oder es entfernen kann.
+         * JLabel für Anleitungen wie man ein Schiff zu setzen hat oder es entfernen kann.
          */
         JLabel info = new JLabel();
-        info.setText("<html><body>Zum setzen eines Schiffes<br>beliebigen Startpunkt wählen<br>" +
-                "und anschließend einen der<br>grünen Punkte anklicken.<br>" +
-                " <br>zum Entfernen eines Schiffes,<br>das gewünschte Objekt mit der  <br>" +
-                "rechten Maustaste klicken<br> <br>Für eine automatische Platzierung  <br>" +
-                "den Button \"zufällig\" drücken </body></html>");
+        info.setText("<html><body>Zum setzen eines Schiffes<br>beliebigen Startpunkt waehlen<br>" +
+                "und anschliessend einen der<br>gruenen Punkte anklicken.<br>" +
+                " <br>zum Entfernen eines Schiffes,<br>das gewuenschte Objekt mit der  <br>" +
+                "rechten Maustaste klicken<br> <br>Fuer eine automatische Platzierung  <br>" +
+                "den Button \"zufaellig\" druecken </body></html>");
 
         JButton weiter = new JButton("weiter");
         weiter.setEnabled(false);
@@ -263,8 +263,8 @@ import java.util.Random;
                         Game.rotateShip(3);
                     }
                     success=false;
-                    if(Game.moveShip(start_x, start_y)){
-                        success = Game.placeShip(DataContainer.getSelectedShip());
+                    if(Game.moveShip(start_x, start_y)){ // wenn versc hiebung gültig, dann wird versucht das Schiff zu platzieren
+                        success = Game.placeShip(DataContainer.getSelectedShip()); // wenn platzierung erfolgreich wird succes auf true gesetzt und das Schiff wird auf der Oberfläche dargestellt.
                     }
 
                     /**grafische darstellung des schiffs
@@ -329,10 +329,10 @@ import java.util.Random;
 
 
     /**
-     * die Methode Endpoints sucht und setzt mögliche Endpunkte der Schiffe, welche dann auf dem Spielfeld
-     * grün dargestellt werden.
-     * @param row
-     * @param column
+     * die Methode Endpoints sucht und setzt moegliche Endpunkte der Schiffe, welche dann auf dem Spielfeld
+     * gruen dargestellt werden.
+     * @param row reihe des Ausgangspunktes
+     * @param column Spalte des Ausgangspunktes
      */
     private void endpoints(int row, int column){
         boolean check;       //zur pruefung ob setzbar ist
