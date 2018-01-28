@@ -102,7 +102,7 @@ public class SelectFieldSize {
                     //setzt die Maximale Schiffslaenge
                     DataContainer.setOccupancy();
                     DataContainer.setMaxShipLength();
-
+                  
                     Game.setMap();
                     new SelectShips();
                 }

@@ -91,7 +91,7 @@ public class Board implements BoardInterface {
                     if (s.getHitcounter() == 0) {//wenn schiff keine ungetroffenen felder mehr hat
                         int orr= s.getOrientation();
                         int pos;
-                        switch (orr){
+                        switch (orr){ // ändert status der tiles die auf das versenkte schiff verweisen
                             case 0:
                                 for (pos = s.getXpos(); pos >= s.getXpos() - s.getLength() + 1; pos--) {
                                     playerboard[s.getYpos()][pos].setStatus(2);
@@ -238,16 +238,16 @@ public class Board implements BoardInterface {
         else if (playerboard [s.getYpos()] [s.getXpos()].getStatus() == 1){ //checkt ob bereits schiff an stelle plaziert ist
             return false;
         }
-        else if(s.getOrientation()==0 && s.getXpos()-s.getLength()+1 < 0){ //checkt ob schiff in waagerechter orrientation arraygrenzen verlaesst
+        else if(s.getOrientation()==0 && s.getXpos()-s.getLength()+1 < 0){ //checkt ob schiff in  orrientation 0 arraygrenzen verlaesst
             return false;
         }
-        else if(s.getOrientation()==1 && s.getYpos()-s.getLength()+1 < 0){ //checkt ob schiff in senkrechter orrientation arraygrenzen verlaesst
+        else if(s.getOrientation()==1 && s.getYpos()-s.getLength()+1 < 0){ //checkt ob schiff in  orrientation 1 arraygrenzen verlaesst
             return false;
         }
-        else if(s.getOrientation()==2 && s.getXpos()+s.getLength()-1 > DataContainer.getGameboardWidth()-1) {
+        else if(s.getOrientation()==2 && s.getXpos()+s.getLength()-1 > DataContainer.getGameboardWidth()-1) { //checkt ob schiff in  orrientation 2 arraygrenzen verlaesst
             return false;
         }
-        else if(s.getOrientation()==3 && s.getYpos()+s.getLength()-1 >DataContainer.getGameboardHeight()-1) {
+        else if(s.getOrientation()==3 && s.getYpos()+s.getLength()-1 >DataContainer.getGameboardHeight()-1) { //checkt ob schiff in  orrientation 3 arraygrenzen verlaesst
             return false;
         }
         else{

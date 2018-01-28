@@ -110,7 +110,8 @@ public class Game {
 	public static int shoot(int x, int y, Ai ai) {
 		if(DataContainer.getAllowed()) {
 			int val;
-			if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf") || DataContainer.getGameType().equals("bdf-loaded")) {
+
+			if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf") || DataContainer.getGameType().equals("bdf-loaded")) { // im einzelspieler hit der ai aufrufen
 				val = ai.hit(x, y);
                 if (val == -1) {
                     return -1; // shoot failed due to generic issues
@@ -145,9 +146,9 @@ public class Game {
 					map.setPlayershots(x,y,2);
 					DataContainer.getPlayerShootTable().setValueAt(2,y,x);
 					displayHits(x,y,0,DataContainer.getPlayerShootTable());
-                    if (DataContainer.decreaseCounter(1) == 0) {
-                        new VictoryScreen(true);
-                    }
+          if (DataContainer.decreaseCounter(1) == 0) {
+              new VictoryScreen(true);
+          }
 					break;
 			}
 			return val;
@@ -171,12 +172,12 @@ public class Game {
 			map.getPlayerboardAt(x,y).setStatus(7);
 		} else if (i == 1) {
             DataContainer.getTable().setValueAt(1, y, x);
-        } else if (i == 2){
-            DataContainer.getTable().setValueAt(2, y, x);
-			displayHits(x,y,0,DataContainer.getTable());
-            if (DataContainer.decreaseCounter(2) == 0) {
-                new VictoryScreen(false);
-            }
+    } else if (i == 2){
+        DataContainer.getTable().setValueAt(2, y, x);
+			  displayHits(x, y, 0, DataContainer.getTable());
+        if (DataContainer.decreaseCounter(2) == 0) {
+            new VictoryScreen(false);
+        }
 		}
 		return i;
 	}
@@ -289,18 +290,18 @@ public class Game {
 		int prev=0;
 		while(occupancy>0){
 			for(int i=2; i<= currentsize; i++){
-				if(occupancy-i>=0){
+				if(occupancy-i>=0){		//restgröße größer 0 füge weiteres Schiff ein
 					occupancy-=i;
 					sizes[i-2]++;
 					prev=i;
 				}
-				else if(occupancy-i < 0){
-					if(occupancy >=2){
+				else if(occupancy-i < 0){	// restgröße kleiner 0
+					if(occupancy >=2){		//restgröße groß genug um schiff mit verbleibender größe einzufügen
 						sizes[occupancy-2]++;
 						occupancy-=occupancy;
 					}
-					else if(occupancy-i == -1){
-						sizes[prev-2]--;
+					else if(occupancy-i == -1){ // restgröße 1
+						sizes[prev-2]--; 		//lösche vorheriges element aus liste und füge ein neues mit alter länge +1 ein
 						occupancy += prev;
 						sizes[prev-1]++;
 						occupancy -= prev+1;
@@ -343,11 +344,11 @@ public class Game {
 		if(s != null) {
 			while (!success && count < DataContainer.getGameboardWidth() * DataContainer.getGameboardHeight()) {
 				int randomX = rand.nextInt(DataContainer.getGameboardWidth());
-				int randomY = rand.nextInt(DataContainer.getGameboardHeight());
+				int randomY = rand.nextInt(DataContainer.getGameboardHeight());	//zufallszahlen innerhalb der Spielfeldgrenzen werden generiert
 				int startorr = rand.nextInt(4);
 				s.setOrientation(startorr);
 				int i =0;
-				while(i <4 && !success){
+				while(i <4 && !success){ //schiff wird versucht nacheinander in verschiedenen Richtungen zu platzieren bis erfolgreich
 					s.setOrientation((startorr + i)%4);
 					dummy.moveShip(randomX,randomY,s);
 					success= dummy.place(s);

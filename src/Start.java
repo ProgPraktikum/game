@@ -15,7 +15,6 @@ public class Start {
 
             @Override
             public void run() {
-
                 new GUIMain();
             }
         });

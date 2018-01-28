@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class VictoryScreen {
     private JDialog victory;
-
+  
     public VictoryScreen(boolean won) {
         victory = new JDialog();
         victory.setModal(true);
@@ -16,6 +16,7 @@ public class VictoryScreen {
         Box vbox = Box.createVerticalBox();
         Box hBoxBot = Box.createHorizontalBox();
         Box hBoxTop = Box.createHorizontalBox();
+
         Dimension template = new Dimension(250,50);
         JLabel message;
 
@@ -37,6 +38,7 @@ public class VictoryScreen {
         vbox.add(hBoxTop);
         vbox.add(Box.createVerticalStrut(10));   //Abstand zwischen Buttons
         vbox.add(Box.createGlue());
+
         /**
          * zurueck Button
          */
