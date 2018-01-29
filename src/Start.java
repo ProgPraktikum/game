@@ -2,11 +2,10 @@ import gui.GUIMain;
 
 import javax.swing.*;
 
-
-/** Diese Klasse dient dazu ein neues Spiel in einem neuen Thread zu starten
+/**
+ * Diese Klasse dient dazu ein neues Spiel in einem neuen Thread zu starten
  *
  * @author Christopher Kisch, Jan Riedel, Felix Graeber
- *
  */
 public class Start {
 
@@ -15,7 +14,6 @@ public class Start {
 
             @Override
             public void run() {
-
                 new GUIMain();
             }
         });

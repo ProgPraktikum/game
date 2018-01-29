@@ -2,23 +2,26 @@ package gui;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 
 
-/** Diese Klasse bildet das Startfenster, also quasi das Hauptmenue.
+/**
+ * Diese Klasse bildet das Startfenster, also quasi das Hauptmenue.
  * Es wird ein JFrame erstellt, welches ein Hintergrundbild beherbergt
  * mehrere JButton um ein Neues Spiel zu starten, ein vorhandes zu laden
  * oder das ganze Spiel wieder zu beenden.
  *
- *  @author Christopher Kisch, Jan Riedel, Felix Graeber
+ * @author Christopher Kisch, Jan Riedel, Felix Graeber
  */
 public class GUIMain {
 
     JFrame mainFrame;
 
 
-    public GUIMain(){
+    public GUIMain() {
 
         mainFrame = new JFrame();
         mainFrame.setTitle("Schiffe versenken");
@@ -27,21 +30,19 @@ public class GUIMain {
         mainFrame.setContentPane(Box.createVerticalBox());
 
         /**
-        Schlachtschiff Bild (Startbildschirm)
+         Schlachtschiff Bild (Startbildschirm)
          */
         ImageIcon cover = null;
-        try{
+        try {
             Image image = ImageIO.read(getClass().getResource("Schlachtschiff.jpg"));
             cover = new ImageIcon(image);
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         JLabel schlachtschiff = new JLabel(cover);
         schlachtschiff.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainFrame.add(schlachtschiff);
-
 
 
         /**
@@ -83,6 +84,26 @@ public class GUIMain {
         loadBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         loadBtn.addActionListener(
                 (e) -> {
+                    JFileChooser filechooserSave = new JFileChooser();
+
+                    FileFilter filter = new FileFilter() {
+                        public boolean accept(File f) {
+                            return f.isDirectory()
+                                    || f.getName().toLowerCase().endsWith(".txt");
+                        }
+
+                        public String getDescription() {
+                            return "TXT";
+                        }
+                    };
+                    filechooserSave.setFileFilter(filter);
+                    int state = filechooserSave.showOpenDialog(null);
+
+                    if (state == JFileChooser.APPROVE_OPTION) {
+                        File file = filechooserSave.getSelectedFile();
+                        String filename = file.getAbsolutePath();
+                        backup.Load.loadSavegame(filename);
+                    }
                 }
         );
         btn_box.add(loadBtn);
@@ -114,7 +135,6 @@ public class GUIMain {
         mainFrame.setVisible(true);
 
     }
-
 
 
 }

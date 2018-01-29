@@ -1,11 +1,11 @@
 package network;
 
-
 import gui.SelectFieldSize;
 import data.DataContainer;
 import gui.PlaceShips;
 import data.Game;
 import data.Ship;
+import gui.VictoryScreen;
 
 
 import java.io.*;
@@ -18,57 +18,54 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * Diese Klasse ist fuer die Kommunikation im Netzwerk zustaendig. Sie dient
- * dem aufbau einer Host- bzw. ClientConnection.
+ * Diese Klasse ist für die Kommunikation im Netzwerk zustaendig. Sie dient
+ * dem Aufbau einer Host- bzw. Client Connection.
  * Des Weiteren beinhaltet diese Klasse saemtliche Methoden zum uebermitteln und
- * empfangen der relevanten Daten wie z.B. Feldgroesse und Anzahl Schiffe.
+ * empfangen der relevanten Daten wie z.B. Feldgroesse und Anzahl der Schiffe.
  */
 public class Network {
+    // MEMBER VARIABLES
 
     /**
-     * variable zum speichern des Ports. (besteht aus 50000 + GruppenNr)
+     * Speichert den Netzwerkport. (besteht aus 50000 + GruppenNr).
      */
-    private static int port = 50010;
     private static String addr;
 
     /**
-     * Serversocket des Hosts
+     * Serversocket des Hosts.
      */
     private static ServerSocket ss;
 
     /**
-     * Socket Client
+     * Socket Client.
      */
     private static Socket s;
 
     /**
-     * BufferedReader der die ueber das Netzwerk uebermittelte Daten liest.
+     * Reader, der ueber das Netzwerk uebermittelte Daten liest.
      */
     private static BufferedReader reader;
 
     /**
-     * Writer der der Daten ueber das Netzwerk uebermittelt
+     * Writer, der Daten über das Netzwerk übermittelt.
      */
     private static Writer writer;
 
     /**
-     * Intervalle fuer Socket-Recovering nach Verbindungsabbruch
+     * Intervalle für Socket-Recovering nach Verbindungsabbruch. --> In Implementation letztendlich doch nicht genutzt.
      */
     private static int[] recoverIntervals = {1000, 3000, 6000, 10000, 150000}; // varying from the RFC the intervals won't be randomly generated here since we've got just one client and thus no DOS like issues
 
-    /*
-    methoden
-     */
+
+    // PUBLIC METHODS
 
     /**
-     * Mit dieser Methode wird eine HostVerbindung aufgebaut
+     * Erstellt einen lokalen Websocket Host.
      */
     public static void createHostConnection() {
         try {
-            /*
-             * Es wird ein neuen Serversocket mit uebergebenem Port erstellt.
-             */
-            ss = new ServerSocket(port);
+            /* Es wird ein neuen Serversocket mit uebergebenem Port erstellt. */
+            ss = new ServerSocket(DataContainer.getNetworkPort());
 
             /*
              * Dem Benutzer wird ein Informationsfenster angezeigt, dass er auf
@@ -80,6 +77,10 @@ public class Network {
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
+            // Both players are loosing if network fails
+            DataContainer.setAllowed(false);
+            new VictoryScreen(false);
+
             for (int i = 0; i < 5; i++) { // Not sure if this type of recovering is actually useful here, but..
                 try {
                     TimeUnit.MILLISECONDS.sleep(recoverIntervals[i]);
@@ -99,7 +100,7 @@ public class Network {
     }
 
     /**
-     * Hostverbindung wird beendet
+     * Schliesst den Websocket Host.
      */
     public static void closeHostConnection() {
         try {
@@ -111,20 +112,22 @@ public class Network {
     }
 
     /**
-     * ClientVerbindung wird erstellt
-     * @param ip
+     * Verbindung zum Host-Websocket wird hergestellt.
+     * @param ip IP-Adresse des Hosts
      */
     public static void createClientConnection(String ip) {
         addr = ip;
         try {
-            /*
-             * Es wird ein neuer Socket mit uebergeber Ip und Port erstellt
-             */
-            s = new Socket(ip, port);
+            /* Es wird ein neuer Socket mit uebergeber Ip und Port erstellt */
+            s = new Socket(ip, DataContainer.getNetworkPort());
 
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
+            // Both players are loosing if network fails
+            DataContainer.setAllowed(false);
+            new VictoryScreen(false);
+            
             for (int i = 0; i < 5; i++) { // Not sure if this type of recovering is actually useful here, but..
                 try {
                     TimeUnit.MILLISECONDS.sleep(recoverIntervals[i]);
@@ -141,11 +144,10 @@ public class Network {
             }
             e.printStackTrace();
         }
-
     }
 
     /**
-     * Clientverbindung beenden
+     * Verbindung des Clients wird geschlossen.
      */
     public static void closeClientConnection() {
         try {
@@ -153,20 +155,17 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
-     * Diese Methode dient der uebermittlung der Feldbreite, Feldhoehe,
-     * sowie den zu setzenden Schiffslaengen.
+     * Uebermittlung der Feldbreite, Feldhöhe, sowie den zu setzenden Schiffslaengen.
      */
     public static void sendStartData(int width, int height, Stack<Integer> lengths) {
         StringBuffer line = new StringBuffer();
         Iterator<Integer> iterator = lengths.iterator();
 
-        /*
-         * Size beinhaltet die Feldbreite und Hoehe
-         * Ships beinhaltet die Anzahl Schiffe und die Schiffslaenge
+        /* Size beinhaltet die Feldbreite und Höhe
+         * Ships beinhaltet die Anzahl Schiffe und die Schiffslänge
          */
         line.append("size ").append(width).append(" ").append(height).append(", ");
         line.append("ships ").append(lengths.size());
@@ -183,9 +182,8 @@ public class Network {
     }
 
     /**
-     * Diese Methode liest beim Client die StartUpDaten aus
-     * ( Feldgroesse und Anzahl der Schiffe mit den entsprechenden
-     * Laengen
+     * Clientseitiges Lesen der StartUpDaten vom Host (Feldgroesse und Anzahl der Schiffe mit den entsprechenden
+     * Laengen)
      */
     public static void recieveStartData() {
         String line = "";
@@ -208,7 +206,10 @@ public class Network {
          */
         DataContainer.setGameboardWidth(Integer.parseInt(size[1]));
         DataContainer.setGameboardHeight(Integer.parseInt(size[2]));
-
+        /*
+        Initialisiere map
+         */
+        Game.setMap();
         for (int i = 2; i < startData.length; i++) {
             String[] ship = startData[i].split(" ");
 
@@ -219,10 +220,16 @@ public class Network {
         }
         new PlaceShips();
     }
-    public static int networkShoot(int x,int y) {
+
+    /**
+     * Schiessen auf Netzwerkgegner
+     * @param x X-Koordinate des zu beschiessenden Feldes.
+     * @param y Y-Koordinate des zu beschiessenden Feldes.
+     * @return Den Vorgaben entsprechender Trefferwert.
+     */
+    public static int networkShoot(int x, int y) {
         StringBuffer line = new StringBuffer();
         line.append("shot ").append(y).append(" ").append(x);
-        System.out.println("Line:" + line);
         try {
             writer.write(String.format("%s%n", line));
             writer.flush();
@@ -230,13 +237,18 @@ public class Network {
             System.err.println("Connection lost - trying to recover!");
             try {
                 recover();
-            } catch(IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
         return shootanswer();
     }
-    public static int shootanswer(){
+
+    /**
+     * Liest den Rueckgabewert nach Schuss auf Gegnerisches Feld aus.
+     * @return Den Vorgaben entsprechender Trefferwert.
+     */
+    public static int shootanswer() {
         String inputLine = ""; //1 zeichen return wert von shoot des gegners
         try {
             inputLine = reader.readLine();
@@ -244,7 +256,7 @@ public class Network {
             System.err.println("Connection lost - trying to recover!");
             try {
                 recover();
-            } catch(IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
@@ -256,16 +268,19 @@ public class Network {
             try {
                 System.err.println("Connection seems lost - trying to recover!");
                 recover();
-            } catch(IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
         return ret;
     }
 
-    public static void networkHit(){
+    /**
+     * Empfaengt via Netzwerk einkommenden Treffer.
+     */
+    public static void networkHit() {
         String inputLine = "";
         try {
             inputLine = reader.readLine();
@@ -278,7 +293,7 @@ public class Network {
         int x = Integer.parseInt(input[2]);
 
         StringBuffer outputLine = new StringBuffer();
-        outputLine.append(Integer.toString(Game.getHit(x,y)));
+        outputLine.append(Integer.toString(Game.getHit(x, y)));
         try {
             writer.write(String.format("%s%n", outputLine));
             writer.flush();
@@ -286,6 +301,13 @@ public class Network {
             e.printStackTrace();
         }
     }
+
+    // PRIVATE METHODS
+
+    /**
+     * Versucht verlorene Verbindung wiederherzustellen.
+     * @throws IOException Bei nicht Gelingen der Wiederherstellung.
+     */
 
     private static void recover() throws IOException {
         boolean isHost = DataContainer.getIsHost();
@@ -295,13 +317,15 @@ public class Network {
             } else {
                 recoverClientSocket(addr);
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw e;
         }
-
     }
 
-
+    /**
+     * Versucht, Websocket Host wiederherzustellen.
+     * @throws IOException Bei nicht Gelingen der Wiederherstellung.
+     */
     private static void recoverHostSocket() throws IOException {
         try {
             s = ss.accept();
@@ -314,6 +338,11 @@ public class Network {
         }
     }
 
+    /**
+     * Versucht, Verbindung zu Websocket Host wiederherzustellen.
+     * @param ip Internetadresse des Websocket Hosts.
+     * @throws IOException Bei nicht Gelingen der Wiederherstellung.
+     */
     private static void recoverClientSocket(String ip) throws IOException {
         try {
             s.shutdownOutput();
@@ -322,7 +351,7 @@ public class Network {
         }
 
         try {
-            s = new Socket(ip, port);
+            s = new Socket(ip, DataContainer.getNetworkPort());
             System.out.println("Recovered connection");
 
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));

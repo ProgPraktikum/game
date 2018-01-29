@@ -15,26 +15,26 @@ import java.util.Iterator;
 import java.util.Random;
 
 
- public class PlaceShips {
-
-    /**
-     * Variablen
-     */
-
-
+public class PlaceShips {
+    // MEMBER VARIABLES
     private JDialog setships;
     private TableView table;
 
     private Point startingPoint;
     private JTextArea ta;
-     //success gibt an ob die letzte plazierung erfolgreich war um zu verhindern,
-    // dass das naechste schiff ausgewaehlt wird bevor das vorherige platziert ist
+    //success gibt an ob die letzte plazierung erfolgreich war um zu verhindern,
+    // dass das nächste schiff ausgewählt wird bevor das vorherige platziert ist
     private boolean success = true;
-    //s ist hilfsvariable um ausgewaehltes schiff zu speichern
-    private Ship s=null;
+    //s ist hilfsvariable um ausgewähltes schiff zu speichern
+    private Ship s = null;
 
     public PlaceShips() {
 
+        //counter fuer Siegesbedingung setzen
+        DataContainer.setWinCounters();
+
+        //counter fuer Siegesbedingung setzen
+        DataContainer.setWinCounters();
 
         setships = new JDialog();
         setships.setModal(true);
@@ -56,7 +56,7 @@ import java.util.Random;
                 item.addActionListener(
                         (e) -> {
                             setships.dispose();
-                            if(DataContainer.getGameType().equals("mp") || DataContainer.getGameType()
+                            if (DataContainer.getGameType().equals("mp") || DataContainer.getGameType()
                                     .equals("mps")) {
                                 Network.closeClientConnection();
                                 Network.closeHostConnection();
@@ -73,7 +73,8 @@ import java.util.Random;
          * des Spielers darstellt.
          */
         table = new TableView();
-        table.setFont(new Font("Tahoma", Font.BOLD, 30));
+        table.setFont(new Font("Arial", Font.BOLD, 30));
+
 
         Iterator<Integer> ships = DataContainer.getShipLenghts().iterator();
 
@@ -89,11 +90,11 @@ import java.util.Random;
          * Es werden alle ausgewaehlten Schiffstypen zur textArea hinzugefuegt.
          */
         while (ships.hasNext()) {
-            ta.insert("Setze Schiff der Laenge: " + ships.next().toString() + "\n",0);
+            ta.insert("Setze Schiff der Länge: " + ships.next().toString() + "\n", 0);
         }
 
         /**
-         * JLabel fuer Anleitungen wie man ein Scheff zu setzen hat oder es entfernen kann.
+         * JLabel für Anleitungen wie man ein Schiff zu setzen hat oder es entfernen kann.
          */
         JLabel info = new JLabel();
         info.setText("<html><body>Zum setzen eines Schiffes<br>beliebigen Startpunkt waehlen<br>" +
@@ -116,13 +117,10 @@ import java.util.Random;
                 (e) -> {
                     if (!(DataContainer.getfleet().isEmpty())) {
                         randomLoop();
-                    }
-                    //randomplace(); // randomplace wird ausgefuehrt bis erfolgreiche platzierung gefunden wurde
-                    else {
+                    } else {
                         reset();
                         randomLoop();
                     }
-                        //randomplace();
                     if (DataContainer.getShipLenghts().size() == 0) {
                         weiter.setEnabled(true); //button wird ernabled
                     }
@@ -164,10 +162,8 @@ import java.util.Random;
         weiter.addActionListener(
                 (e) -> {
                     DataContainer.setTable(table);
-                    if(DataContainer.getGameType().equals("bdf") ||
+                    if (DataContainer.getGameType().equals("bdf") ||
                             DataContainer.getGameType().equals("ss")) {
-
-                        //Todo: Aufruf der Ai damit sie die Schiffe platziert
                     }
                     setships.dispose();
                     new GameView();
@@ -224,9 +220,7 @@ import java.util.Random;
                 startingPoint = x;
                 endpoints(row, column);
             }
-            // wenn schon ein punkt als Startpunkt gewaehlt ist
-            boolean clickedendpoint;
-
+          
             if (table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(4)) {
 
                 /*
@@ -259,9 +253,9 @@ import java.util.Random;
                     } else if (start_y < end_y) { //Orrientierung UNTEN (=3)
                         Game.rotateShip(3);
                     }
-                    success=false;
-                    if(Game.moveShip(start_x, start_y)){
-                        success = Game.placeShip(DataContainer.getSelectedShip());
+                    success = false;
+                    if (Game.moveShip(start_x, start_y)) { // wenn versc hiebung gültig, dann wird versucht das Schiff zu platzieren
+                        success = Game.placeShip(DataContainer.getSelectedShip()); // wenn platzierung erfolgreich wird succes auf true gesetzt und das Schiff wird auf der Oberfläche dargestellt.
                     }
 
                     /**grafische darstellung des schiffs
@@ -290,7 +284,6 @@ import java.util.Random;
                                 }
                                 break;
                         }
-                    //DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
                         DataContainer.getShipLenghts().pop();
                         textAreaRemoveLine();
                     }
@@ -298,13 +291,6 @@ import java.util.Random;
                 if (DataContainer.getShipLenghts().isEmpty()) {
                     return;
                 }
-                //DataContainer.getShipLenghts().pop();
-
-                /*
-                nach dem setzen soll das element entfernt werden und aus
-                dem Stack entfernt werden ( der Stack enthaelt alle laengen der
-                schiffe) ebenso soll es aus der TextArea entfernt werden.
-                */
 
                 startingPoint = null;
             } else {
@@ -314,83 +300,79 @@ import java.util.Random;
                  */
                 hideEndpoints(table.rowAtPoint(startingPoint), table.columnAtPoint(startingPoint));
                 endpoints(row, column);
-                startingPoint = x;//null
+                startingPoint = x; // null
             }
-        }
-        else if(e.getButton() == MouseEvent.BUTTON3){// bei rechte maustaste
-            removeShip(row,column);
+        } else if (e.getButton() == MouseEvent.BUTTON3) { // Bei rechter Maustaste
+            removeShip(row, column);
         }
     }
-
-
 
 
     /**
      * die Methode Endpoints sucht und setzt moegliche Endpunkte der Schiffe, welche dann auf dem Spielfeld
      * gruen dargestellt werden.
-     * @param row
-     * @param column
+     * @param row    Reihe des Ausgangspunktes.
+     * @param column Spalte des Ausgangspunktes.
      */
-    private void endpoints(int row, int column){
-        boolean check;       //zur pruefung ob setzbar ist
-        //int length = DataContainer.getShipLenghts().firstElement();// laenge des zu setzenden schiffs
+    private void endpoints(int row, int column) {
+        boolean check; // Zur Pruefung ob setzbar
         int length = DataContainer.getShipLenghts().peek();
 
         for (Directions directions : Directions.values()) {
-            switch(directions){
+            switch (directions) {
 
                 case LINKS:
                     check = true;
-                    if( (column -length + 1) >= 0){
-                        for(int i= column;i >=column -length +1;i--){
-                            if(table.getValueAt(row,i).equals(3)){
-                                check=false;
+                    if ((column - length + 1) >= 0) {
+                        for (int i = column; i >= column - length + 1; i--) {
+                            if (table.getValueAt(row, i).equals(3)) {
+                                check = false;
                             }
                         }
-                        if(check){
-                            table.setValueAt(4, row,column-length+1);
+                        if (check) {
+                            table.setValueAt(4, row, column - length + 1);
                         }
                     }
                     break;
 
                 case OBEN:
                     check = true;
-                    if ( row - length + 1 >= 0){
-                        for(int i =row; i>= row - length +1;i--){
-                            if(table.getValueAt(i, column).equals(3)){
+                    if (row - length + 1 >= 0) {
+                        for (int i = row; i >= row - length + 1; i--) {
+                            if (table.getValueAt(i, column).equals(3)) {
                                 check = false;
                             }
                         }
-                        if(check){
-                            table.setValueAt(4,row - length +1,column);
+                        if (check) {
+                            table.setValueAt(4, row - length + 1, column);
                         }
                     }
                     break;
 
                 case RECHTS:
-                    check=true;
-                    if(DataContainer.getGameboardWidth()-1 >=(column + length-1)){
-                        for(int i = column; i <=column + length - 1; i++){
-                            if(table.getValueAt(row, i).equals(3)){
-                                check= false;
+                    check = true;
+                    if (DataContainer.getGameboardWidth() - 1 >= (column + length - 1)) {
+                        for (int i = column; i <= column + length - 1; i++) {
+                            if (table.getValueAt(row, i).equals(3)) {
+                                check = false;
                             }
                         }
-                        if(check){
-                            table.setValueAt(4,row,column+length-1);
+                        if (check) {
+                            table.setValueAt(4, row, column + length - 1);
                         }
                     }
                     break;
 
                 case UNTEN:
-                    check=true;
-                    if(DataContainer.getGameboardHeight() - 1 >= (row + length -1)){
-                        for(int i = row; i <= row + length -1; i++) {
+                    check = true;
+                    if (DataContainer.getGameboardHeight() - 1 >= (row + length - 1)) {
+                        for (int i = row; i <= row + length - 1; i++) {
                             if (table.getValueAt(i, column).equals(3)) {
                                 check = false;
                             }
                         }
-                        if(check){
-                            table.setValueAt(4,row + length -1 ,column);
+                        if (check) {
+                            table.setValueAt(4, row + length - 1, column);
                         }
                     }
                     break;
@@ -403,49 +385,48 @@ import java.util.Random;
 
 
     /**
-    Die Methode hideEndpoints setzt zuvor gesetzte moegliche Endpunkte wieder auf den Wert Wasser
+     * Die Methode hideEndpoints setzt zuvor gesetzte moegliche Endpunkte wieder auf den Wert Wasser
      */
     private void hideEndpoints(int y, int x) {
 
 		/*
-		 * In dieser Variable wird die Laenge des letzten Schiffes gespeichert
+         * In dieser Variable wird die Laenge des letzten Schiffes gespeichert
 		 */
-        //int size = DataContainer.getShipLenghts().firstElement();
         int size = DataContainer.getShipLenghts().peek();
 
 		/*
-		 * Die Schleife laueft die Directions ab
+         * Die Schleife laueft die Directions ab
 		 */
         for (Directions directions : Directions.values()) {
             switch (directions) {
                 case LINKS:
-                    if(x - size + 1 >= 0){
-                        if(table.getValueAt(y,x- size + 1).equals(4)){
-                            table.setValueAt(0,y,x - size + 1);
+                    if (x - size + 1 >= 0) {
+                        if (table.getValueAt(y, x - size + 1).equals(4)) {
+                            table.setValueAt(0, y, x - size + 1);
                         }
                     }
                     break;
 
                 case OBEN:
-                    if(y - size + 1 >= 0){
-                        if(table.getValueAt(y - size + 1,x).equals(4)){
-                            table.setValueAt(0,y - size + 1, x);
+                    if (y - size + 1 >= 0) {
+                        if (table.getValueAt(y - size + 1, x).equals(4)) {
+                            table.setValueAt(0, y - size + 1, x);
                         }
                     }
                     break;
 
                 case RECHTS:
-                    if(x + size - 1 <= DataContainer.getGameboardWidth() - 1){
-                        if(table.getValueAt(y,x + size - 1).equals(4)){
-                            table.setValueAt(0,y,x + size - 1);
+                    if (x + size - 1 <= DataContainer.getGameboardWidth() - 1) {
+                        if (table.getValueAt(y, x + size - 1).equals(4)) {
+                            table.setValueAt(0, y, x + size - 1);
                         }
                     }
                     break;
 
                 case UNTEN:
-                    if(y + size - 1 <= DataContainer.getGameboardHeight() - 1){
-                        if(table.getValueAt(y + size - 1, x).equals(4)){
-                            table.setValueAt(0,y + size - 1, x);
+                    if (y + size - 1 <= DataContainer.getGameboardHeight() - 1) {
+                        if (table.getValueAt(y + size - 1, x).equals(4)) {
+                            table.setValueAt(0, y + size - 1, x);
                         }
                     }
                     break;
@@ -456,20 +437,20 @@ import java.util.Random;
         }
     }
 
-    private void textAreaRemoveLine(){
+    private void textAreaRemoveLine() {
         int start;
         int end;
         int count;
 
-        try{
+        try {
             count = ta.getLineCount();
-            if(count > 0){
+            if (count > 0) {
                 start = ta.getLineStartOffset(0);
                 end = ta.getLineEndOffset(0);
 
-                ta.replaceRange(null, start,end);
+                ta.replaceRange(null, start, end);
             }
-        }catch(BadLocationException e){
+        } catch (BadLocationException e) {
             e.printStackTrace();
         }
     }
@@ -482,19 +463,19 @@ import java.util.Random;
         Random rand = new Random();
         success = false;
         int count = 0;
-        if(s != null) {
+        if (s != null) {
             while (!success && count < DataContainer.getGameboardWidth() * DataContainer.getGameboardHeight()) {
                 int randomX = rand.nextInt(DataContainer.getGameboardWidth());
                 int randomY = rand.nextInt(DataContainer.getGameboardHeight());
                 int startorr = rand.nextInt(4);
-                    s.setOrientation(startorr);
-                    int i =0;
-                    while(i <4 && !success){
-                        s.setOrientation((startorr + i)%4);
-                        Game.moveShip(randomX,randomY);
-                        success= Game.placeShip(s);
-                        i++;
-                    }
+                s.setOrientation(startorr);
+                int i = 0;
+                while (i < 4 && !success) {
+                    s.setOrientation((startorr + i) % 4);
+                    Game.moveShip(randomX, randomY);
+                    success = Game.placeShip(s);
+                    i++;
+                }
                 count++;
             }
         }
@@ -521,8 +502,7 @@ import java.util.Random;
                     }
                     break;
             }
-            s=null;
-            //DataContainer.getShipLenghts().remove(DataContainer.getShipLenghts().firstElement());
+            s = null;
             DataContainer.getShipLenghts().pop();
             textAreaRemoveLine();
 
@@ -536,15 +516,11 @@ import java.util.Random;
         }
     }
 
-
-
-
-    private void removeShip(int row,int  column){
-        if(table.getValueAt(row,column)!=null && table.getValueAt(row, column).equals(3)){
-            Ship s=Game.getPlayerboard(column, row).getMaster();
-            //DataContainer.getfleet();
-            String add= "Setze Schiff der Laenge: "+s.getLength()+"\n";
-            ta.insert(add,0);
+    private void removeShip(int row, int column) {
+        if (table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(3)) {
+            Ship s = Game.getPlayerboard(column, row).getMaster();
+            String add = "Setze Schiff der Länge: " + s.getLength() + "\n";
+            ta.insert(add, 0);
             switch (s.getOrientation()) {
                 case 0:
                     for (int i = s.getXpos(); i >= s.getXpos() - s.getLength() + 1; i--) {
@@ -571,23 +547,23 @@ import java.util.Random;
             s.setOrientation(0);
             s.setxpos(0);
             s.setypos(0);
-            //DataContainer.getShipLenghts().add(0,s.getLength());
             DataContainer.getShipLenghts().push(s.getLength());
             DataContainer.getfleet().push(s);
         }
     }
-    private void reset(){
-        int currentlength = 2;
-        boolean fieldempty = false;
+
+    private void reset() {
         int rowempty;
         int columnempty;
+        int currentlength = 2;
+        boolean fieldempty = false;
         while (!(fieldempty)) {
-            columnempty=0;
+            columnempty = 0;
             for (int i = 0; i < DataContainer.getGameboardHeight(); i++) {
-                rowempty=0;
+                rowempty = 0;
                 for (int j = 0; j < DataContainer.getGameboardWidth(); j++) {
                     if (table.getValueAt(i, j).equals(3)) {
-                        rowempty =1;
+                        rowempty = 1;
                         if (currentlength == Game.getPlayerboard(j, i).getMaster().getLength()) {
                             removeShip(i, j);
                         }
@@ -595,29 +571,29 @@ import java.util.Random;
                         rowempty += 0;
                     }
                 }
-                //wenn treffer in reihe, dann wird er in spalte uebertragen
-                if(rowempty==1){
+                //wenn treffer in reihe, dann wird er in spalte übertragen
+                if (rowempty == 1) {
                     columnempty = 1;
-                }
-                else{
-                    columnempty +=0;
+                } else {
+                    columnempty += 0;
                 }
             }
             // wenn kein spaltentreffer, dann ist feld leer -> SCHLEIFENABBRUCH
-            if(columnempty==0){
-                fieldempty=true;
+            if (columnempty == 0) {
+                fieldempty = true;
             }
             //schiffslaenge wird nach komplettem durchlauf durch feld erhoeht
             // (alle schiffe der vorherigen laenge wurden bereits entfernt
             currentlength++;
         }
-        success= true;
+        success = true;
     }
-    public void randomLoop(){
-        boolean end= false;
-        while(!end){
-            end= randomplace();
-            if(!end){
+
+    public void randomLoop() {
+        boolean end = false;
+        while (!end) {
+            end = randomplace();
+            if (!end) {
                 reset();
             }
         }
