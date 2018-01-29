@@ -176,8 +176,7 @@ public class GameView {
          */
         textArea.append("Das linke Feld ist Ihres.\n");
         if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf")) {
-            textArea.append("Spieler beginnt\n" + "Geben Sie einen Schuss ab,\n" + "indem Sie in eine Zelle des \n"
-                    + "rechten Spielfeldes klicken.\n");
+            textArea.append("Spieler beginnt\n" + "Geben Sie einen Schuss ab, indem Sie in eine Zelle des rechten Spielfeldes klicken.\n");
         }
 
 
@@ -204,10 +203,14 @@ public class GameView {
         playView.setVisible(true); // MUST stand at the end this this call in combination with .setModal(true) blocks until return after hide or dispose.
 
         // IN CASE OF LOADED GAME -> Let Ai draw if its her turn:
+        if (DataContainer.getGameType().equals("mp") && DataContainer.getAllowed()) {
+            textArea.append("Sie sind am Zug!\nZum Abgeben eines Schuss klicken Sie in eine Zelle des rechten Spielfeldes.");
+        }
         if (DataContainer.getGameType().equals("bdf-loaded") && !DataContainer.getAllowed()) {
             Ai ai = new Ai();
             ai.draw();
-        } else if ((DataContainer.getGameType().equals("mp") || DataContainer.getGameType().equals("mp")) && !DataContainer.getAllowed()) {
+        } else if (DataContainer.getGameType().equals("mp") && !DataContainer.getAllowed()) {
+            textArea.append("Der Gegner (Client) beginnt.\nZum Abgeben eines Schuss klicken Sie in eine Zelle des rechten Spielfeldes.");
             CompletableFuture.supplyAsync(Game::hitloop);
         } else if (DataContainer.getGameType().equals("mps")) {
             Thread thread = new Thread(new Runnable() {
