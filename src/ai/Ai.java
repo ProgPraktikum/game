@@ -63,7 +63,11 @@ public class Ai {
 
     // PUBLIC METHODS
     public void draw() {
-        // do all actions here
+        if (!placed) {
+            place();
+            placed = true;
+        }
+
         if (!vsAi) {
             data.DataContainer.setAllowed(false);
         }
@@ -71,7 +75,7 @@ public class Ai {
     }
 
     public int hit(int x, int y) {
-        if (!placed) {
+        if (!placed) { // In case Ai is hit first
             place();
             placed = true;
         }
