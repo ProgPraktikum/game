@@ -121,7 +121,7 @@ public class Game {
                     DataContainer.setAllowed(false);
                 }
 			}
-			else if (DataContainer.getGameType().equals("mp")) {
+			else if (DataContainer.getGameType().equals("mp") || DataContainer.getGameType().equals("mps")) {
 				val = Network.networkShoot(x,y);
 				if (val == -1) {
 				    return -1; // shoot failed due to network issues

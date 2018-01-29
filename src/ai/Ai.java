@@ -17,12 +17,15 @@ public class Ai {
 
     private static boolean placed;
 
+    private static boolean vsAi;
+
     private static Trace trace = new Trace();
 
     // CONSTRUCTOR
     public Ai() {
         boardWidth = data.DataContainer.getGameboardWidth();
         boardHeight = data.DataContainer.getGameboardHeight();
+        vsAi = data.DataContainer.getGameType().equals("mps");
     }
 
     // PUBLIC GETTER AND SETTER FOR SAVEGAME
@@ -292,7 +295,13 @@ public class Ai {
             }
         }
 
-        int ret = fire(x, y);    // 0: Wasser, 1: Treffer, 2: versenkt
+        int ret;
+        if (vsAi) {
+            ret = networkFire(x, y);
+        } else {
+            ret = fire(x, y);    // 0: Wasser, 1: Treffer, 2: versenkt
+        }
+
         System.out.println("Firing on coordinates x: " + x + ", y: " + y);
         switch (ret) {
             case 0:
@@ -319,6 +328,11 @@ public class Ai {
     private int fire(int x, int y) {
         /* fire on other player and handle result */
         return Game.getHit(x, y);
+    }
+
+    private int networkFire(int x, int y) {
+        /* fire on other ai player */
+        return Game.shoot(x, y, this);
     }
 
     private void place() {

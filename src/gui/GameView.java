@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
+import javax.xml.crypto.Data;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -41,12 +42,12 @@ import java.util.concurrent.TimeUnit;
          */
 
         switch (DataContainer.getGameType()) {
-             case "ss":    //SS steht für schnelles Spiel
+            case "ss":    //SS steht für schnelles Spiel
                  tablePlayer = DataContainer.getTable();
                  DataContainer.setAllowed(true);
                  break;
 
-             case "bdf":  // bdf steht für Benutzerdefiniert
+            case "bdf":  // bdf steht für Benutzerdefiniert
                  tablePlayer = DataContainer.getTable();          // das Place ships window wird die Table angelegt haben
                  DataContainer.setAllowed(true);
                  break;
@@ -55,9 +56,13 @@ import java.util.concurrent.TimeUnit;
                 tablePlayer = DataContainer.getTable();
                 break;
 
-             case "mp":
+            case "mp":
                  tablePlayer = DataContainer.getTable();
                  break;
+
+            case "mps":
+                tablePlayer = DataContainer.getTable();
+                break;
         }
 
         if (!DataContainer.getGameType().equals("bdf-loaded")) {
@@ -201,8 +206,10 @@ import java.util.concurrent.TimeUnit;
         if (DataContainer.getGameType().equals("bdf-loaded") && !DataContainer.getAllowed()) {
             Ai ai = new Ai();
             ai.draw();
-        } else if (DataContainer.getGameType().equals("mp") && !DataContainer.getAllowed()) {
+        } else if ((DataContainer.getGameType().equals("mp") || DataContainer.getGameType().equals("mp")) && !DataContainer.getAllowed()) {
             CompletableFuture.supplyAsync(Game::hitloop);
+        } else if (DataContainer.getGameType().equals("mps")) {
+            CompletableFuture.supplyAsync(this::asyncAiVsAiLoop); // Asynchronous executes makes live view at Ai's draws possible
         }
 
     } // END CONSTRUCTOR
@@ -223,6 +230,30 @@ import java.util.concurrent.TimeUnit;
         return true;
     }
 
+    private boolean asyncAiVsAiLoop() {
+        Ai ai = new Ai();
+        if(!DataContainer.getAllowed()) {
+            CompletableFuture.supplyAsync(Game::hitloop);
+        }
+        while(!DataContainer.getAllowed()) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(100);
+            } catch (Exception ex) {
+                ;
+            }
+        }
+        while(DataContainer.getAllowed()){
+            ai.draw();
+            if(DataContainer.getAllowed()) {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(500);
+                } catch (Exception ex) {
+                    ;
+                }
+            }
+        }
+        return true;
+    }
 
     private void TouchedMouse(MouseEvent e) {
         /*
@@ -259,28 +290,6 @@ import java.util.concurrent.TimeUnit;
                     }
                 }
             }
-
-            /* if (DataContainer.getAllowed()) { // Dismiss following calls if shooting isn't permitted
-                if (DataContainer.getPlayerShootTable().getValueAt(row, column).equals(9)) {
-                    int i = Game.shoot(column, row, ai);
-                    if (DataContainer.getGameType().equals("mp")) {
-                        System.out.println("mp!");
-                        if (i == 0) {
-                            CompletableFuture.supplyAsync(Game::hitloop);
-                        }
-                        if (i == -1) {
-                            textArea.append("Shot failed due to technical issues. Please try again!");
-                        }
-                        if (i == -2) {
-                            textArea.append("Shot failed since it wasn't your turn!");
-                        }
-                    } else if(!DataContainer.getAllowed() && (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf"))) {
-                        ai.draw();
-                    }
-
-                }
-            } */
         }
     }
-    
 }
