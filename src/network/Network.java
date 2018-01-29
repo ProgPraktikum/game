@@ -231,7 +231,6 @@ public class Network {
     public static int networkShoot(int x, int y) {
         StringBuffer line = new StringBuffer();
         line.append("shot ").append(y).append(" ").append(x);
-        System.out.println("Line:" + line);
         try {
             writer.write(String.format("%s%n", line));
             writer.flush();

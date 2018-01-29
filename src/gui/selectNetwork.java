@@ -195,9 +195,6 @@ class selectNetwork {
                     if (isClient.isSelected()) {
                         if (field.getText() != null)
                             DataContainer.setNetworkIP(field.getText());
-                        System.out.println("dc " + DataContainer.getNetworkIP());
-                        System.out.println("tf " + field.getText());
-
                     }
                     DataContainer.setAllowed(DataContainer.getIsClient());
                     nw.setVisible(false);

@@ -141,10 +141,8 @@ public class Game {
             DataContainer.setAllowed(true);
             map.getPlayerboardAt(x, y).setStatus(7);
         } else if (i == 1) {
-            System.out.println("Return 1");
             DataContainer.getTable().setValueAt(1, y, x);
         } else if (i == 2) {
-            System.out.println("Return 2");
             DataContainer.getTable().setValueAt(2, y, x);
             displayHits(x, y, 0, DataContainer.getTable());
             if (DataContainer.decreaseCounter(2) == 0) {

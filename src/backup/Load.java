@@ -33,7 +33,6 @@ public class Load {
      */
     public static void loadSavegame(String file) {
 
-        System.out.println("File: " + file);
         Gson gson = new Gson();
 
         try {
