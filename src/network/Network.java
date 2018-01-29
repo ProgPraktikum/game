@@ -1,6 +1,5 @@
 package network;
 
-
 import gui.SelectFieldSize;
 import data.DataContainer;
 import gui.PlaceShips;
@@ -19,55 +18,53 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Diese Klasse ist für die Kommunikation im Netzwerk zustaendig. Sie dient
- * dem aufbau einer Host- bzw. ClientConnection.
- * Des Weiteren beinhaltet diese Klasse sämtliche Methoden zum übermitteln und
- * empfangen der relevanten Daten wie z.B. Feldgröße und Anzahl Schiffe.
+ * dem Aufbau einer Host- bzw. Client Connection.
+ * Des Weiteren beinhaltet diese Klasse saemtliche Methoden zum uebermitteln und
+ * empfangen der relevanten Daten wie z.B. Feldgroesse und Anzahl der Schiffe.
  */
 public class Network {
+    // MEMBER VARIABLES
 
     /**
-     * variable zum speichern des Ports. (besteht aus 50000 + GruppenNr)
+     * Speichert den Netzwerkport. (besteht aus 50000 + GruppenNr).
      */
     private static int port = 50010;
     private static String addr;
 
     /**
-     * Serversocket des Hosts
+     * Serversocket des Hosts.
      */
     private static ServerSocket ss;
 
     /**
-     * Socket Client
+     * Socket Client.
      */
     private static Socket s;
 
     /**
-     * BufferedReader der die über das Netzwerk übermittelte Daten liest.
+     * Reader, der ueber das Netzwerk uebermittelte Daten liest.
      */
     private static BufferedReader reader;
 
     /**
-     * Writer der der Daten über das Netzwerk übermittelt
+     * Writer, der Daten über das Netzwerk übermittelt.
      */
     private static Writer writer;
 
     /**
-     * Intervalle für Socket-Recovering nach Verbindungsabbruch
+     * Intervalle für Socket-Recovering nach Verbindungsabbruch. --> In Implementation letztendlich doch nicht genutzt.
      */
     private static int[] recoverIntervals = {1000, 3000, 6000, 10000, 150000}; // varying from the RFC the intervals won't be randomly generated here since we've got just one client and thus no DOS like issues
 
-    /*
-    methoden
-     */
+
+    // PUBLIC METHODS
 
     /**
-     * Mit dieser Methode wird eine HostVerbindung aufgebaut
+     * Erstellt einen lokalen Websocket Host.
      */
     public static void createHostConnection() {
         try {
-            /*
-             * Es wird ein neuen Serversocket mit uebergebenem Port erstellt.
-             */
+            /* Es wird ein neuen Serversocket mit uebergebenem Port erstellt. */
             ss = new ServerSocket(port);
 
             /*
@@ -99,7 +96,7 @@ public class Network {
     }
 
     /**
-     * Hostverbindung wird beendet
+     * Schliesst den Websocket Host.
      */
     public static void closeHostConnection() {
         try {
@@ -111,16 +108,13 @@ public class Network {
     }
 
     /**
-     * ClientVerbindung wird erstellt
-     *
-     * @param ip
+     * Verbindung zum Host-Websocket wird hergestellt.
+     * @param ip IP-Adresse des Hosts
      */
     public static void createClientConnection(String ip) {
         addr = ip;
         try {
-            /*
-             * Es wird ein neuer Socket mit uebergeber Ip und Port erstellt
-             */
+            /* Es wird ein neuer Socket mit uebergeber Ip und Port erstellt */
             s = new Socket(ip, port);
 
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -142,11 +136,10 @@ public class Network {
             }
             e.printStackTrace();
         }
-
     }
 
     /**
-     * Clientverbindung beenden
+     * Verbindung des Clients wird geschlossen.
      */
     public static void closeClientConnection() {
         try {
@@ -154,19 +147,16 @@ public class Network {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
-     * Diese Methode dient der Übermittlung der Feldbreite, Feldhöhe,
-     * sowie den zu setzenden Schiffslängen.
+     * Uebermittlung der Feldbreite, Feldhöhe, sowie den zu setzenden Schiffslaengen.
      */
     public static void sendStartData(int width, int height, Stack<Integer> lengths) {
         StringBuffer line = new StringBuffer();
         Iterator<Integer> iterator = lengths.iterator();
 
-        /*
-         * Size beinhaltet die Feldbreite und Höhe
+        /* Size beinhaltet die Feldbreite und Höhe
          * Ships beinhaltet die Anzahl Schiffe und die Schiffslänge
          */
         line.append("size ").append(width).append(" ").append(height).append(", ");
@@ -184,9 +174,8 @@ public class Network {
     }
 
     /**
-     * Diese Methode liest beim Client die StartUpDaten aus
-     * ( Feldgroesse und Anzahl der Schiffe mit den entsprechenden
-     * Laengen
+     * Clientseitiges Lesen der StartUpDaten vom Host (Feldgroesse und Anzahl der Schiffe mit den entsprechenden
+     * Laengen)
      */
     public static void recieveStartData() {
         String line = "";
@@ -224,6 +213,12 @@ public class Network {
         new PlaceShips();
     }
 
+    /**
+     * Schiessen auf Netzwerkgegner
+     * @param x X-Koordinate des zu beschiessenden Feldes.
+     * @param y Y-Koordinate des zu beschiessenden Feldes.
+     * @return Den Vorgaben entsprechender Trefferwert.
+     */
     public static int networkShoot(int x, int y) {
         StringBuffer line = new StringBuffer();
         line.append("shot ").append(y).append(" ").append(x);
@@ -242,6 +237,10 @@ public class Network {
         return shootanswer();
     }
 
+    /**
+     * Liest den Rueckgabewert nach Schuss auf Gegnerisches Feld aus.
+     * @return Den Vorgaben entsprechender Trefferwert.
+     */
     public static int shootanswer() {
         String inputLine = ""; //1 zeichen return wert von shoot des gegners
         try {
@@ -271,6 +270,9 @@ public class Network {
         return ret;
     }
 
+    /**
+     * Empfaengt via Netzwerk einkommenden Treffer.
+     */
     public static void networkHit() {
         String inputLine = "";
         try {
@@ -293,6 +295,13 @@ public class Network {
         }
     }
 
+    // PRIVATE METHODS
+
+    /**
+     * Versucht verlorene Verbindung wiederherzustellen.
+     * @throws IOException Bei nicht Gelingen der Wiederherstellung.
+     */
+
     private static void recover() throws IOException {
         boolean isHost = DataContainer.getIsHost();
         try {
@@ -304,10 +313,12 @@ public class Network {
         } catch (IOException e) {
             throw e;
         }
-
     }
 
-
+    /**
+     * Versucht, Websocket Host wiederherzustellen.
+     * @throws IOException Bei nicht Gelingen der Wiederherstellung.
+     */
     private static void recoverHostSocket() throws IOException {
         try {
             s = ss.accept();
@@ -320,6 +331,11 @@ public class Network {
         }
     }
 
+    /**
+     * Versucht, Verbindung zu Websocket Host wiederherzustellen.
+     * @param ip Internetadresse des Websocket Hosts.
+     * @throws IOException Bei nicht Gelingen der Wiederherstellung.
+     */
     private static void recoverClientSocket(String ip) throws IOException {
         try {
             s.shutdownOutput();

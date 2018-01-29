@@ -13,13 +13,13 @@ import ai.Ai;
 import javax.swing.*;
 
 /**
- * Diese Klasse speichert ein laufendes Spiel in einer TXT Datei
+ * Diese Klasse speichert ein laufendes Spiel in einer TXT Datei.
  */
 public class Save {
 
     /**
-     * im Spielmodus "bdf" (benutzerdefiniert) wird diese Methode zum speichern des Spieles
-     * aufgerufen
+     * Im Spielmodus "bdf" (benutzerdefiniert) wird diese Methode zum Speichern des Spieles
+     * aufgerufen.
      */
     public static void saveBDF(String file) {
 

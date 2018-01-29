@@ -5,6 +5,10 @@ import java.util.Random;
 import gameboard.Board;
 import data.Game;
 
+/**
+ * AI Klasse, welche den Ai-Gegner sowohl für den Einzelspieler, als auch den Ai vs. Ai Modus bedient.
+ */
+
 public class Ai {
     // MEMBER VARIABLES
     private static Random randomGenerator = new Random();
@@ -29,18 +33,35 @@ public class Ai {
     }
 
     // PUBLIC GETTER AND SETTER FOR SAVEGAME
+
+    /**
+     * Getter fuer Spielfeld mit gesetzten Schiffen der Ai.
+     * @return Board board
+     */
     public Board getAiBoard() {
         return aiBoard;
     }
 
+    /**
+     * Getter fuer Spielfeld mit durchgefuehrten Zuegen der Ai.
+     * @return Board board
+     */
     public Board getAiStrikes() {
         return aiStrikes;
     }
 
+    /**
+     * Getter fuer Wert, der angiebt, ob die Schiffe der Ai platziert wurden.
+     * @return Boolean placed
+     */
     public Boolean getAiPlaced() {
         return placed;
     }
 
+    /**
+     * Getter fuer Trace/Log der letzten erfolgreichen Schuesse auf ein Schiff.
+     * @return Trace trace
+     */
     public Trace getAiTrace() {
         return trace;
     }
@@ -62,6 +83,10 @@ public class Ai {
     }
 
     // PUBLIC METHODS
+
+    /**
+     * Fuehrt den Zug der Ai aus.
+     */
     public void draw() {
         if (!placed) {
             place();
@@ -74,6 +99,12 @@ public class Ai {
         eval();
     }
 
+    /**
+     * Fuehrt Zug gegen die Ai aus.
+     * @param x X-Koordinate des zu beschiessenden Feldes.
+     * @param y Y-Koordinate des zu beschiessenden Feldes.
+     * @return Den Vorgaben entsprechender Trefferwert.
+     */
     public int hit(int x, int y) {
         if (!placed) { // In case Ai is hit first
             place();
@@ -94,6 +125,10 @@ public class Ai {
     }
 
     // PRIVATE METHODS
+
+    /**
+     * Evaluiert anhand der gespeicherten letzten Treffer das naechste anzugreifende Ziel.
+     */
     private void eval() {
         /* evaluate next target, fire and handle results */
         int x = 0, y = 0;
@@ -308,7 +343,6 @@ public class Ai {
             ret = fire(x, y);    // 0: Wasser, 1: Treffer, 2: versenkt
         }
 
-        System.out.println("Firing on coordinates x: " + x + ", y: " + y);
         switch (ret) {
             case 0:
                 System.out.println("Just water here :/");
@@ -331,23 +365,38 @@ public class Ai {
         }
     }
 
+    /**
+     * Fuehrt Angriff gegen den Spieler durch.
+     * @param x X-Koordinate des zu beschiessenden Feldes.
+     * @param y Y-Koordinate des zu beschiessenden Feldes.
+     * @return Den Vorgaben entsprechender Trefferwert.
+     */
     private int fire(int x, int y) {
         /* fire on other player and handle result */
         return Game.getHit(x, y);
     }
 
+    /**
+     * Fuehrt Angriff gegen eine andere Ai im Netzwerk durch.
+     * @param x X-Koordinate des zu beschiessenden Feldes.
+     * @param y Y-Koordinate des zu beschiessenden Feldes.
+     * @return Den Vorgaben entsprechender Trefferwert.
+     */
     private int networkFire(int x, int y) {
         /* fire on other ai player */
         return Game.shoot(x, y, this);
     }
 
+    /**
+     * Platziert zufaellig die Schiffe der Ai auf dem Spielfeld.
+     */
     private void place() {
         /* place ships on Board */
         aiBoard = Game.aiRandomPlace();
     }
 
     /**
-     * Flag the surrounding fields beneath to a destroyed ship.
+     * Markiert die anliegenden Felder um ein versenktes Schiff als Wasser.
      */
     private void flagSurrounding() {
         int x1 = trace.getTile(0)[0];
@@ -405,7 +454,7 @@ public class Ai {
     }
 
     /**
-     * Reset static member variables to provide a clear environment for the next game.
+     * Setzt statische Membervariablen zurueck, um eine saubere Umgebung fuer das naechste Spiel bereitzustellen.
      */
     public static void reset() {
         randomGenerator = new Random();
