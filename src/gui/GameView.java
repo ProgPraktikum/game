@@ -209,8 +209,6 @@ import java.util.concurrent.TimeUnit;
         } else if ((DataContainer.getGameType().equals("mp") || DataContainer.getGameType().equals("mp")) && !DataContainer.getAllowed()) {
             CompletableFuture.supplyAsync(Game::hitloop);
         } else if (DataContainer.getGameType().equals("mps")) {
-            while (true) {
-                //CompletableFuture.supplyAsync(this::asyncAiVsAiLoop); // Asynchronous executes makes live view at Ai's draws possible
                 Thread thread = new Thread(new Runnable() {
                     public void run() {
                         Ai ai = new Ai();
@@ -220,18 +218,23 @@ import java.util.concurrent.TimeUnit;
                             }
                             while(!DataContainer.getAllowed()) {
                                 try {
-                                    TimeUnit.MILLISECONDS.sleep(100);
-                                } catch (Exception ex) {
-                                    ;
+                                    Thread.sleep(100);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                             }
                             while(DataContainer.getAllowed()){
+                                try { // Have some delay to make the game more comprehensible
+                                    Thread.sleep(500);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 ai.draw();
-                                if(DataContainer.getAllowed()) {
+                                if(DataContainer.getAllowed()) { // Have some delay if Ai is drawing again
                                     try {
-                                        TimeUnit.MILLISECONDS.sleep(500);
-                                    } catch (Exception ex) {
-                                        ;
+                                        Thread.sleep(500);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
                                 }
                             }
@@ -239,7 +242,6 @@ import java.util.concurrent.TimeUnit;
                     }
                 });
                 thread.start();
-            }
         }
 
     } // END CONSTRUCTOR
