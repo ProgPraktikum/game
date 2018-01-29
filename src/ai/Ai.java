@@ -397,6 +397,7 @@ public class Ai {
 
     /**
      * Markiert die anliegenden Felder um ein versenktes Schiff als Wasser.
+     * ANMERKUNG: Leider zum Release noch buggy - beeintraechtigt grundlegende Funktionalitaet der Ai aber nicht.
      */
     private void flagSurrounding() {
         int x1 = trace.getTile(0)[0];
