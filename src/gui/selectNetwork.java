@@ -28,6 +28,7 @@ class selectNetwork {
 
     private JDialog nw;
     private JTextField field;
+    private JTextField portField;
     private JLabel displayIp;
     private JCheckBox isHost;
     private JCheckBox isClient;
@@ -119,13 +120,27 @@ class selectNetwork {
          * JTextField für die Eingabe einer IP
          */
         field = new JTextField("IP des Hosts..");
-        field.setMaximumSize(new Dimension(200, 30));
-        field.setMinimumSize(new Dimension(200, 30));
-        field.setPreferredSize(new Dimension(200, 30));
+        field.setMaximumSize(new Dimension(150, 30));
+        field.setMinimumSize(new Dimension(150, 30));
+        field.setPreferredSize(new Dimension(150, 30));
         field.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 field.setText("");
+            }
+        });
+
+        /**
+         * JTextField für die Eingabe eines Netzwerkports
+         */
+        portField = new JTextField("Port..");
+        portField.setMaximumSize(new Dimension(80, 30));
+        portField.setMinimumSize(new Dimension(80, 30));
+        portField.setPreferredSize(new Dimension(80, 30));
+        portField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                portField.setText("");
             }
         });
 
@@ -142,6 +157,7 @@ class selectNetwork {
 
                     if (isHost.isSelected()) {
                         field.setText(myIp.toString());
+                        portField.setText("50010");
                         isClient.setSelected(false);
                     }
                 }
@@ -160,6 +176,7 @@ class selectNetwork {
 
                     if (isClient.isSelected()) {
                         field.setText("IP des Hosts..");
+                        portField.setText("50010");
                         isHost.setSelected(false);
                     }
                 }
@@ -188,14 +205,18 @@ class selectNetwork {
                 (e) -> {
                     if (isHost.isSelected()) {
                         DataContainer.setIsHost(true);
+                        DataContainer.setNetworkPort(Integer.parseInt(portField.getText()));
                     } else {
                         DataContainer.setIsClient(true);
+                        DataContainer.setNetworkPort(Integer.parseInt(portField.getText()));
                     }
 
                     if (isClient.isSelected()) {
-                        if (field.getText() != null)
+                        if (field.getText() != null) {
                             DataContainer.setNetworkIP(field.getText());
+                        }
                     }
+
                     DataContainer.setAllowed(DataContainer.getIsClient());
                     nw.setVisible(false);
                     if (DataContainer.getIsHost()) {
@@ -257,7 +278,9 @@ class selectNetwork {
          * Box welche das JTextField aufnimmt
          */
         tf.add(field);
-        tf.add(Box.createHorizontalStrut(5));   //abstand zwischen TextField und Label
+        tf.add(Box.createHorizontalStrut(5));
+        tf.add(portField);
+        tf.add(Box.createHorizontalStrut(10));   //abstand zwischen TextField und Label
         tf.add(displayIp);
         nw.add(horizontalBox1);
         nw.add(tf);

@@ -150,6 +150,11 @@ public class DataContainer {
     private static String networkIP = null;
 
     /**
+     * Speicherort fuer Netzwerkport
+     */
+    private static int networkPort = 50010;
+
+    /**
      * Methode gibt playerShootTable vom Typ TableView zurueck
      *
      * @return playerShootTable vom Typ Tableview.
@@ -225,6 +230,17 @@ public class DataContainer {
         networkIP = s;
     }
 
+    /**
+     * Gibt Netzwerkport zurück.
+     * @return String: Netzwerkport
+     */
+    public static int getNetworkPort() { return networkPort; }
+
+    /**
+     * Setzt Netzwerkport.
+     * @param port String: Netzwerkport
+     */
+    public static void setNetworkPort(int port) { networkPort = port; }
     /**
      * Gibt die Spielfeldbreite zurueck
      */

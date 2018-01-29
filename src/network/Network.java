@@ -29,7 +29,6 @@ public class Network {
     /**
      * Speichert den Netzwerkport. (besteht aus 50000 + GruppenNr).
      */
-    private static int port = 50010;
     private static String addr;
 
     /**
@@ -66,7 +65,7 @@ public class Network {
     public static void createHostConnection() {
         try {
             /* Es wird ein neuen Serversocket mit uebergebenem Port erstellt. */
-            ss = new ServerSocket(port);
+            ss = new ServerSocket(DataContainer.getNetworkPort());
 
             /*
              * Dem Benutzer wird ein Informationsfenster angezeigt, dass er auf
@@ -120,7 +119,7 @@ public class Network {
         addr = ip;
         try {
             /* Es wird ein neuer Socket mit uebergeber Ip und Port erstellt */
-            s = new Socket(ip, port);
+            s = new Socket(ip, DataContainer.getNetworkPort());
 
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
@@ -352,7 +351,7 @@ public class Network {
         }
 
         try {
-            s = new Socket(ip, port);
+            s = new Socket(ip, DataContainer.getNetworkPort());
             System.out.println("Recovered connection");
 
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
