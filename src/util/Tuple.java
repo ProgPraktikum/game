@@ -3,7 +3,7 @@ package util;
 public class Tuple {
     private int[] data;
 
-    public Tuple (int... members) {
+    public Tuple(int... members) {
         this.data = members;
     }
 

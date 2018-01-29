@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class VictoryScreen {
     private JDialog victory;
-  
+
     public VictoryScreen(boolean won) {
         victory = new JDialog();
         victory.setModal(true);
@@ -17,14 +17,13 @@ public class VictoryScreen {
         Box hBoxBot = Box.createHorizontalBox();
         Box hBoxTop = Box.createHorizontalBox();
 
-        Dimension template = new Dimension(250,50);
+        Dimension template = new Dimension(250, 50);
         JLabel message;
 
-        if(won){
+        if (won) {
             message = new JLabel(" Gewonnen :)");
-        }
-        else{
-            message= new JLabel(" Verloren :(");
+        } else {
+            message = new JLabel(" Verloren :(");
         }
         message.setForeground(Color.WHITE);
         message.setHorizontalAlignment(SwingConstants.CENTER);
@@ -61,11 +60,6 @@ public class VictoryScreen {
         hBoxBot.add(back);
         hBoxBot.add(Box.createGlue());
         vbox.add(hBoxBot);
-
-
-        //
-        //hbox.add(vbox);
-        //hbox.add(Box.createGlue());
 
         victory.add(vbox);
         victory.pack();

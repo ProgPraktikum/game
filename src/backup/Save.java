@@ -21,7 +21,7 @@ public class Save {
      * im Spielmodus "bdf" (benutzerdefiniert) wird diese Methode zum speichern des Spieles
      * aufgerufen
      */
-    public static void saveBDF(String file){
+    public static void saveBDF(String file) {
 
         try {
 
@@ -67,7 +67,7 @@ public class Save {
              */
             writer.close();
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Something went horribly wrong!", "Error!", JOptionPane.ERROR_MESSAGE);
         }

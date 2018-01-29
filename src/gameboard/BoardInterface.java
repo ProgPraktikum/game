@@ -1,9 +1,11 @@
 /**
- *Arraycodierung: 0=Wasser, 1=treffer, 2=versenkt, 3=schiff, 4=Wassertreffer
+ * Arraycodierung: 0=Wasser, 1=treffer, 2=versenkt, 3=schiff, 4=Wassertreffer
+ *
  * @author Felix
  */
 
 package gameboard;
+
 import data.*;
 
 /**
@@ -29,7 +31,7 @@ public interface BoardInterface {
     /* checkplace überprüft ob ein schiff an stelle x,y mit orientation o und
     länge l ins feld plaziert werden kann
     */
-    
+
     int checkboard(int x, int y);
     /*ckeckt koordinate und spieler ob wasser oder schiff plaziert ist
     bei schiff wird checkship aufgerufen

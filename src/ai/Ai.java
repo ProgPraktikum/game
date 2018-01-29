@@ -50,7 +50,7 @@ public class Ai {
     }
 
     public void setAiStrikes(Board board) {
-        aiBoard = board;
+        aiStrikes = board;
     }
 
     public void setPlaced(Boolean bool) {

@@ -31,7 +31,7 @@ public class Load {
      * im Spielmodus "bdf" (benutzerdefiniert) wird diese Methode zum speichern des Spieles
      * aufgerufen
      */
-    public static void loadSavegame(String file){
+    public static void loadSavegame(String file) {
 
         System.out.println("File: " + file);
         Gson gson = new Gson();
@@ -48,7 +48,6 @@ public class Load {
 
             JSONObject jsonObject = (JSONObject) obj;
 
-            String gameType = (String) jsonObject.get("gameType");
             Integer gameboardWidth = ((Number) jsonObject.get("gameboardWidth")).intValue(); // returns Long but initial given int - dunno why.
             Integer gameboardHeight = ((Number) jsonObject.get("gameboardHeight")).intValue(); // - * -
             Boolean allowed = (Boolean) jsonObject.get("allowed");
@@ -67,7 +66,6 @@ public class Load {
 
             Boolean aiPlaced = (Boolean) jsonObject.get("aiPlaced");
 
-            // DataContainer.setGameType(gameType);
             DataContainer.setGameType("bdf-loaded");
             DataContainer.setGameboardWidth(gameboardWidth);
             DataContainer.setGameboardHeight(gameboardHeight);
@@ -115,12 +113,12 @@ public class Load {
 
             new GameView();
 
-        } catch(FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "The given filepath does not exist!", "Error!", JOptionPane.ERROR_MESSAGE);
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Something went horribly wrong!", "Error!", JOptionPane.ERROR_MESSAGE);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Could not load the savegame! Probably it's corrupt!", "Error!", JOptionPane.ERROR_MESSAGE);
         }

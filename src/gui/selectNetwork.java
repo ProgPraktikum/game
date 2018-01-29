@@ -24,7 +24,7 @@ import java.util.Enumeration;
  * angezeigt, welche fuer den Client notwendig ist um
  * eine Verbindung zu dem Host herzustellen.
  */
- class selectNetwork {
+class selectNetwork {
 
     private JDialog nw;
     private JTextField field;
@@ -32,147 +32,145 @@ import java.util.Enumeration;
     private JCheckBox isHost;
     private JCheckBox isClient;
 
-     private static boolean isVmMac(byte[] mac) {
-         byte invalidMacs[][] = {
-                 {0x00, 0x05, 0x69},             //VMWare
-                 {0x00, 0x1C, 0x14},             //VMWare
-                 {0x00, 0x0C, 0x29},             //VMWare
-                 {0x00, 0x50, 0x56},             //VMWare
-                 {0x0A, 0x00, 0x27}              //VirtualBox
-         };
+    private static boolean isVmMac(byte[] mac) {
+        byte invalidMacs[][] = {
+                {0x00, 0x05, 0x69},             //VMWare
+                {0x00, 0x1C, 0x14},             //VMWare
+                {0x00, 0x0C, 0x29},             //VMWare
+                {0x00, 0x50, 0x56},             //VMWare
+                {0x0A, 0x00, 0x27}              //VirtualBox
+        };
 
-         for (byte[] b: invalidMacs) {
-             if (b[0] == mac[0] && b[1] == mac[1] && b[2] == mac[2]) {
-                 return true;
-             }
-         }
-         return false;
-     }
+        for (byte[] b : invalidMacs) {
+            if (b[0] == mac[0] && b[1] == mac[1] && b[2] == mac[2]) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-     selectNetwork() throws SocketException {
-         /**
-          * eigene IP ermitteln
-          */
-         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-         final StringBuffer myIp = new StringBuffer();
-         while ( interfaces.hasMoreElements() )
-         {
-             /**
-              * Check whether interface is up, isn't virtual and doesn't loop back
-              */
-             NetworkInterface iface = interfaces.nextElement();
-             if (!(iface.isUp()) ||(iface.isVirtual()) || (iface.isLoopback())) {
-                 continue;
-             }
+    selectNetwork() throws SocketException {
+        /**
+         * eigene IP ermitteln
+         */
+        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+        final StringBuffer myIp = new StringBuffer();
+        while (interfaces.hasMoreElements()) {
+            /**
+             * Check whether interface is up, isn't virtual and doesn't loop back
+             */
+            NetworkInterface iface = interfaces.nextElement();
+            if (!(iface.isUp()) || (iface.isVirtual()) || (iface.isLoopback())) {
+                continue;
+            }
 
-             Enumeration<InetAddress> addresses = iface.getInetAddresses();
-             while ( addresses.hasMoreElements() )
-             {
-                 /**
-                  * Check physical interface address and filter out VM hosts
-                  */
-                 byte[] mac = iface.getHardwareAddress();
-                 InetAddress addr = addresses.nextElement();
+            Enumeration<InetAddress> addresses = iface.getInetAddresses();
+            while (addresses.hasMoreElements()) {
+                /**
+                 * Check physical interface address and filter out VM hosts
+                 */
+                byte[] mac = iface.getHardwareAddress();
+                InetAddress addr = addresses.nextElement();
 
-                 if (mac == null) {
-                     continue;
-                 }
+                if (mac == null) {
+                    continue;
+                }
 
-                 if (isVmMac(mac)) {
-                     continue;
-                 }
+                if (isVmMac(mac)) {
+                    continue;
+                }
 
-                 /**
-                  * Check ip adress and accept IPv4 only at this moment to prevent issues
-                  */
-                 try {
-                     if (!addr.isReachable(1000)) {
-                         continue;
-                     }
-                 } catch(IOException e) {
-                     continue;
-                 }
+                /**
+                 * Check ip adress and accept IPv4 only at this moment to prevent issues
+                 */
+                try {
+                    if (!addr.isReachable(1000)) {
+                        continue;
+                    }
+                } catch (IOException e) {
+                    continue;
+                }
 
-                 if(!(addr.isLinkLocalAddress()) && !(addr.isLoopbackAddress()) && !(addr instanceof Inet6Address)){
-                     myIp.append(addr.getHostAddress());
-                 }
-             }
-         }
+                if (!(addr.isLinkLocalAddress()) && !(addr.isLoopbackAddress()) && !(addr instanceof Inet6Address)) {
+                    myIp.append(addr.getHostAddress());
+                }
+            }
+        }
 
-         /**
-          * Neuer JDialog wird erstellt und auf Modal gesetzt. Des Weiteren wird undecorated gesetzt.
-          */
-         nw = new JDialog();
-         nw.setModal(true);
-         nw.setUndecorated(true);
-         nw.setBackground(Color.BLACK);
-         nw.setPreferredSize(new Dimension(400, 400));
-         nw.setContentPane(Box.createVerticalBox());
+        /**
+         * Neuer JDialog wird erstellt und auf Modal gesetzt. Des Weiteren wird undecorated gesetzt.
+         */
+        nw = new JDialog();
+        nw.setModal(true);
+        nw.setUndecorated(true);
+        nw.setBackground(Color.BLACK);
+        nw.setPreferredSize(new Dimension(400, 400));
+        nw.setContentPane(Box.createVerticalBox());
 
-         /**
-          * Boxn um die JCheckBox'n und JButtons und JTextField aufzunehmen.
-          */
-         Box horizontalBox = Box.createHorizontalBox();
-         Box horizontalBox1 = Box.createHorizontalBox();
-         Box tf = Box.createHorizontalBox();
+        /**
+         * Boxn um die JCheckBox'n und JButtons und JTextField aufzunehmen.
+         */
+        Box horizontalBox = Box.createHorizontalBox();
+        Box horizontalBox1 = Box.createHorizontalBox();
+        Box tf = Box.createHorizontalBox();
 
 
-         /**
-          * JTextField für die Eingabe einer IP
-          */
-         field = new JTextField("IP des Hosts..");
-         field.setMaximumSize(new Dimension(200, 30));
-         field.setMinimumSize(new Dimension(200, 30));
-         field.setPreferredSize(new Dimension(200, 30));
-         field.addMouseListener(new MouseAdapter() {
-             @Override
-             public  void mouseClicked(MouseEvent e) {
-                 field.setText("");
-             }
-         });
+        /**
+         * JTextField für die Eingabe einer IP
+         */
+        field = new JTextField("IP des Hosts..");
+        field.setMaximumSize(new Dimension(200, 30));
+        field.setMinimumSize(new Dimension(200, 30));
+        field.setPreferredSize(new Dimension(200, 30));
+        field.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                field.setText("");
+            }
+        });
 
 
-         /**
-          * JCheckBox für isHost
-          */
-         isHost = new JCheckBox("Host");
-         isHost.setAlignmentX(Component.LEFT_ALIGNMENT);
-         isHost.setBackground(Color.BLACK);
-         isHost.setForeground(Color.WHITE);
-         isHost.addActionListener(
-                 (e) -> {
+        /**
+         * JCheckBox für isHost
+         */
+        isHost = new JCheckBox("Host");
+        isHost.setAlignmentX(Component.LEFT_ALIGNMENT);
+        isHost.setBackground(Color.BLACK);
+        isHost.setForeground(Color.WHITE);
+        isHost.addActionListener(
+                (e) -> {
 
-                     if (isHost.isSelected()) {
-                         field.setText(myIp.toString());
-                         isClient.setSelected(false);
-                     }
-                 }
-         );
+                    if (isHost.isSelected()) {
+                        field.setText(myIp.toString());
+                        isClient.setSelected(false);
+                    }
+                }
+        );
 
 
-         /**
-          * JCheckBox für isClient
-          */
-         isClient = new JCheckBox("Client");
-         isClient.setAlignmentX(Component.LEFT_ALIGNMENT);
-         isClient.setBackground(Color.BLACK);
-         isClient.setForeground(Color.WHITE);
-         isClient.addActionListener(
-                 (e) -> {
+        /**
+         * JCheckBox für isClient
+         */
+        isClient = new JCheckBox("Client");
+        isClient.setAlignmentX(Component.LEFT_ALIGNMENT);
+        isClient.setBackground(Color.BLACK);
+        isClient.setForeground(Color.WHITE);
+        isClient.addActionListener(
+                (e) -> {
 
-                     if (isClient.isSelected()) {
-                         field.setText("IP des Hosts..");
-                         isHost.setSelected(false);
-                     }
-                 }
-         );
+                    if (isClient.isSelected()) {
+                        field.setText("IP des Hosts..");
+                        isHost.setSelected(false);
+                    }
+                }
+        );
 
 
         /**
          * DisplayIp zeigt die eigene Ip Adresse wenn man hosted. wird nur für die
          * Clientverindung benötigt
          */
-        displayIp = new JLabel("My IP: "+ myIp);
+        displayIp = new JLabel("My IP: " + myIp);
         displayIp.setForeground(Color.GREEN);
         displayIp.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -188,29 +186,28 @@ import java.util.Enumeration;
         ok.setFont(new Font("Tahoma", Font.PLAIN, 20));
         ok.addActionListener(
                 (e) -> {
-                    if(isHost.isSelected()){
+                    if (isHost.isSelected()) {
                         DataContainer.setIsHost(true);
-                    }else{
+                    } else {
                         DataContainer.setIsClient(true);
                     }
 
-                    if(isClient.isSelected()){
-                        if(field.getText() != null)
-                        DataContainer.setNetworkIP(field.getText());
-                        // ausgaben nur für debug
-                        System.out.println("dc " +DataContainer.getNetworkIP());
-                        System.out.println("tf " +field.getText());
+                    if (isClient.isSelected()) {
+                        if (field.getText() != null)
+                            DataContainer.setNetworkIP(field.getText());
+                        System.out.println("dc " + DataContainer.getNetworkIP());
+                        System.out.println("tf " + field.getText());
 
                     }
                     DataContainer.setAllowed(DataContainer.getIsClient());
                     nw.setVisible(false);
-                    if(DataContainer.getIsHost()){
+                    if (DataContainer.getIsHost()) {
                         /**
                          * Aufbau HostVerindung
                          */
                         Network.createHostConnection();
                         new SelectFieldSize();
-                    }else{
+                    } else {
 
                         Board b = new Board();
                         DataContainer.setShipStack();
@@ -227,7 +224,6 @@ import java.util.Enumeration;
                          * Empfangen der übermittelten StartDaten
                          */
                         Network.recieveStartData();
-                      //  new PlaceShips();
                     }
                 }
         );
@@ -241,7 +237,8 @@ import java.util.Enumeration;
         abbrechen.setFont(new Font("Tahoma", Font.PLAIN, 20));
         abbrechen.addActionListener(
                 (e) -> {
-                    nw.dispose(); }
+                    nw.dispose();
+                }
         );
 
         /**

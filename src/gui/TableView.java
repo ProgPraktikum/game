@@ -10,11 +10,10 @@ import javax.swing.table.TableColumnModel;
 /**
  * Diese Klasse erzeugt ein Objekt das ein Spielfeld enthält
  * Verwendet wird hierfuehr eine JTable
- *
  */
 public class TableView extends JTable {
 
-    public TableView(){
+    public TableView() {
 
         // Das array names wird über die Breite des Spielfeldes initialisiert
         Object[] name = new Integer[DataContainer.getGameboardWidth()];
@@ -23,12 +22,12 @@ public class TableView extends JTable {
         Object[][] data = new Integer[DataContainer.getGameboardHeight()][DataContainer.getGameboardWidth()];
 
         // Array name wird mit 1 - breite numeriert
-        for(int i = 0; i < DataContainer.getGameboardWidth(); i++){
+        for (int i = 0; i < DataContainer.getGameboardWidth(); i++) {
             name[i] = i;
         }
         // Array data wird komplett mit 0 befüllt. 0 steht hierbei für den Wert für WASSER
-        for(int i = 0; i < DataContainer.getGameboardHeight(); i++){
-            for(int j = 0; j < DataContainer.getGameboardWidth(); j++){
+        for (int i = 0; i < DataContainer.getGameboardHeight(); i++) {
+            for (int j = 0; j < DataContainer.getGameboardWidth(); j++) {
                 data[i][j] = 0;
             }
         }
@@ -36,8 +35,8 @@ public class TableView extends JTable {
         /**
          * Hier wird die Editierbarkeit im TableModel überschrieben
          */
-        this.setModel(new DefaultTableModel(data, name){
-            public boolean isCellEditable(int row, int column){
+        this.setModel(new DefaultTableModel(data, name) {
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         });

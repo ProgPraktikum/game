@@ -20,7 +20,7 @@ class SelectModi {
 
     private JDialog new_Game;
 
-     SelectModi(){
+    SelectModi() {
 
         new_Game = new JDialog();
 
@@ -57,23 +57,20 @@ class SelectModi {
                     DataContainer.setShipStack();
                     DataContainer.setFleets();
                     int anz = 4;
-                    //for(int i = 5; i>=2; i--){
-                    for(int i= 2; i<=5;i++){
+                    for (int i = 2; i <= 5; i++) {
 
-                        for(int j = 1; j <= anz; j++){
+                        for (int j = 1; j <= anz; j++) {
                             DataContainer.getShipLenghts().push(i);
                             DataContainer.getShipLengthsAI().push(i);
-                            //DataContainer.getShipLengthsInverted().push(i);
                             Ship s = new Ship(i);
                             DataContainer.getfleet().push(s);
                             Ship a = new Ship(i);
                             DataContainer.getAiFleet().push(a);
                         }
-                        anz --;
+                        anz--;
                     }
                     new_Game.setVisible(false);
-                   new PlaceShips();
-                    //new GameView();
+                    new PlaceShips();
                 }
         );
         vbox.add(sSpiel);
@@ -130,9 +127,9 @@ class SelectModi {
 
 
         vbox.add(Box.createVerticalStrut(7));   //Abstand zwischen Buttons
-         /**
-          *   Computer gegen Computer Button
-          */
+        /**
+         *   Computer gegen Computer Button
+         */
         JButton comvsCom = new JButton("Zuschauer");
         comvsCom.setToolTipText("Lasse den Computer gegen einen anderen Computer antreten (benötigt Netzwerk)");
         comvsCom.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -156,9 +153,9 @@ class SelectModi {
 
         vbox.add(comvsCom);
 
-         /**
-          * zurueck Button
-          */
+        /**
+         * zurueck Button
+         */
         vbox.add(Box.createVerticalStrut(7));   //Abstand zwischen Buttons
         JButton back = new JButton("zurück");
         back.setAlignmentX(Component.CENTER_ALIGNMENT);

@@ -1,7 +1,5 @@
 package gui;
 
-import data.DataContainer;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -10,19 +8,20 @@ import java.io.File;
 import java.io.IOException;
 
 
-/** Diese Klasse bildet das Startfenster, also quasi das Hauptmenue.
+/**
+ * Diese Klasse bildet das Startfenster, also quasi das Hauptmenue.
  * Es wird ein JFrame erstellt, welches ein Hintergrundbild beherbergt
  * mehrere JButton um ein Neues Spiel zu starten, ein vorhandes zu laden
  * oder das ganze Spiel wieder zu beenden.
  *
- *  @author Christopher Kisch, Jan Riedel, Felix Graeber
+ * @author Christopher Kisch, Jan Riedel, Felix Graeber
  */
 public class GUIMain {
 
     JFrame mainFrame;
 
 
-    public GUIMain(){
+    public GUIMain() {
 
         mainFrame = new JFrame();
         mainFrame.setTitle("Schiffe versenken");
@@ -31,21 +30,19 @@ public class GUIMain {
         mainFrame.setContentPane(Box.createVerticalBox());
 
         /**
-        Schlachtschiff Bild (Startbildschirm)
+         Schlachtschiff Bild (Startbildschirm)
          */
         ImageIcon cover = null;
-        try{
+        try {
             Image image = ImageIO.read(getClass().getResource("Schlachtschiff.jpg"));
             cover = new ImageIcon(image);
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         JLabel schlachtschiff = new JLabel(cover);
         schlachtschiff.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainFrame.add(schlachtschiff);
-
 
 
         /**
@@ -138,7 +135,6 @@ public class GUIMain {
         mainFrame.setVisible(true);
 
     }
-
 
 
 }

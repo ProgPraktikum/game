@@ -2,15 +2,14 @@ package gui;
 
 import ai.Ai;
 
-import com.sun.xml.internal.ws.util.CompletedFuture;
 import data.DataContainer;
 import network.Network;
 import data.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
-import javax.xml.crypto.Data;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -23,17 +22,18 @@ import java.util.concurrent.TimeUnit;
  * Es enthaelt zwei Spielfelder, wobei das linke das des Spielers ist
  * und das rechte ist das um Schuesse abzufeuern.
  */
- public class GameView {
+public class GameView {
 
+    // MEMBER VARIABLES
     private TableView tablePlayer;
     private TableView PlayerShootTable;
     private JTextArea textArea;
 
-    public GameView() { // CONSTRUCTOR
+    // CONSTRUCTOR
+    public GameView() {
 
         JDialog playView = new JDialog();
-        //playView.setModal(true);
-        playView.setSize((DataContainer.getGameboardWidth()*2 + 100), (DataContainer.getGameboardHeight() + 100));
+        playView.setSize((DataContainer.getGameboardWidth() * 2 + 100), (DataContainer.getGameboardHeight() + 100));
         playView.setUndecorated(true);
         playView.setContentPane(Box.createVerticalBox());
 
@@ -42,25 +42,25 @@ import java.util.concurrent.TimeUnit;
          */
 
         switch (DataContainer.getGameType()) {
-            case "ss":    //SS steht für schnelles Spiel
-                 tablePlayer = DataContainer.getTable();
-                 DataContainer.setAllowed(true);
-                 break;
+            case "ss":    // Schnelles Spiel
+                tablePlayer = DataContainer.getTable();
+                DataContainer.setAllowed(true);
+                break;
 
-            case "bdf":  // bdf steht für Benutzerdefiniert
-                 tablePlayer = DataContainer.getTable();          // das Place ships window wird die Table angelegt haben
-                 DataContainer.setAllowed(true);
-                 break;
+            case "bdf":    // Benutzerdefiniertes Spiel
+                tablePlayer = DataContainer.getTable();
+                DataContainer.setAllowed(true);
+                break;
 
-            case "bdf-loaded":  // bdf steht für Benutzerdefiniert
+            case "bdf-loaded":    // Geladenes, benutzerdefiniertes Spiel
                 tablePlayer = DataContainer.getTable();
                 break;
 
-            case "mp":
-                 tablePlayer = DataContainer.getTable();
-                 break;
+            case "mp":    // Multiplayer
+                tablePlayer = DataContainer.getTable();
+                break;
 
-            case "mps":
+            case "mps":    // Ai vs Ai
                 tablePlayer = DataContainer.getTable();
                 break;
         }
@@ -68,9 +68,9 @@ import java.util.concurrent.TimeUnit;
         if (!DataContainer.getGameType().equals("bdf-loaded")) {
             PlayerShootTable = new TableView();
             PlayerShootTable.setFont(new Font("Arial", Font.BOLD, 30));
-            for(int i = 0; i < DataContainer.getGameboardHeight(); i++){
-                for(int j = 0; j < DataContainer.getGameboardWidth(); j++){
-                    PlayerShootTable.setValueAt(9,i,j);
+            for (int i = 0; i < DataContainer.getGameboardHeight(); i++) {
+                for (int j = 0; j < DataContainer.getGameboardWidth(); j++) {
+                    PlayerShootTable.setValueAt(9, i, j);
                 }
             }
             DataContainer.setPlayerShootTable(PlayerShootTable);
@@ -117,7 +117,7 @@ import java.util.concurrent.TimeUnit;
                 JMenuItem item = new JMenuItem("Spiel speichern");
                 item.addActionListener(
                         (e) -> {
-                            if(DataContainer.getGameType().equals("bdf")
+                            if (DataContainer.getGameType().equals("bdf")
                                     || DataContainer.getGameType().equals("ss")) {
                                 JFileChooser filechooserSave = new JFileChooser();
 
@@ -138,7 +138,7 @@ import java.util.concurrent.TimeUnit;
                                     File file = filechooserSave.getSelectedFile();
                                     String filename = file.getAbsolutePath() + ".txt";
                                     if (DataContainer.getGameType().equals("bdf"))
-                                    backup.Save.saveBDF(filename);
+                                        backup.Save.saveBDF(filename);
                                 }
                             }
                         }
@@ -149,7 +149,7 @@ import java.util.concurrent.TimeUnit;
                 JMenuItem item = new JMenuItem("Beenden");
                 item.addActionListener(
                         (e) -> {
-                            if(DataContainer.getGameType().equals("mp") || DataContainer.getGameType().equals("mps")) {
+                            if (DataContainer.getGameType().equals("mp") || DataContainer.getGameType().equals("mps")) {
                                 Network.closeClientConnection();
                                 Network.closeHostConnection();
                             }
@@ -185,6 +185,7 @@ import java.util.concurrent.TimeUnit;
             public void mousePressed(MouseEvent event) {
                 TouchedMouse(event);
             }
+
             public void mouseReleased(MouseEvent event) {
 
             }
@@ -209,39 +210,39 @@ import java.util.concurrent.TimeUnit;
         } else if ((DataContainer.getGameType().equals("mp") || DataContainer.getGameType().equals("mp")) && !DataContainer.getAllowed()) {
             CompletableFuture.supplyAsync(Game::hitloop);
         } else if (DataContainer.getGameType().equals("mps")) {
-                Thread thread = new Thread(new Runnable() {
-                    public void run() {
-                        Ai ai = new Ai();
-                        while (true) {
-                            if(!DataContainer.getAllowed()) {
-                                CompletableFuture.supplyAsync(Game::hitloop);
+            Thread thread = new Thread(new Runnable() {
+                public void run() {
+                    Ai ai = new Ai();
+                    while (true) {
+                        if (!DataContainer.getAllowed()) {
+                            CompletableFuture.supplyAsync(Game::hitloop);
+                        }
+                        while (!DataContainer.getAllowed()) {
+                            try {
+                                Thread.sleep(100);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            while(!DataContainer.getAllowed()) {
+                        }
+                        while (DataContainer.getAllowed()) {
+                            try { // Have some delay to make the game more comprehensible
+                                Thread.sleep(500);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            ai.draw();
+                            if (DataContainer.getAllowed()) { // Have some delay if Ai is drawing again
                                 try {
-                                    Thread.sleep(100);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            while(DataContainer.getAllowed()){
-                                try { // Have some delay to make the game more comprehensible
                                     Thread.sleep(500);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                ai.draw();
-                                if(DataContainer.getAllowed()) { // Have some delay if Ai is drawing again
-                                    try {
-                                        Thread.sleep(500);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                }
                             }
                         }
                     }
-                });
-                thread.start();
+                }
+            });
+            thread.start();
         }
 
     } // END CONSTRUCTOR
@@ -249,9 +250,9 @@ import java.util.concurrent.TimeUnit;
 
     private boolean asyncAiLoop() {
         Ai ai = new Ai();
-        while(!DataContainer.getAllowed()){
+        while (!DataContainer.getAllowed()) {
             ai.draw();
-            if(!DataContainer.getAllowed()) {
+            if (!DataContainer.getAllowed()) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
                 } catch (Exception ex) {
@@ -263,15 +264,9 @@ import java.util.concurrent.TimeUnit;
     }
 
     private void TouchedMouse(MouseEvent e) {
-        /*
-        speichert die angeklickte Zelle der Table
-         */
-        Point x = e.getPoint();
+        Point x = e.getPoint(); // Geklickte Zelle
         int column = PlayerShootTable.columnAtPoint(x);
         int row = PlayerShootTable.rowAtPoint(x);
-        //TEST
-        //new VictoryScreen(false);
-        //TEST
 
         if (e.getButton() == MouseEvent.BUTTON1) {  // Linke Maustaste
             Ai ai = new Ai();

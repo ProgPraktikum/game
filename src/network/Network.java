@@ -112,6 +112,7 @@ public class Network {
 
     /**
      * ClientVerbindung wird erstellt
+     *
      * @param ip
      */
     public static void createClientConnection(String ip) {
@@ -222,7 +223,8 @@ public class Network {
         }
         new PlaceShips();
     }
-    public static int networkShoot(int x,int y) {
+
+    public static int networkShoot(int x, int y) {
         StringBuffer line = new StringBuffer();
         line.append("shot ").append(y).append(" ").append(x);
         System.out.println("Line:" + line);
@@ -233,13 +235,14 @@ public class Network {
             System.err.println("Connection lost - trying to recover!");
             try {
                 recover();
-            } catch(IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
         return shootanswer();
     }
-    public static int shootanswer(){
+
+    public static int shootanswer() {
         String inputLine = ""; //1 zeichen return wert von shoot des gegners
         try {
             inputLine = reader.readLine();
@@ -247,7 +250,7 @@ public class Network {
             System.err.println("Connection lost - trying to recover!");
             try {
                 recover();
-            } catch(IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
@@ -259,16 +262,16 @@ public class Network {
             try {
                 System.err.println("Connection seems lost - trying to recover!");
                 recover();
-            } catch(IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
         return ret;
     }
 
-    public static void networkHit(){
+    public static void networkHit() {
         String inputLine = "";
         try {
             inputLine = reader.readLine();
@@ -281,7 +284,7 @@ public class Network {
         int x = Integer.parseInt(input[2]);
 
         StringBuffer outputLine = new StringBuffer();
-        outputLine.append(Integer.toString(Game.getHit(x,y)));
+        outputLine.append(Integer.toString(Game.getHit(x, y)));
         try {
             writer.write(String.format("%s%n", outputLine));
             writer.flush();
@@ -298,7 +301,7 @@ public class Network {
             } else {
                 recoverClientSocket(addr);
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             throw e;
         }
 

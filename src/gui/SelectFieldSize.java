@@ -2,7 +2,6 @@ package gui;
 
 import data.DataContainer;
 import data.Game;
-import gameboard.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +14,13 @@ public class SelectFieldSize {
 
     static JDialog eingaben;
 
-    public SelectFieldSize(){
+    public SelectFieldSize() {
 
         // Fenster für die eingabe der Spielfeldgröße
         eingaben = new JDialog();
         eingaben.setModal(true);
         eingaben.setContentPane(Box.createVerticalBox());
-        eingaben.setMinimumSize(new Dimension(400,400));
+        eingaben.setMinimumSize(new Dimension(400, 400));
         eingaben.setBackground(Color.BLACK);
         eingaben.setUndecorated(true);
 
@@ -53,17 +52,17 @@ public class SelectFieldSize {
         /**
          * SpinnerModel fuer die Feldgroesse
          */
-        SpinnerNumberModel spinNumModel1 = new SpinnerNumberModel(10,5,30,1);
-        SpinnerNumberModel spinNumModel2 = new SpinnerNumberModel(10,5,30,1);
+        SpinnerNumberModel spinNumModel1 = new SpinnerNumberModel(10, 5, 30, 1);
+        SpinnerNumberModel spinNumModel2 = new SpinnerNumberModel(10, 5, 30, 1);
         /**
          * JSpinner zur Wahl der Feldbreite
          */
         JSpinner spinnerBreite = new JSpinner();
         spinnerBreite.setModel(spinNumModel1);
-        ((JSpinner.DefaultEditor)spinnerBreite.getEditor()).getTextField().setEditable(false);
-        spinnerBreite.setMinimumSize(new Dimension(50,30));
-        spinnerBreite.setMaximumSize(new Dimension(50,30));
-        spinnerBreite.setPreferredSize(new Dimension(50,30));
+        ((JSpinner.DefaultEditor) spinnerBreite.getEditor()).getTextField().setEditable(false);
+        spinnerBreite.setMinimumSize(new Dimension(50, 30));
+        spinnerBreite.setMaximumSize(new Dimension(50, 30));
+        spinnerBreite.setPreferredSize(new Dimension(50, 30));
 
 
         /**
@@ -71,10 +70,10 @@ public class SelectFieldSize {
          */
         JSpinner spinnerHoehe = new JSpinner();
         spinnerHoehe.setModel(spinNumModel2);
-        ((JSpinner.DefaultEditor)spinnerHoehe.getEditor()).getTextField().setEditable(false);
-        spinnerHoehe.setMinimumSize(new Dimension(50,30));
-        spinnerHoehe.setMaximumSize(new Dimension(50,30));
-        spinnerHoehe.setPreferredSize(new Dimension(50,30));
+        ((JSpinner.DefaultEditor) spinnerHoehe.getEditor()).getTextField().setEditable(false);
+        spinnerHoehe.setMinimumSize(new Dimension(50, 30));
+        spinnerHoehe.setMaximumSize(new Dimension(50, 30));
+        spinnerHoehe.setPreferredSize(new Dimension(50, 30));
 
         /**
          * JLabel: Bitte Spielfeldhoehe waehlen
@@ -86,7 +85,7 @@ public class SelectFieldSize {
 
         /**
          Bestaetigen Button ( liest die eingegebenen Werte ein und und speichert diese
-        */
+         */
         JButton ok = new JButton("OK");
         ok.setBackground(Color.BLACK);
         ok.setForeground(Color.WHITE);
@@ -102,7 +101,7 @@ public class SelectFieldSize {
                     //setzt die Maximale Schiffslaenge
                     DataContainer.setOccupancy();
                     DataContainer.setMaxShipLength();
-                  
+
                     Game.setMap();
                     new SelectShips();
                 }
@@ -118,7 +117,8 @@ public class SelectFieldSize {
         abort.setFont(new Font("Tahoma", Font.PLAIN, 20));
         abort.addActionListener(
                 (e) -> {
-                    eingaben.dispose(); }
+                    eingaben.dispose();
+                }
         );
 
         hbox.add(lblBreite);
