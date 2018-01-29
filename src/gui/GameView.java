@@ -209,7 +209,37 @@ import java.util.concurrent.TimeUnit;
         } else if ((DataContainer.getGameType().equals("mp") || DataContainer.getGameType().equals("mp")) && !DataContainer.getAllowed()) {
             CompletableFuture.supplyAsync(Game::hitloop);
         } else if (DataContainer.getGameType().equals("mps")) {
-            CompletableFuture.supplyAsync(this::asyncAiVsAiLoop); // Asynchronous executes makes live view at Ai's draws possible
+            while (true) {
+                //CompletableFuture.supplyAsync(this::asyncAiVsAiLoop); // Asynchronous executes makes live view at Ai's draws possible
+                Thread thread = new Thread(new Runnable() {
+                    public void run() {
+                        Ai ai = new Ai();
+                        while (true) {
+                            if(!DataContainer.getAllowed()) {
+                                CompletableFuture.supplyAsync(Game::hitloop);
+                            }
+                            while(!DataContainer.getAllowed()) {
+                                try {
+                                    TimeUnit.MILLISECONDS.sleep(100);
+                                } catch (Exception ex) {
+                                    ;
+                                }
+                            }
+                            while(DataContainer.getAllowed()){
+                                ai.draw();
+                                if(DataContainer.getAllowed()) {
+                                    try {
+                                        TimeUnit.MILLISECONDS.sleep(500);
+                                    } catch (Exception ex) {
+                                        ;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                thread.start();
+            }
         }
 
     } // END CONSTRUCTOR
@@ -220,31 +250,6 @@ import java.util.concurrent.TimeUnit;
         while(!DataContainer.getAllowed()){
             ai.draw();
             if(!DataContainer.getAllowed()) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(500);
-                } catch (Exception ex) {
-                    ;
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean asyncAiVsAiLoop() {
-        Ai ai = new Ai();
-        if(!DataContainer.getAllowed()) {
-            CompletableFuture.supplyAsync(Game::hitloop);
-        }
-        while(!DataContainer.getAllowed()) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(100);
-            } catch (Exception ex) {
-                ;
-            }
-        }
-        while(DataContainer.getAllowed()){
-            ai.draw();
-            if(DataContainer.getAllowed()) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
                 } catch (Exception ex) {

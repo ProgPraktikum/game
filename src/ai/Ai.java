@@ -64,7 +64,9 @@ public class Ai {
     // PUBLIC METHODS
     public void draw() {
         // do all actions here
-        data.DataContainer.setAllowed(false);
+        if (!vsAi) {
+            data.DataContainer.setAllowed(false);
+        }
         eval();
     }
 
