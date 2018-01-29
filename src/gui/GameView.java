@@ -137,8 +137,7 @@ public class GameView {
                                 if (state == JFileChooser.APPROVE_OPTION) {
                                     File file = filechooserSave.getSelectedFile();
                                     String filename = file.getAbsolutePath() + ".txt";
-                                    if (DataContainer.getGameType().equals("bdf"))
-                                        backup.Save.saveBDF(filename);
+                                    backup.Save.saveBDF(filename);
                                 }
                             }
                         }
