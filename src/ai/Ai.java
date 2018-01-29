@@ -307,6 +307,8 @@ public class Ai {
             case 2:
                 System.out.println("Destroyed ship!");
                 aiStrikes.setPlayershots(x, y, 2);
+                trace.addTile(x, y);
+                flagSurrounding();
                 trace.clear();
                 break;
             default:
@@ -322,6 +324,64 @@ public class Ai {
     private void place() {
         /* place ships on Board */
         aiBoard = Game.aiRandomPlace();
+    }
+
+    /**
+     * Flag the surrounding fields beneath to a destroyed ship.
+     */
+    private void flagSurrounding() {
+        int x1 = trace.getTile(0)[0];
+        int x2 = trace.getTile(1)[0];
+        int y1 = trace.getTile(0)[1];
+        int y2 = trace.getTile(1)[1];
+
+        if (y1 == y2) {
+            // orientation horizontal
+            int x = x1;
+            int y = y1;
+            while (x < boardWidth && (aiStrikes.getPlayershots(x, y) == 1 || aiStrikes.getPlayershots(x, y) == 2)) {
+                if ((y + 1) < boardHeight) {
+                    aiStrikes.setPlayershots(x, (y + 1), 0);
+                }
+                if ((y - 1) >= 0) {
+                    aiStrikes.setPlayershots(x, (y - 1), 0);
+                }
+                x++;
+            }
+            x = x1 - 1;
+            while (x >= 0 && (aiStrikes.getPlayershots(x, y) == 1 || aiStrikes.getPlayershots(x, y) == 2)) {
+                if ((y + 1) < boardHeight) {
+                    aiStrikes.setPlayershots(x, (y + 1), 0);
+                }
+                if ((y - 1) >= 0) {
+                    aiStrikes.setPlayershots(x, (y - 1), 0);
+                }
+                x--;
+            }
+        } else if (x1 == x2) {
+            // orientation vertical
+            int x = x1;
+            int y = y1;
+            while (y < boardHeight && (aiStrikes.getPlayershots(x, y) == 1 || aiStrikes.getPlayershots(x, y) == 2)) {
+                if ((x + 1) < boardWidth) {
+                    aiStrikes.setPlayershots((x + 1), y, 0);
+                }
+                if ((x - 1) >= 0) {
+                    aiStrikes.setPlayershots((x - 1), y, 0);
+                }
+                y++;
+            }
+            y = y1 - 1;
+            while (y >= 0 && (aiStrikes.getPlayershots(x, y) == 1 || aiStrikes.getPlayershots(x, y) == 2)) {
+                if ((x + 1) < boardWidth) {
+                    aiStrikes.setPlayershots((x + 1), y, 0);
+                }
+                if ((x - 1) >= 0) {
+                    aiStrikes.setPlayershots((x - 1), y, 0);
+                }
+                y--;
+            }
+        }
     }
 
     /**
