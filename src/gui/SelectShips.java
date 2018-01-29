@@ -26,7 +26,7 @@ class SelectShips {
 
     SelectShips() {
 
-        // Fenster für die Auswahl der Schiffe
+        // Fenster fuer die Auswahl der Schiffe
         selectships = new JDialog();
         selectships.setModal(true);
         selectships.setUndecorated(true);
@@ -36,7 +36,7 @@ class SelectShips {
 
 
         /**
-         ArrayList nimmt die ganzen JSpinner auf welche für die Anzahl der Schiffe genutzt werden.
+        ArrayList nimmt die ganzen JSpinner auf welche fuer die Anzahl der Schiffe genutzt werden.
          */
         spinners = new ArrayList<JSpinner>();
 
@@ -58,11 +58,10 @@ class SelectShips {
         Box vbox_spinner = Box.createVerticalBox();
         Box horizont = Box.createHorizontalBox();
 
-        /**
-         * JLabel mit dem Text "Laenge ..." wird initialisiert
-         * und zusätzlich jeweils ein spinner
-         */
-
+			/**
+			 * JLabel mit dem Text "Laenge ..." wird initialisiert
+			 * und zusaetzlich jeweils ein spinner
+			 */
         for (int i = DataContainer.getMaxShipLength(); i >= 2; i--) {
 
             JLabel labelSize = new JLabel("Laenge " + i + " : ");
@@ -112,7 +111,7 @@ class SelectShips {
 
                         selectships.dispose();
                         /**
-                         * Daten übermitteln falls Netzwerkspiel
+                         * Daten uebermitteln falls Netzwerkspiel
                          */
                         if (DataContainer.getGameType().equals("mp") || DataContainer.getGameType()
                                 .equals("mps")) {
@@ -122,7 +121,7 @@ class SelectShips {
                         new PlaceShips();
                     } else {
                         /*
-                        Falls die zulaessige Anzahl der Schiffe überschritten wurde
+                        Falls die zulaessige Anzahl der Schiffe ueberschritten wurde
                         werden die Stacks neu erstellt
                          */
                         DataContainer.setShipStack();

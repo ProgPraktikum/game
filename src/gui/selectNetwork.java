@@ -182,10 +182,9 @@ class selectNetwork {
                 }
         );
 
-
         /**
-         * DisplayIp zeigt die eigene Ip Adresse wenn man hosted. wird nur für die
-         * Clientverindung benötigt
+         * DisplayIp zeigt die eigene Ip Adresse wenn man hosted. wird nur fuer die
+         * Clientverindung benoetigt
          */
         displayIp = new JLabel("My IP: " + myIp);
         displayIp.setForeground(Color.GREEN);
@@ -193,9 +192,9 @@ class selectNetwork {
 
 
         /**
-         * OK Button, der bei Benutzung das Fenster schließt und falls man Host ist
-         * select FieldSize öffnet.
-         * Ist man Client wird das PlaceShips View geöffnet.
+         * OK Button, der bei Benutzung das Fenster schliesst und falls man Host ist
+         * select FieldSize oeffnet.
+         * Ist man Client wird das PlaceShips View geoeffnet.
          */
         JButton ok = new JButton("OK");
         ok.setBackground(Color.BLACK);
@@ -239,7 +238,7 @@ class selectNetwork {
 
 
                         /**
-                         * Empfangen der übermittelten StartDaten
+                         * Empfangen der uebermittelten StartDaten
                          */
                         Network.recieveStartData();
                     }
@@ -247,7 +246,7 @@ class selectNetwork {
         );
 
         /**
-         * abbrechen Button (schließt den JDialog)
+         * abbrechen Button (schliesst den JDialog)
          */
         JButton abbrechen = new JButton("abbrechen");
         abbrechen.setBackground(Color.BLACK);

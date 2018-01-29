@@ -2,9 +2,10 @@ package data;
 
 /**
  * @author: Felix Graeber
- * @desc: Hilfsklasse um einzelne Spielbrettfelder zu erzeugen. ermoeglicht Verknuepfung
+ * Hilfsklasse um einzelne Spielbrettfelder zu erzeugen. ermoeglicht Verknuepfung
  * von mehreren Stellen im Array mit demselben Schiff, sodass Treffer korrekt verknuepft werden koennen.
- * Enthaelt ausserdem einen Statuswert, der Agibt was sich an der entsprechenden Stelle auf dem Spielfeld befindet.
+ * Enthaelt ausserdem einen Statuswert, der angibt was sich an der entsprechenden Stelle auf dem Spielfeld befindet.
+ *
  */
 public class Tile {
     /**

@@ -10,9 +10,9 @@ import java.net.SocketException;
 
 
 /**
- * Hier wird ein neuer JDialog erstellt um ein Auswahlfenster für diverse SpielModi
+ * Hier wird ein neuer JDialog erstellt um ein Auswahlfenster fuer diverse SpielModi
  * (Einzelspieler, Netzwerk, Com vs Com).
- * Für jeden Modi wird ein JButton erzeugt.
+ * Fuer jeden Modi wird ein JButton erzeugt.
  *
  * @author Christopher Kisch, Jan Riedel, Felix Graeber
  */
@@ -169,7 +169,7 @@ class SelectModi {
         back.addActionListener(
                 (e) -> {
 
-                    new_Game.dispose();               // schließt den JDialog
+                    new_Game.dispose();               // schliesst den JDialog
                 }
         );
         vbox.add(back);

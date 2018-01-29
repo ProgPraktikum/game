@@ -202,7 +202,7 @@ public class Network {
         String[] size = startData[0].split(" ");
 
         /*
-        Breite und Höhe werden in den DataContainer geschrieben.
+        Breite und Hoehe werden in den DataContainer geschrieben.
          */
         DataContainer.setGameboardWidth(Integer.parseInt(size[1]));
         DataContainer.setGameboardHeight(Integer.parseInt(size[2]));

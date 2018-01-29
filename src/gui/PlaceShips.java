@@ -110,7 +110,7 @@ public class PlaceShips {
         /**
          * Button, welcher die Funktion aufruft, dass Schiffe automatisch gesetzt werden.
          */
-        JButton randomBtn = new JButton("zufällig");
+        JButton randomBtn = new JButton("zufaellig");
         randomBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         randomBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
         randomBtn.addActionListener(
@@ -130,7 +130,7 @@ public class PlaceShips {
         /**
          * Button, welcher alle gesetzten Schiffe loescht
          */
-        JButton reset = new JButton("zurücksetzen");
+        JButton reset = new JButton("zuruecksetzen");
         reset.setAlignmentX(Component.CENTER_ALIGNMENT);
         reset.setFont(new Font("Tahoma", Font.PLAIN, 20));
         reset.addActionListener(
@@ -140,7 +140,7 @@ public class PlaceShips {
 
         /**
          *MouseAdapter wird hinzugefuegt. beim klicken wird TouchedMouse aufgerufen.
-         *anschließend wird geprueft ob die schiffe platziert sind
+         *anschliessend wird geprueft ob die schiffe platziert sind
          */
         table.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent event) {
@@ -214,12 +214,13 @@ public class PlaceShips {
                 return;
             }
             /*
-            wenn noch kein Startpunkt gewählt wurde
+            wenn noch kein Startpunkt gewaehlt wurde
              */
             if (startingPoint == null) {
                 startingPoint = x;
                 endpoints(row, column);
             }
+          
             if (table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(4)) {
 
                 /*
@@ -234,7 +235,7 @@ public class PlaceShips {
                 int end_y = table.rowAtPoint(x);
                 int end_x = table.columnAtPoint(x);
                 hideEndpoints(start_y, start_x);
-                /**ausgewähltes schiff wird aus stack geholt
+                /**ausgewaehltes schiff wird aus stack geholt
                  * und in selectedship zwischengespeichert
                  */
 
@@ -294,7 +295,7 @@ public class PlaceShips {
                 startingPoint = null;
             } else {
                 /**
-                 * falls auf keinen endpunkt geklickt wude sollen die möglichen wieder
+                 * falls auf keinen endpunkt geklickt wude sollen die moeglichen wieder
                  * versteckt werden.
                  */
                 hideEndpoints(table.rowAtPoint(startingPoint), table.columnAtPoint(startingPoint));
@@ -310,9 +311,8 @@ public class PlaceShips {
     /**
      * die Methode Endpoints sucht und setzt moegliche Endpunkte der Schiffe, welche dann auf dem Spielfeld
      * gruen dargestellt werden.
-     *
-     * @param row    reihe des Ausgangspunktes
-     * @param column Spalte des Ausgangspunktes
+     * @param row    Reihe des Ausgangspunktes.
+     * @param column Spalte des Ausgangspunktes.
      */
     private void endpoints(int row, int column) {
         boolean check; // Zur Pruefung ob setzbar
@@ -385,7 +385,7 @@ public class PlaceShips {
 
 
     /**
-     * Die Methode hideEndpoints setzt zuvor gesetzte mögliche Endpunkte wieder auf den Wert Wasser
+     * Die Methode hideEndpoints setzt zuvor gesetzte moegliche Endpunkte wieder auf den Wert Wasser
      */
     private void hideEndpoints(int y, int x) {
 
@@ -516,7 +516,6 @@ public class PlaceShips {
         }
     }
 
-
     private void removeShip(int row, int column) {
         if (table.getValueAt(row, column) != null && table.getValueAt(row, column).equals(3)) {
             Ship s = Game.getPlayerboard(column, row).getMaster();
@@ -583,8 +582,8 @@ public class PlaceShips {
             if (columnempty == 0) {
                 fieldempty = true;
             }
-            //schiffslänge wird nach komplettem durchlauf durch feld erhöht
-            // (alle schiffe der vorherigen länge wurden bereits entfernt
+            //schiffslaenge wird nach komplettem durchlauf durch feld erhoeht
+            // (alle schiffe der vorherigen laenge wurden bereits entfernt
             currentlength++;
         }
         success = true;

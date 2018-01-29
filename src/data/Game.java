@@ -10,9 +10,12 @@ import java.util.Random;
 import java.util.Stack;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * @author Felix
- * @desc Statische Klasse welche die Huaptlogik des Spiels enthaelt und Netzwerk, AI und gui verknuepft
+/**@author Felix
+ * Statische Klasse welche die Hauptlogik des Spiels enthaelt und Netzwerk, AI und gui verknuepft.
+ * Hier wird das Board Objekt des Spielers verwaltet, FlottenvorSchlaege erzeugt, sowie die Schiffsplatzierung fuer Spieler und AI vorgenommen.
+ * Ausserdem befinden sich hier die zentralen Methoden zum Schiessen und Getroffen werden, die durch verschiedene Spieleparameter,
+ * die aus dem DataContainer entnommen werden werschiedenen Aktionen im Netzwerk, bei der AI oder auf der NButzerOberflaeche ausloesen.
+ *
  */
 public class Game {
     /**
@@ -73,18 +76,16 @@ public class Game {
         return map.place(s);
     }
 
-    // SPIELMETHODEN
-
     /**
      * @param x X-Zielkoordinate
      * @param y Y-Zielkoordinate
      * @return gibt entweder 0 fuer wasser, 1 fuer treffer oder 2 fuer versenkt zurueck.
-     * @desc Methode des Spielers um auf seinen Gegner zu schiessen, abhaengig vom Spielmodus entweder Ai oder Netzwerkgegner.
+     * Methode des Spielers um auf seinen Gegner zu schiessen.
+     * Bei Einzelspieler wird die hit methode der Ai aufgerufen und bei Mehrspieler die networkShoot methode aufgerufen welche ueber shootanswer den entsprechenden Antwortwert zurueckliefert.
      */
     public static int shoot(int x, int y, Ai ai) {
         if (DataContainer.getAllowed()) {
             int val;
-
             if (DataContainer.getGameType().equals("ss") || DataContainer.getGameType().equals("bdf") || DataContainer.getGameType().equals("bdf-loaded")) { // im einzelspieler hit der ai aufrufen
                 val = ai.hit(x, y);
                 if (val == -1) {
@@ -107,7 +108,6 @@ public class Game {
                     map.setPlayershots(x, y, 7);
                     DataContainer.getPlayerShootTable().setValueAt("X", y, x);
                     break;
-
                 case 1:
                     map.setPlayershots(x, y, 1);
                     DataContainer.getPlayerShootTable().setValueAt(1, y, x);

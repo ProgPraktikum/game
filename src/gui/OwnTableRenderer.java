@@ -6,7 +6,7 @@ import java.awt.*;
 
 
 /**
- * Diese Klasse wird für die Visuelle Gestaltung des Spielfedes benoetigt
+ * Diese Klasse wird fuer die Visuelle Gestaltung des Spielfedes benoetigt
  */
 public class OwnTableRenderer extends javax.swing.table.DefaultTableCellRenderer {
 
@@ -19,7 +19,7 @@ public class OwnTableRenderer extends javax.swing.table.DefaultTableCellRenderer
             /*
 			 * ist der Wert ein Int dann wird mittels des Wertes geprueft welche Farbe genutz wird
 			 * 0 = Wasser, 1 = Schiff, 2 = versenkt, 3 = Schiff, 4 = endpunkt beim setzen,
-			 * 9 = grau für unbeschossene Felder, 7 = beschossenes Wasserfeld
+			 * 9 = grau fuer unbeschossene Felder, 7 = beschossenes Wasserfeld
 			 */
             if (value instanceof String) {
                 if (value.equals("X")) {

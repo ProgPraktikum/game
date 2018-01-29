@@ -40,7 +40,6 @@ public class GameView {
         /**
          * Erstellung der TableView abhaengig des gewaehlten GameTyp
          */
-
         switch (DataContainer.getGameType()) {
             case "ss":    // Schnelles Spiel
                 tablePlayer = DataContainer.getTable();
@@ -80,7 +79,7 @@ public class GameView {
 
 
         /**
-         * JMenuBar mit den Unterpunkten zum Spiel speichern/laden und schließen.
+         * JMenuBar mit den Unterpunkten zum Spiel speichern/laden und schliessen.
          */
         JMenuBar bar = new JMenuBar();
         {
@@ -161,7 +160,7 @@ public class GameView {
             bar.add(menu);
         }
         /**
-         * ScrollPane und TextArea unterhalb des Spielfeldes für
+         * ScrollPane und TextArea unterhalb des Spielfeldes fuer
          * saemtliche Informationen
          */
         JScrollPane scrollPane = new JScrollPane();
