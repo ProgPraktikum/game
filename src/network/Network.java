@@ -5,6 +5,7 @@ import data.DataContainer;
 import gui.PlaceShips;
 import data.Game;
 import data.Ship;
+import gui.VictoryScreen;
 
 
 import java.io.*;
@@ -77,6 +78,10 @@ public class Network {
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
+            // Both players are loosing if network fails
+            DataContainer.setAllowed(false);
+            new VictoryScreen(false);
+
             for (int i = 0; i < 5; i++) { // Not sure if this type of recovering is actually useful here, but..
                 try {
                     TimeUnit.MILLISECONDS.sleep(recoverIntervals[i]);
@@ -120,6 +125,10 @@ public class Network {
             reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
             writer = new OutputStreamWriter(s.getOutputStream());
         } catch (IOException e) {
+            // Both players are loosing if network fails
+            DataContainer.setAllowed(false);
+            new VictoryScreen(false);
+            
             for (int i = 0; i < 5; i++) { // Not sure if this type of recovering is actually useful here, but..
                 try {
                     TimeUnit.MILLISECONDS.sleep(recoverIntervals[i]);
